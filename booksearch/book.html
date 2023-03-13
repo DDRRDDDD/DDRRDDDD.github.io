@@ -12,19 +12,40 @@
 <body>
   <h1>Book Search</h1>
   <form class="search-box">
-    <input class="query" type="text">
-    <input type="submit" value="search" placeholder="검색할 책 제목 입력" autofocus>
+    <input class="query" type="text" placeholder="검색할 책 제목 입력">
+    <!-- 폼 태그 안에 버튼이 하나면 디폴트가 submit임 -->
+    <button id="search">
+      <img src="https://em-content.zobj.net/thumbs/240/toss-face/342/magnifying-glass-tilted-left_1f50d.png" >
+    </button>
   </form>
   <div class="container">
     <div class="result-card">
-      <img class="book-img" src="/book.png">
+      <img class="book-img" src="https://search1.kakaocdn.net/thumb/R120x174.q85/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flbook%2Fimage%2F965212%3Ftimestamp%3D20220101150538">
       <h4 class="book-title">도서 제목</h4>
-      <p class="book-description">도서상세정보</p>
       <span class="price">10000원</span>
       <p class="book-info">
         <span class="author">저자</span>|<span class="publisher">출판사</span>
       </p>
     </div>
+
+    <div class="result-card">
+
+      <img class="book-img">
+
+      <h4 class="book-title">도서 제목</h4>
+
+      <p class="book-description">도서상세정보</p>
+
+      <span class="price">10000원</span>
+
+      <p class="book-info">
+
+        <span class="author">저자</span>|<span class="publisher">출판사</span>
+
+      </p>
+
+    </div>
+    
   </div>
   <script type="text/javascript" src="book.js"></script>
 </body>
