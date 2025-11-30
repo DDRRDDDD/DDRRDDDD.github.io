@@ -19,14 +19,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: 체크아웃
         uses: actions/checkout@v4
 
-      - name: Setup Flutter
+#      - name: Setup Flutter
+#        uses: subosito/flutter-action@v2
+#        with:
+#          # Flutter 버전
+#          flutter-version: 3.39.0
+
+      - name: 플러터 3.39.0 버전 설정
         uses: subosito/flutter-action@v2
         with:
-          # Flutter 버전
-          flutter-version: ' 3.39.0'
+          flutter-version: 3.39.0
+
+      - name: 플러터 3.39.0 체크아웃
+        shell: bash
+        run: |
+            cd $FLUTTER_ROOT;
+            git fetch --tags;
+            git checkout 3.10.7;
+            flutter --version;
 
       - name: Install Dependencies
         run: flutter pub get
