@@ -22,23 +22,17 @@ jobs:
       - name: 체크아웃
         uses: actions/checkout@v4
 
-#      - name: Setup Flutter
-#        uses: subosito/flutter-action@v2
-#        with:
-#          # Flutter 버전
-#          flutter-version: 3.39.0
+      - name: 플러터 버전 설정
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 3.39.0
 
-#      - name: 플러터 3.39.0 버전 설정
-#        uses: subosito/flutter-action@v2
-#        with:
-#          flutter-version: 3.39.0
-
-      - name: 플러터 3.39.0 체크아웃
+      - name: 플러터 체크아웃
         shell: bash
         run: |
             cd $FLUTTER_ROOT;
             git fetch --tags;
-            git checkout 3.10.7;
+            git checkout 3.39.0;
             flutter --version;
 
       - name: 종속성 설치
