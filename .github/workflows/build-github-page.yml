@@ -27,14 +27,6 @@ jobs:
         with:
           flutter-version: 3.38.3
 
-#      - name: 플러터 체크아웃
-#        shell: bash
-#        run: |
-#            cd $FLUTTER_ROOT;
-#            git fetch --tags;
-#            git checkout 3.38.3;
-#            flutter --version;
-
       - name: 종속성 설치
         run: flutter pub get
 
