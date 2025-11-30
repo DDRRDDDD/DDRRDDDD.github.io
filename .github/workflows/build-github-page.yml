@@ -1,4 +1,4 @@
-name: Deploy Flutter Web App to GitHub Pages
+name: 포트폴리오 웹 배포
 
 on:
   push:
