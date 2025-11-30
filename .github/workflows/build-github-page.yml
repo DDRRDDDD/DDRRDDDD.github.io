@@ -28,10 +28,10 @@ jobs:
 #          # Flutter 버전
 #          flutter-version: 3.39.0
 
-      - name: 플러터 3.39.0 버전 설정
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: 3.39.0
+#      - name: 플러터 3.39.0 버전 설정
+#        uses: subosito/flutter-action@v2
+#        with:
+#          flutter-version: 3.39.0
 
       - name: 플러터 3.39.0 체크아웃
         shell: bash
@@ -41,19 +41,18 @@ jobs:
             git checkout 3.10.7;
             flutter --version;
 
-      - name: Install Dependencies
+      - name: 종속성 설치
         run: flutter pub get
 
-      - name: Build Web
+      - name: 웹 빌드
         run: flutter build web --release --base-href /${{ github.event.repository.name }}/
 
-      - name: Add .nojekyll
+      - name: .nojekyll 파일 추가
         run: echo > build/web/.nojekyll
 
-      - name: Deploy to GitHub Pages
+      - name: 깃헙 페이지 배포
         uses: peaceiris/actions-gh-pages@v3
         with:
-          # repository에서 사용할 시크릿 키 이름
           github_token: ${{ secrets.SECRET_KEY }}
           publish_dir: build/web
 #          publish_branch: gh-pages
