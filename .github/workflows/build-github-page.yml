@@ -1,0 +1,46 @@
+name: Deploy Flutter Web App to GitHub Pages
+
+on:
+  push:
+    # 실행할 기본 브랜치
+    branches: [ "main" ]
+  # GitHub Actions 탭에서 수동으로 이 워크플로우를 실행할 수 있음
+  workflow_dispatch:
+
+# 이 동시성 설정은 GitHub Pages에 대한 배포 작업이 동시에 여러 개 실행되지 않도록 제한
+# 이미 실행 중인 배포 작업이 완료될 때까지 기다림
+concurrency:
+  group: "pages"
+  # 현재 진행 중인 작업을 취소하지 않음
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          # Flutter 버전
+          flutter-version: '3.11.0'
+
+      - name: Install Dependencies
+        run: flutter pub get
+
+      - name: Build Web
+        run: flutter build web --release
+
+      - name: Add .nojekyll
+        run: echo > build/web/.nojekyll
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          # repository에서 사용할 시크릿 키 이름
+          github_token: ${{ secrets.MY_SECRET_KEY_NAME }}
+          publish_dir: build/web
+          publish_branch: gh-pages
