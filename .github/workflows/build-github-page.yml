@@ -33,7 +33,7 @@ jobs:
         run: flutter pub get
 
       - name: 웹 빌드
-        run: flutter build web --release --base-href /${{ steps.pages.outputs.base_path }}/
+        run: flutter build web --base-href "/${{ github.event.repository.name }}/"
 
       - name: .nojekyll 파일 추가
         run: echo > build/web/.nojekyll
@@ -43,4 +43,4 @@ jobs:
         with:
           github_token: ${{ secrets.SECRET_KEY }}
           publish_dir: build/web
-#          publish_branch: gh-pages
+          publish_branch: main
