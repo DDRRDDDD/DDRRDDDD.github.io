@@ -14,32 +14,98 @@ concurrency:
   # 현재 진행 중인 작업을 취소하지 않음
   cancel-in-progress: false
 
-jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
+env:
+  PATH_TO_APP: my_portfolio
 
+jobs:
+#  build-and-deploy:
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - name: 체크아웃
+#        uses: actions/checkout@v4
+#
+#      - name: 플러터 버전 설정
+#        uses: subosito/flutter-action@v2
+#        with:
+#          cache: true
+#          channel: stable
+#          flutter-version: 3.38.3
+#
+#      - name: 종속성 설치
+#        run: flutter pub get
+#        working-directory: ${{env.PATH_TO_APP}}
+#
+#      - name: 페이지 셋업
+#        id: pages
+#        uses: actions/configure-pages@v5
+#
+#      - name: .nojekyll 파일 추가
+#        run: echo > build/web/.nojekyll
+#
+#      - name: 웹 빌드
+#        run: flutter build web --base-href "${{ steps.pages.outputs.base_path }}/"
+#        working-directory: ${{env.PATH_TO_APP}}
+#
+#      - name: 빌드 아티팩트 업로드
+#        uses: actions/upload-pages-artifact@v3
+#        with:
+#          path: ${{ env.PATH_TO_APP }}/build/web
+#
+#      - name: 깃헙 페이지 배포
+#        uses: peaceiris/actions-gh-pages@v3
+#        with:
+#          github_token: ${{ secrets.SECRET_KEY }}
+#          publish_dir: build/web
+##############################################################################################
+  ci:
+    name: Continuous Integration
+    runs-on: ubuntu-latest
     steps:
-      - name: 체크아웃
+      - name: 코드 체크아웃
         uses: actions/checkout@v4
 
       - name: 플러터 버전 설정
         uses: subosito/flutter-action@v2
         with:
-          channel: stable
           cache: true
+          channel: stable
           flutter-version: 3.38.3
+
+      - name: 페이지 설정
+        id: pages
+        uses: actions/configure-pages@v5
 
       - name: 종속성 설치
         run: flutter pub get
+        working-directory: ${{ env.PATH_TO_APP }}
 
       - name: 웹 빌드
-        run: flutter build web --release
+        run: flutter build web --base-href "${{ steps.pages.outputs.base_path }}/"
+        working-directory: ${{ env.PATH_TO_APP }}
 
-      - name: .nojekyll 파일 추가
-        run: echo > build/web/.nojekyll
+#      - name: Run tests
+#        run: flutter test
+#        working-directory: ${{ env.PATH_TO_APP }}
 
-      - name: 깃헙 페이지 배포
-        uses: peaceiris/actions-gh-pages@v3
+      - name: 빌드 아티팩트 업로드
+#        if: github.ref == 'refs/heads/main'
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.SECRET_KEY }}
-          publish_dir: build/web
+          path: ${{ env.PATH_TO_APP }}/build/web
+
+  cd:
+    name: Continuous Deployment
+    needs: ci
+#    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: 웹 배포
+        id: deployment
+        uses: actions/deploy-pages@v4
