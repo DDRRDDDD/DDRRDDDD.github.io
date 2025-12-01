@@ -93,7 +93,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
 #          path: ${{ env.PATH_TO_APP }}/build/web
-          path: /build/web
+          path: build/web
 
   cd:
     name: Continuous Deployment
