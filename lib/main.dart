@@ -88,7 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: ListView.separated(
         padding: const EdgeInsets.symmetric(horizontal: 500),
-        itemCount: 100,
+        itemCount: 50π,
         itemBuilder: (context, index) {
           return Container(
             color: Colors.blueAccent,
