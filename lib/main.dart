@@ -86,35 +86,23 @@ class _MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      body: ListView(
+      body: ListView.separated(
         padding: const EdgeInsets.symmetric(horizontal: 500),
-        children: [
-          const Text('You have pushed the button this many times:'),
-          Text('$_counter', style: Theme.of(context).textTheme.headlineMedium),
-          const Text('You have pushed the button this many times:'),
-          Text('$_counter', style: Theme.of(context).textTheme.headlineMedium),
-          const Text('You have pushed the button this many times:'),
-          Text('$_counter', style: Theme.of(context).textTheme.headlineMedium),
-          const Text('You have pushed the button this many times:'),
-          Text('$_counter', style: Theme.of(context).textTheme.headlineMedium),
-          const Text('You have pushed the button this many times:'),
-          Text('$_counter', style: Theme.of(context).textTheme.headlineMedium),
-          const Text('You have pushed the button this many times:'),
-          Text('$_counter', style: Theme.of(context).textTheme.headlineMedium),
-          const Text('You have pushed the button this many times:'),
-          Text('$_counter', style: Theme.of(context).textTheme.headlineMedium),
-          const Text('You have pushed the button this many times:'),
-          Text('$_counter', style: Theme.of(context).textTheme.headlineMedium),
-          const Text('You have pushed the button this many times:'),
-          Text('$_counter', style: Theme.of(context).textTheme.headlineMedium),
-          const Text('You have pushed the button this many times:'),
-          Text('$_counter', style: Theme.of(context).textTheme.headlineMedium),
-          const Text('You have pushed the button this many times:'),
-          Text('$_counter', style: Theme.of(context).textTheme.headlineMedium),
-          const Text('You have pushed the button this many times:'),
-          Text('$_counter', style: Theme.of(context).textTheme.headlineMedium),
-        ],
+        itemCount: 100,
+        itemBuilder: (context, index) {
+          return Container(
+            color: Colors.blueAccent,
+            height: 200,
+            width: double.infinity,
+            child: Text(
+              '$_counter',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+          );
+        },
+        separatorBuilder: (context, index) => const SizedBox(height: 20),
       ),
+
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: '음매',
