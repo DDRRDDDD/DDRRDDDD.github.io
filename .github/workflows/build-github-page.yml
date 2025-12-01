@@ -78,11 +78,11 @@ jobs:
 
       - name: 종속성 설치
         run: flutter pub get
-        working-directory: ${{ env.PATH_TO_APP }}
+#        working-directory: ${{ env.PATH_TO_APP }}
 
       - name: 웹 빌드
         run: flutter build web --base-href "${{ steps.pages.outputs.base_path }}/"
-        working-directory: ${{ env.PATH_TO_APP }}
+#        working-directory: ${{ env.PATH_TO_APP }}
 
 #      - name: Run tests
 #        run: flutter test
@@ -92,7 +92,8 @@ jobs:
 #        if: github.ref == 'refs/heads/main'
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ${{ env.PATH_TO_APP }}/build/web
+#          path: ${{ env.PATH_TO_APP }}/build/web
+          path: /build/web
 
   cd:
     name: Continuous Deployment
