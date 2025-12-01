@@ -29,6 +29,9 @@ jobs:
           cache: true
           flutter-version: 3.38.3
 
+      - name: 플러터 빌드 클린
+        run: flutter clean
+
       - name: 종속성 설치
         run: flutter pub get
 
