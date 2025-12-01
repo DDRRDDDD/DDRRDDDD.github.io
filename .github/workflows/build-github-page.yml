@@ -18,42 +18,6 @@ env:
   PATH_TO_APP: my_portfolio
 
 jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: 체크아웃
-        uses: actions/checkout@v4
-
-      - name: 플러터 버전 설정
-        uses: subosito/flutter-action@v2
-        with:
-          cache: true
-          channel: stable
-          flutter-version: 3.38.3
-
-      - name: 종속성 설치
-        run: flutter pub get
-
-      - name: .nojekyll 파일 추가
-        run: echo > build/web/.nojekyll
-
-      - name: 웹 빌드
-        run: flutter build web --base-href "/${{ github.event.repository.name }}/"
-
-      - name: 빌드 아티팩트 업로드
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: ${{ env.PATH_TO_APP }}/build/web
-
-      - name: 깃헙 페이지 배포
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.SECRET_KEY }}
-          publish_dir: build/web
-
-##############################################################################################
-
   continuous-integration:
     name: Continuous Integration
     runs-on: ubuntu-latest
