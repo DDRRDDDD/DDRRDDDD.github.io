@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 
-import '../widget/my_avatar.dart';
+class MyPortfolioScaffold extends StatelessWidget {
+  const MyPortfolioScaffold({
+    super.key,
+    required this.child,
+  });
 
-class MyPortfolioScreen extends StatelessWidget {
-  const MyPortfolioScreen({super.key});
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {
@@ -12,13 +15,7 @@ class MyPortfolioScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         title: const Text('나의 포트폴리오'),
       ),
-      body: ListView(
-        children: [
-          SizedBox(height: 100),
-          MyAvatar(),
-          SizedBox(height: 100),
-        ],
-      ),
+      body: child,
     );
   }
 }
