@@ -14,8 +14,14 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.8
-  rive: ^0.13.20
-  rive_native: ^0.0.17
+  rive: ^0.14.0-dev.13
+  rive_native: ^0.0.16
+
+# rive 버전 강제
+# (dev.14 버전 rive_native 호환성 문제가 존재함)
+dependency_overrides:
+  rive: 0.14.0-dev.13
+  rive_native: 0.0.16
 
 dev_dependencies:
   flutter_test:
