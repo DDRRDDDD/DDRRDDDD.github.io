@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:rive_native/rive_native.dart';
 
-import 'view/my_portfolio.dart';
+import 'route.dart';
+import 'widget/responsive_layout.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,15 +17,11 @@ class MyPortfolioApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: '김용민 | 플러터 개발자',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: .fromSeed(
-          seedColor: Colors.deepPurple,
-        ),
-      ),
-      home: const MyPortfolioScreen(),
+      routerConfig: router,
+      builder: (_, child) => ResponsiveLayout(child: child!),
     );
   }
 }
