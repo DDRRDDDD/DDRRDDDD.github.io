@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:rive_native/rive_native.dart';
 
-import 'route.dart';
-import 'widget/responsive_layout.dart';
+import 'route/route.dart';
+import 'widget/theme_mode_provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,11 +17,16 @@ class MyPortfolioApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      title: '김용민 | 플러터 개발자',
-      debugShowCheckedModeBanner: false,
-      routerConfig: router,
-      builder: (_, child) => ResponsiveLayout(child: child!),
+    return ThemeModeProvider(
+      child: MaterialApp.router(
+        title: '김용민 | 플러터 개발자',
+        debugShowCheckedModeBanner: false,
+        routerConfig: router,
+        theme: ThemeData(
+          fontFamily: 'Pretendard',
+          splashFactory: NoSplash.splashFactory,
+        ),
+      ),
     );
   }
 }
