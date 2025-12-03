@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../extension/theme_extension.dart';
-
 class ThemeModeProvider extends StatefulWidget {
   const ThemeModeProvider({
     super.key,
@@ -52,7 +50,15 @@ class ThemeModel extends InheritedNotifier<ValueNotifier<ThemeMode>> {
   });
 
   static ValueNotifier<ThemeMode> of(BuildContext context) {
-    return context.dependOnInheritedWidgetOfExactType<ThemeModel>()!.notifier!;
+    final ValueNotifier<ThemeMode>? notifier = context
+        .dependOnInheritedWidgetOfExactType<ThemeModel>()
+        ?.notifier;
+
+    if (notifier != null) {
+      return notifier;
+    }
+
+    throw FlutterError('상위 위젯 트리에서 ThemeModeProvider를 찾을 수 없습니다.');
   }
 }
 
