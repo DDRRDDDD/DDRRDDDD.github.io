@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:rive_native/rive_native.dart';
 
+import 'extension/brightness_extension.dart';
 import 'route/route.dart';
 import 'widget/theme_mode_provider.dart';
 
@@ -17,11 +18,12 @@ class MyPortfolioApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ThemeModeProvider(
-      child: MaterialApp.router(
+    return BrightnessProvider(
+      builder: (_, brightness) => MaterialApp.router(
         title: '김용민 | 플러터 개발자',
         debugShowCheckedModeBanner: false,
         routerConfig: router,
+        themeMode: brightness.themeMode,
         theme: ThemeData(
           fontFamily: 'Pretendard',
           splashFactory: NoSplash.splashFactory,
