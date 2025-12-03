@@ -22,7 +22,7 @@ class MyPortfolioScaffold extends StatelessWidget {
           child: child,
         ),
       ),
-      floatingActionButton: const ThemeModeToggle(),
+      floatingActionButton: const BrightnessToggle(),
     );
   }
 }

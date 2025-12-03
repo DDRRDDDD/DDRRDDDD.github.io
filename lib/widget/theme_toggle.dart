@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
 
+import '../extension/brightness_extension.dart';
 import '../theme/app_colors.dart';
 import 'theme_mode_provider.dart';
 
-typedef ThemeButtonStyle = ({
+typedef BrightnessButtonStyle = ({
   IconData icon,
   Color iconColor,
   Color backgroundColor,
 });
 
-class ThemeModeToggle extends StatefulWidget {
-  const ThemeModeToggle({super.key});
+class BrightnessToggle extends StatefulWidget {
+  const BrightnessToggle({super.key});
 
   @override
-  State<ThemeModeToggle> createState() => _ThemeModeToggleState();
+  State<BrightnessToggle> createState() => _BrightnessToggleState();
 }
 
-class _ThemeModeToggleState extends State<ThemeModeToggle>
+class _BrightnessToggleState extends State<BrightnessToggle>
     with SingleTickerProviderStateMixin {
   double _turns = double.nan;
 
@@ -25,8 +26,8 @@ class _ThemeModeToggleState extends State<ThemeModeToggle>
     super.didChangeDependencies();
 
     if (_turns.isNaN) {
-      final ThemeMode mode = ThemeModel.of(context).value;
-      _turns = mode == ThemeMode.light ? 0.5 : 0.0;
+      final Brightness mode = BrightnessModel.of(context).value;
+      _turns = mode == Brightness.light ? 0.5 : 0.0;
       return;
     }
 
@@ -37,7 +38,7 @@ class _ThemeModeToggleState extends State<ThemeModeToggle>
   @override
   Widget build(BuildContext context) {
     const double fabInset = -30.0;
-    const double buttonSize = _ThemeModeActionButton.buttonSize;
+    const double buttonSize = _BrightnessActionButton.buttonSize;
     final double spacing = MediaQuery.sizeOf(context).width * 0.3;
 
     return Transform.translate(
@@ -51,10 +52,10 @@ class _ThemeModeToggleState extends State<ThemeModeToggle>
           crossAxisAlignment: .center,
           spacing: spacing,
           children: [
-            const _ThemeModeActionButton(
+            const _BrightnessActionButton(
               mode: .dark,
             ),
-            const _ThemeModeActionButton(
+            const _BrightnessActionButton(
               mode: .light,
             ),
           ],
@@ -64,24 +65,39 @@ class _ThemeModeToggleState extends State<ThemeModeToggle>
   }
 }
 
-class _ThemeModeActionButton extends StatelessWidget {
+class _BrightnessActionButton extends StatelessWidget {
   static const double buttonSize = 56.0;
   static const double iconSize = 30.0;
 
-  const _ThemeModeActionButton({
+  const _BrightnessActionButton({
     super.key,
     required this.mode,
   });
 
-  final ThemeMode mode;
+  final Brightness mode;
+
+  BrightnessButtonStyle get _buttonStyle {
+    return switch (mode) {
+      Brightness.light => (
+        icon: Icons.wb_sunny_rounded,
+        iconColor: AppColors.lightBackground,
+        backgroundColor: AppColors.lightPrimary,
+      ),
+      Brightness.dark => (
+        icon: Icons.nights_stay,
+        iconColor: AppColors.darkBackground,
+        backgroundColor: AppColors.darkPrimary,
+      ),
+    };
+  }
 
   @override
   Widget build(BuildContext context) {
-    final ThemeButtonStyle buttonStyle = mode.buttonStyle;
-    
+    final BrightnessButtonStyle buttonStyle = _buttonStyle;
+
     return InkWell(
       customBorder: const CircleBorder(),
-      onTap: () => ThemeModel.of(context).value = mode.opposite,
+      onTap: () => BrightnessModel.of(context).value = mode.opposite,
       child: SizedBox(
         height: buttonSize,
         width: buttonSize,
@@ -100,27 +116,5 @@ class _ThemeModeActionButton extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-extension ThemeModeExtension on ThemeMode {
-  ThemeMode get opposite {
-    return this == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
-  }
-
-  ThemeButtonStyle get buttonStyle {
-    return switch(this) {
-      ThemeMode.light => (
-          icon: Icons.wb_sunny_rounded,
-          iconColor: AppColors.lightBackground,
-          backgroundColor: AppColors.lightPrimary,
-        ),
-      ThemeMode.dark => (
-          icon: Icons.nights_stay,
-          iconColor: AppColors.darkBackground,
-          backgroundColor: AppColors.darkPrimary,
-        ),
-      ThemeMode.system => throw UnimplementedError(),
-    };
   }
 }
