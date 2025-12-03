@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../theme/app_colors.dart';
+import '../widget/theme_toggle.dart';
+
 class MyPortfolioScaffold extends StatelessWidget {
   const MyPortfolioScaffold({
     super.key,
@@ -11,11 +14,15 @@ class MyPortfolioScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: const Text('나의 포트폴리오'),
+      backgroundColor: AppColors.darkBackground,
+      body: Align(
+        alignment: Alignment.topCenter,
+        child: FractionallySizedBox(
+          widthFactor: 0.6,
+          child: child,
+        ),
       ),
-      body: child,
+      floatingActionButton: const ThemeModeToggle(),
     );
   }
 }
