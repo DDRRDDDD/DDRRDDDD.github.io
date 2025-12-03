@@ -115,11 +115,12 @@ extension _ThemeModeExtension on ThemeMode {
           iconColor: AppColors.lightBackground,
           backgroundColor: AppColors.lightPrimary,
         ),
-      ThemeMode.dark || ThemeMode.system => (
+      ThemeMode.dark => (
           icon: Icons.nights_stay,
           iconColor: AppColors.darkBackground,
           backgroundColor: AppColors.darkPrimary,
         ),
+      ThemeMode.system => throw UnimplementedError(),
     };
   }
 }
