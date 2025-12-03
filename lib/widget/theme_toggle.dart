@@ -19,19 +19,29 @@ class BrightnessToggle extends StatefulWidget {
 
 class _BrightnessToggleState extends State<BrightnessToggle>
     with SingleTickerProviderStateMixin {
+  static const double _lightModeOffset = 0.5; // 뒤집힌 상태 (180도)
+  static const double _darkModeOffset = 0.0;  // 정위치 (0도)
+
+  static const double _halfTurn = 0.5;
+
   double _turns = double.nan;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
+    final Brightness mode = BrightnessModel.valueOf(context);
+    final bool isLight = mode == Brightness.light;
+
     if (_turns.isNaN) {
-      final Brightness mode = BrightnessModel.of(context).value;
-      _turns = mode == Brightness.light ? 0.5 : 0.0;
+      _turns = isLight ? _lightModeOffset : _darkModeOffset;
       return;
     }
 
-    _turns += 0.5;
+    final bool visuallyDark = _turns % 1 == _darkModeOffset;
+    if (isLight == visuallyDark) {
+      _turns += _halfTurn;
+    }
   }
 
   /// (Wrap 간격 + 버튼 크기) 만큼 오른쪽으로 밀어야 함
@@ -52,12 +62,8 @@ class _BrightnessToggleState extends State<BrightnessToggle>
           crossAxisAlignment: .center,
           spacing: spacing,
           children: [
-            const _BrightnessActionButton(
-              mode: .dark,
-            ),
-            const _BrightnessActionButton(
-              mode: .light,
-            ),
+            const _BrightnessActionButton(mode: .dark),
+            const _BrightnessActionButton(mode: .light),
           ],
         ),
       ),

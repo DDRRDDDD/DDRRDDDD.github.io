@@ -21,17 +21,23 @@ class BrightnessProvider extends StatefulWidget {
 }
 
 class _BrightnessProviderState extends State<BrightnessProvider> {
-  late final ValueNotifier<Brightness>? _notifier;
+  late final ValueNotifier<Brightness?> _notifier;
+
+  @override
+  void initState() {
+    super.initState();
+    _notifier = ValueNotifier<Brightness?>(null);
+  }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _notifier ??= ValueNotifier(MediaQuery.platformBrightnessOf(context));
+    _notifier.value = MediaQuery.platformBrightnessOf(context);
   }
 
   @override
   void dispose() {
-    _notifier?.dispose();
+    _notifier.dispose();
     super.dispose();
   }
 
@@ -46,21 +52,21 @@ class _BrightnessProviderState extends State<BrightnessProvider> {
   }
 
   Widget _buildWithBrightness(BuildContext context) {
-    final Brightness brightness = BrightnessModel.of(context).value;
+    final Brightness brightness = BrightnessModel.valueOf(context);
 
     return widget.builder(context, brightness);
   }
 }
 
-class BrightnessModel extends InheritedNotifier<ValueNotifier<Brightness>> {
+class BrightnessModel extends InheritedNotifier<ValueNotifier<Brightness?>> {
   const BrightnessModel({
     super.key,
-    super.notifier,
+    required super.notifier,
     required super.child,
   });
 
-  static ValueNotifier<Brightness> of(BuildContext context) {
-    final ValueNotifier<Brightness>? notifier = context
+  static ValueNotifier<Brightness?> of(BuildContext context) {
+    final ValueNotifier<Brightness?>? notifier = context
         .dependOnInheritedWidgetOfExactType<BrightnessModel>()
         ?.notifier;
 
@@ -69,5 +75,10 @@ class BrightnessModel extends InheritedNotifier<ValueNotifier<Brightness>> {
     }
 
     throw FlutterError('상위 위젯 트리에서 BrightnessModel를 찾을 수 없습니다.');
+  }
+
+  static Brightness valueOf(BuildContext context) {
+    final ValueNotifier<Brightness?> notifier = of(context);
+    return notifier.value ?? MediaQuery.platformBrightnessOf(context);
   }
 }
