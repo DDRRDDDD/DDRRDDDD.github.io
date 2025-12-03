@@ -1,4 +1,4 @@
-p// ignore_for_file: annotate_overrides
+// ignore_for_file: annotate_overrides
 
 import 'package:flutter/material.dart';
 
