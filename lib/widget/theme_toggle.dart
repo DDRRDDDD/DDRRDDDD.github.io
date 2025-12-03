@@ -103,7 +103,7 @@ class _ThemeModeActionButton extends StatelessWidget {
   }
 }
 
-extension _ThemeModeExtension on ThemeMode {
+extension ThemeModeExtension on ThemeMode {
   ThemeMode get opposite {
     return this == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
   }

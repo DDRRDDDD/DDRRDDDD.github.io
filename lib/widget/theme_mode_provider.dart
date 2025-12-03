@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../extension/brightness_extension.dart';
+import '../extension/theme_extension.dart';
 
 class ThemeModeProvider extends StatefulWidget {
   const ThemeModeProvider({
@@ -53,5 +53,11 @@ class ThemeModel extends InheritedNotifier<ValueNotifier<ThemeMode>> {
 
   static ValueNotifier<ThemeMode> of(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType<ThemeModel>()!.notifier!;
+  }
+}
+
+extension BrightnessExtension on Brightness {
+  ThemeMode get themeMode {
+    return this == Brightness.dark ? ThemeMode.dark : ThemeMode.light;
   }
 }
