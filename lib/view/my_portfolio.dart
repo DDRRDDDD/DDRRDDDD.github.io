@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../theme/app_colors.dart';
+import '../extension/theme_extension.dart';
 import '../widget/theme_toggle.dart';
 
 class MyPortfolioScaffold extends StatelessWidget {
@@ -14,7 +14,7 @@ class MyPortfolioScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.darkBackground,
+      backgroundColor: context.colorTheme.background,
       body: Align(
         alignment: Alignment.topCenter,
         child: FractionallySizedBox(

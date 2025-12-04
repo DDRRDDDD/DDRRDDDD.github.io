@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../extension/brightness_extension.dart';
-import '../theme/app_colors.dart';
+import '../extension/theme_extension.dart';
 import 'theme_mode_provider.dart';
 
 typedef BrightnessButtonStyle = ({
@@ -31,7 +31,7 @@ class _BrightnessToggleState extends State<BrightnessToggle>
     super.didChangeDependencies();
 
     final Brightness mode = BrightnessModel.valueOf(context);
-    final bool isLight = mode == Brightness.light;
+    final bool isLight = mode.isLight;
 
     if (_turns.isNaN) {
       _turns = isLight ? _lightModeOffset : _darkModeOffset;
@@ -39,6 +39,7 @@ class _BrightnessToggleState extends State<BrightnessToggle>
     }
 
     final bool visuallyDark = _turns % 1 == _darkModeOffset;
+
     if (isLight == visuallyDark) {
       _turns += _halfTurn;
     }
@@ -82,25 +83,8 @@ class _BrightnessActionButton extends StatelessWidget {
 
   final Brightness mode;
 
-  BrightnessButtonStyle get _buttonStyle {
-    return switch (mode) {
-      Brightness.light => (
-        icon: Icons.wb_sunny_rounded,
-        iconColor: AppColors.lightBackground,
-        backgroundColor: AppColors.lightPrimary,
-      ),
-      Brightness.dark => (
-        icon: Icons.nights_stay,
-        iconColor: AppColors.darkBackground,
-        backgroundColor: AppColors.darkPrimary,
-      ),
-    };
-  }
-
   @override
   Widget build(BuildContext context) {
-    final BrightnessButtonStyle buttonStyle = _buttonStyle;
-
     return InkWell(
       customBorder: const CircleBorder(),
       onTap: () => BrightnessModel.of(context).value = mode.opposite,
@@ -110,12 +94,12 @@ class _BrightnessActionButton extends StatelessWidget {
         child: DecoratedBox(
           decoration: ShapeDecoration(
             shape: const CircleBorder(),
-            color: buttonStyle.backgroundColor,
+            color: context.colorTheme.primary,
           ),
           child: Center(
             child: Icon(
-              buttonStyle.icon,
-              color: buttonStyle.iconColor,
+              mode.isLight ? Icons.light_mode : Icons.dark_mode,
+              color: context.colorTheme.background,
               size: iconSize,
             ),
           ),

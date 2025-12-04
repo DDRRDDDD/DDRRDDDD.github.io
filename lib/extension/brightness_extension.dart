@@ -8,4 +8,8 @@ extension BrightnessExtension on Brightness {
   ThemeMode get themeMode {
     return this == Brightness.dark ? ThemeMode.dark : ThemeMode.light;
   }
+
+  bool get isLight {
+    return this == Brightness.light;
+  }
 }

@@ -4,6 +4,7 @@ import 'package:rive_native/rive_native.dart';
 
 import 'extension/brightness_extension.dart';
 import 'route/route.dart';
+import 'theme/color_theme.dart';
 import 'widget/theme_mode_provider.dart';
 
 Future<void> main() async {
@@ -27,6 +28,11 @@ class MyPortfolioApp extends StatelessWidget {
         theme: ThemeData(
           fontFamily: 'Pretendard',
           splashFactory: NoSplash.splashFactory,
+          extensions: [
+            ColorThemeExtension(
+              delegate: ColorPalette.fromBrightness(brightness),
+            ),
+          ],
         ),
       ),
     );
