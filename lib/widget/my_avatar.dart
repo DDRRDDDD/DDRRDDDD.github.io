@@ -43,7 +43,7 @@ class _MyAvatarState extends State<MyAvatar> {
     return Align(
       alignment: Alignment.center,
       child: SizedBox.square(
-        dimension: MediaQuery.sizeOf(context).width * 0.4,
+        dimension: 200,
         child: RiveWidget(
           controller: _controller,
           fit: Fit.cover,
