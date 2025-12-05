@@ -5,9 +5,10 @@ class AboutMeSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('asdasd');
     return Container(
       color: Colors.blueAccent,
-      height: MediaQuery.sizeOf(context).height * 0.9,
+      height: 800,
       width: double.infinity,
     );
   }

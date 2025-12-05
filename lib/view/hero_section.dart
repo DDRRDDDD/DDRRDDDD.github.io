@@ -4,10 +4,10 @@ class HeroSection extends StatelessWidget {
   const HeroSection({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {print('asdasd');
     return Container(
       color: Colors.yellow,
-      height: MediaQuery.sizeOf(context).height * 0.9,
+      height: 800,
       width: double.infinity,
     );
   }

@@ -4,10 +4,10 @@ class SkillsSection extends StatelessWidget {
   const SkillsSection({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {print('asdasd');
     return Container(
       color: Colors.green,
-      height: MediaQuery.sizeOf(context).height * 0.9,
+      height: 800,
       width: double.infinity,
     );
   }
