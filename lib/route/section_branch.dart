@@ -6,9 +6,7 @@ class SectionBranch extends StatefulShellBranch {
   SectionBranch._({
     required super.routes,
     super.initialLocation,
-    // super.navigatorKey,
-    // super.restorationScopeId,
-    // super.observers,
+    super.preload,
   });
 
   factory SectionBranch({
@@ -16,6 +14,7 @@ class SectionBranch extends StatefulShellBranch {
     required GoRouterWidgetBuilder builder,
   }) {
     return SectionBranch._(
+      preload: true,
       initialLocation: path,
       routes: [
         GoRoute(path: path, builder: builder),

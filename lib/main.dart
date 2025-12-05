@@ -5,6 +5,7 @@ import 'package:rive_native/rive_native.dart';
 import 'extension/brightness_extension.dart';
 import 'route/route.dart';
 import 'theme/color_theme.dart';
+import 'widget/responsive_layout.dart';
 import 'widget/theme_mode_provider.dart';
 
 Future<void> main() async {
@@ -20,19 +21,20 @@ class MyPortfolioApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BrightnessProvider(
-      builder: (_, brightness) => MaterialApp.router(
-        title: '김용민 | 플러터 개발자',
-        debugShowCheckedModeBanner: false,
-        routerConfig: router,
-        themeMode: brightness.themeMode,
-        theme: ThemeData(
-          fontFamily: 'Pretendard',
-          splashFactory: NoSplash.splashFactory,
-          extensions: [
-            ColorThemeExtension(
-              delegate: ColorPalette.fromBrightness(brightness),
-            ),
-          ],
+      builder: (_, brightness) => ResponsiveLayout(
+        child: MaterialApp.router(
+          title: '김용민 | 플러터 개발자',
+          debugShowCheckedModeBanner: false,
+          routerConfig: router,
+          themeMode: brightness.themeMode,
+          theme: ThemeData(
+            splashFactory: NoSplash.splashFactory,
+            extensions: [
+              ColorThemeExtension(
+                delegate: ColorPalette.fromBrightness(brightness),
+              ),
+            ],
+          ),
         ),
       ),
     );

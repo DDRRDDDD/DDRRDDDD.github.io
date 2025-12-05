@@ -48,10 +48,13 @@ final GoRouter router = GoRouter(
 
 Widget _portfolioContainerBuilder(
   BuildContext context,
-    StatefulNavigationShell shell,
+  StatefulNavigationShell shell,
   List<Widget> children,
 ) {
-  return const HeroSection();
+  return MyPortfolioSectionContainer(
+    currentIndex: shell.currentIndex,
+    children: children,
+  );
 }
 
 Widget _portfolioBuilder(
