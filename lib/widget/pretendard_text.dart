@@ -7,19 +7,19 @@ class PretendardText extends StatelessWidget {
   const PretendardText({
     super.key,
     this.color,
-    required this.fontTheme,
+    required this.fontStyle,
     required this.text,
   }) : textSpan = null;
 
   const PretendardText.rich({
     super.key,
     this.color,
-    required this.fontTheme,
+    required this.fontStyle,
     required this.textSpan,
   }) : text = null;
 
-  final Pretendard fontTheme;
   final Color? color;
+  final Pretendard fontStyle;
   final String? text;
   final TextSpan? textSpan;
 
@@ -30,11 +30,11 @@ class PretendardText extends StatelessWidget {
         text: text,
         style: TextStyle(
           color: color ?? context.colorTheme.textMain,
-          fontFamily: fontTheme.fontFamily,
-          fontSize: fontTheme.fontSize,
-          height: fontTheme.height,
-          letterSpacing: fontTheme.letterSpacing,
-          fontVariations: fontTheme.fontVariations,
+          fontFamily: fontStyle.fontFamily,
+          fontSize: fontStyle.fontSize,
+          height: fontStyle.height,
+          letterSpacing: fontStyle.letterSpacing,
+          fontVariations: fontStyle.fontVariations,
         ),
         children: [?textSpan],
       ),

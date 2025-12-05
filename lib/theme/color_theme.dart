@@ -43,7 +43,8 @@ enum ColorPalette implements ColorTheme {
     textMain: Color(0xFFF1F5F9),
     textSub: Color(0xFF94A3B8),
     outline: Color(0xFF334155),
-  );
+  )
+  ;
 
   final Color primary;
   final Color secondary;
@@ -71,6 +72,12 @@ enum ColorPalette implements ColorTheme {
 class ColorThemeExtension extends ThemeExtension<ColorThemeExtension>
     implements ColorTheme {
   const ColorThemeExtension({required this.delegate});
+
+  factory ColorThemeExtension.from(Brightness brightness) {
+    return ColorThemeExtension(
+      delegate: ColorPalette.fromBrightness(brightness),
+    );
+  }
 
   final ColorTheme delegate;
 

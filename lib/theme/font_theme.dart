@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 
-@immutable
 class FontTheme {
   final String? fontFamily;
   final double? letterSpacing;
@@ -67,27 +66,4 @@ enum Pretendard implements FontTheme {
     required this.height,
     required this.fontWeight,
   });
-}
-
-class FontThemeExtension extends ThemeExtension<FontThemeExtension>
-    implements FontTheme {
-  const FontThemeExtension({required this.delegate});
-
-  final FontTheme delegate;
-
-  @override
-  FontThemeExtension copyWith({FontTheme? fontTheme}) {
-    return FontThemeExtension(delegate: fontTheme ?? delegate);
-  }
-
-  @override
-  FontThemeExtension lerp(FontThemeExtension? other, double t) {
-    return this;
-  }
-
-  String? get fontFamily => delegate.fontFamily;
-  double? get letterSpacing => delegate.letterSpacing;
-  double get fontSize => delegate.fontSize;
-  double get height => delegate.height;
-  List<FontVariation> get fontVariations => delegate.fontVariations;
 }

@@ -30,9 +30,7 @@ class MyPortfolioApp extends StatelessWidget {
           theme: ThemeData(
             splashFactory: NoSplash.splashFactory,
             extensions: [
-              ColorThemeExtension(
-                delegate: ColorPalette.fromBrightness(brightness),
-              ),
+              ColorThemeExtension.from(brightness),
             ],
           ),
         ),
