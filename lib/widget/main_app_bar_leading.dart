@@ -1,0 +1,63 @@
+import 'package:flutter/material.dart';
+import 'package:rive/rive.dart';
+
+import '../datasource/rive_manager.dart';
+
+class AppBarLeading extends StatefulWidget {
+  const AppBarLeading({
+    super.key,
+    this.onTap,
+    this.enabled = true,
+  });
+
+  final VoidCallback? onTap;
+  final bool enabled;
+
+  @override
+  State<AppBarLeading> createState() => _AppBarLeadingState();
+}
+
+class _AppBarLeadingState extends State<AppBarLeading> {
+  late RiveWidgetController _controller;
+  late bool _isPlaying;
+
+  @override
+  void initState() {
+    super.initState();
+
+    final File riveFile = RiveFileManager().appBarLeadingFile;
+    _controller = RiveWidgetController(riveFile);
+    _isPlaying = widget.enabled;
+  }
+
+  @override
+  void didUpdateWidget(AppBarLeading oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.enabled != widget.enabled) {
+      _isPlaying = widget.enabled;
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return TickerMode(
+      enabled: _isPlaying,
+      child: GestureDetector(
+        onTap: widget.onTap,
+        child: SizedBox.square(
+          dimension: 55,
+          child: RiveWidget(
+            controller: _controller,
+            fit: Fit.cover,
+          ),
+        ),
+      ),
+    );
+  }
+}
