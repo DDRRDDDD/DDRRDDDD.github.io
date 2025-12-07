@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:rive_native/rive_native.dart';
 
+import 'datasource/rive_manager.dart';
 import 'extension/brightness_extension.dart';
 import 'route/route.dart';
 import 'theme/color_theme.dart';
@@ -12,6 +13,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   usePathUrlStrategy();
   await RiveNative.init();
+  await RiveFileManager.init();
   runApp(const MyPortfolioApp());
 }
 

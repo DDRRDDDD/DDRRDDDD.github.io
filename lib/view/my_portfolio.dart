@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 
 import '../extension/theme_extension.dart';
-import '../widget/primary_app_bar.dart';
+import '../widget/main_app_bar.dart';
 import '../widget/theme_toggle.dart';
 
 class MyPortfolioScaffold extends StatelessWidget {
@@ -17,15 +18,9 @@ class MyPortfolioScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: context.colorTheme.background,
-      appBar: const PrimaryAppBar(),
-      body: Align(
-        alignment: Alignment.topCenter,
-        child: FractionallySizedBox(
-          widthFactor: 0.6,
-          child: child,
-        ),
-      ),
+      extendBodyBehindAppBar: true,
       floatingActionButton: const BrightnessToggle(),
+      body: child,
     );
   }
 }
@@ -75,15 +70,32 @@ class _MyPortfolioSectionContainerState
   }
 
   int get _computeItemCount {
-    return widget.children.length * 2 + 1;
+    return widget.children.length * 2;
+  }
+
+  void _scrollToIndex(int index) {
+    _controller.scrollToIndex(
+      index,
+      preferPosition: .begin,
+      duration: const Duration(milliseconds: 500),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
+      physics: const ClampingScrollPhysics(),
       controller: _controller,
       slivers: [
-
+        SliverPersistentHeader(
+          pinned: true,
+          floating: true,
+          delegate: MainAppBarDelegate(
+            onMenuTap: _scrollToIndex,
+            labels: const ['About', 'Skills', 'Project', 'Contact'],
+          ),
+        ),
+        const SliverGap(70),
         SliverList.builder(
           itemCount: _computeItemCount,
           itemBuilder: _buildSectionItem,
@@ -93,8 +105,8 @@ class _MyPortfolioSectionContainerState
   }
 
   Widget _buildSectionItem(_, int index) {
-    if (index.isEven) {
-      return const SizedBox(height: 120);
+    if (index.isOdd) {
+      return const Gap(120);
     }
 
     final int itemIndex = index ~/ 2;
@@ -103,7 +115,10 @@ class _MyPortfolioSectionContainerState
       index: itemIndex,
       key: ValueKey(itemIndex),
       controller: _controller,
-      child: widget.children.elementAt(itemIndex),
+      child: FractionallySizedBox(
+        widthFactor: 0.6,
+        child: widget.children.elementAt(itemIndex),
+      ),
     );
   }
 }
