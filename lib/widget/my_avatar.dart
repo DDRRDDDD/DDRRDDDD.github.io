@@ -27,7 +27,7 @@ class _MyAvatarState extends State<MyAvatar> {
 
   Future<void> _initRive() async {
     final File? riveFile = await File.asset(
-      'assets/rive/my_rive_avatar.riv',
+      'assets/rive/my_avatar.riv',
       riveFactory: Factory.rive,
     );
     _controller = RiveWidgetController(riveFile!);
