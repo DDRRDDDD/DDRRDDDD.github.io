@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
 
+import '../datasource/rive_file_manager.dart';
+
 class MyAvatar extends StatefulWidget {
   const MyAvatar({super.key});
 
@@ -10,13 +12,13 @@ class MyAvatar extends StatefulWidget {
 
 class _MyAvatarState extends State<MyAvatar> {
   late RiveWidgetController _controller;
-  late bool _isRiveInitialized;
 
   @override
   void initState() {
     super.initState();
-    _isRiveInitialized = false;
-    _initRive();
+
+    final File riveFile = RiveFileManager().myAvatarFile;
+    _controller = RiveWidgetController(riveFile);
   }
 
   @override
@@ -25,27 +27,19 @@ class _MyAvatarState extends State<MyAvatar> {
     super.dispose();
   }
 
-  Future<void> _initRive() async {
-    final File? riveFile = await File.asset(
-      'assets/rive/my_avatar.riv',
-      riveFactory: Factory.rive,
-    );
-    _controller = RiveWidgetController(riveFile!);
-    setState(() =>_isRiveInitialized = true);
-  }
-
   @override
   Widget build(BuildContext context) {
-    if (!_isRiveInitialized) {
-      return const Center(child: CircularProgressIndicator());
-    }
-
-    return Align(
-      alignment: Alignment.center,
-      child: SizedBox.square(
-        dimension: 200,
+    return SizedBox.square(
+      dimension: 500,
+      child: Container(
+        clipBehavior: Clip.hardEdge,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+        ),
         child: RiveWidget(
           controller: _controller,
+          hitTestBehavior: RiveHitTestBehavior.transparent,
+          cursor: SystemMouseCursors.click,
           fit: Fit.cover,
         ),
       ),
