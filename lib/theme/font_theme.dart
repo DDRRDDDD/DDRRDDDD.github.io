@@ -34,6 +34,11 @@ enum Pretendard implements FontTheme {
     fontSize: 22,
     height: 1.27,
   ),
+  subtitle(
+    fontWeight: medium,
+    fontSize: 18,
+    height: 1.35,
+  ),
   body(
     fontWeight: regular,
     fontSize: 16,
