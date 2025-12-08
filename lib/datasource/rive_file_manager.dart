@@ -25,7 +25,7 @@ class RiveFileManager {
   static Future<void> init() async {
     final List<File?> files = await Future.wait([
       File.asset('assets/rive/my_avatar.riv', riveFactory: Factory.rive),
-      File.asset('assets/rive/app_bar_leading.riv', riveFactory: Factory.rive),
+      File.asset('assets/rive/developer_bragging.riv', riveFactory: Factory.rive),
     ]);
 
     _instance = RiveFileManager._internal(
