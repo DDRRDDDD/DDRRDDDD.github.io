@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:gap/gap.dart';
 
 import '../extension/theme_extension.dart';
@@ -73,12 +74,27 @@ class MainAppBarDelegate extends SliverPersistentHeaderDelegate {
 
     final int itemIndex = index ~/ 2;
 
-    return GestureDetector(
-      onTap: () => onMenuTap?.call(itemIndex + 1),
-      child: CustomHoverText(
-        fontStyle: Pretendard.title,
-        hoverColor: context.colorTheme.primary,
-        text: labels.elementAt(itemIndex),
+    return Animate(
+      effects: [
+        FadeEffect(
+          duration: 500.ms,
+          delay: (itemIndex * 50).ms,
+        ),
+        SlideEffect(
+          begin: const Offset(0, -5),
+          end: Offset.zero,
+          duration: 500.ms,
+          curve: Curves.easeOutQuart,
+          delay: (itemIndex * 50).ms,
+        ),
+      ],
+      child: GestureDetector(
+        onTap: () => onMenuTap?.call(itemIndex + 1),
+        child: CustomHoverText(
+          fontStyle: Pretendard.title,
+          hoverColor: context.colorTheme.primary,
+          text: labels.elementAt(itemIndex),
+        ),
       ),
     );
   }

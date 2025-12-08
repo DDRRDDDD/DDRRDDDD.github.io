@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
 
-import '../datasource/rive_manager.dart';
+import '../datasource/rive_file_manager.dart';
+import '../extension/theme_extension.dart';
 
 class AppBarLeading extends StatefulWidget {
   const AppBarLeading({
@@ -31,6 +32,15 @@ class _AppBarLeadingState extends State<AppBarLeading> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    final ViewModelInstance instance = _controller.dataBind(DataBind.auto());
+    instance.color('text main')?.value = context.colorTheme.textMain;
+    instance.color('background')?.value = context.colorTheme.background;
+  }
+
+  @override
   void didUpdateWidget(AppBarLeading oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.enabled != widget.enabled) {
@@ -48,13 +58,16 @@ class _AppBarLeadingState extends State<AppBarLeading> {
   Widget build(BuildContext context) {
     return TickerMode(
       enabled: _isPlaying,
-      child: GestureDetector(
-        onTap: widget.onTap,
-        child: SizedBox.square(
-          dimension: 55,
-          child: RiveWidget(
-            controller: _controller,
-            fit: Fit.cover,
+      child: MouseRegion(
+        cursor: SystemMouseCursors.click,
+        child: GestureDetector(
+          onTap: widget.onTap,
+          child: SizedBox.square(
+            dimension: 55,
+            child: RiveWidget(
+              controller: _controller,
+              fit: Fit.cover,
+            ),
           ),
         ),
       ),
