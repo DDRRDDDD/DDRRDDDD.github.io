@@ -22,6 +22,7 @@ dependencies:
   scroll_to_index: ^3.0.1
   flutter_animate: ^4.5.2
   gap: ^3.0.1
+  google_fonts: ^6.3.3
 
 # rive 버전 강제
 # (dev.14 버전 rive_native 호환성 문제가 존재함)
@@ -40,8 +41,3 @@ flutter:
 
   assets:
     - assets/rive/
-
-  fonts:
-    - family: Pretendard
-      fonts:
-        - asset: assets/fonts/PretendardVariable.ttf
