@@ -36,10 +36,6 @@ class _MyAvatarState extends State<MyAvatar> {
       clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(
-          color: context.colorTheme.outline,
-          width: 2,
-        ),
       ),
       child: RiveWidget(
         controller: _controller,
