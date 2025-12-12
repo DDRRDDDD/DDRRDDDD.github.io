@@ -29,12 +29,10 @@ class MyPortfolioScaffold extends StatelessWidget {
 class MyPortfolioSectionContainer extends StatefulWidget {
   const MyPortfolioSectionContainer({
     super.key,
-    // required this.currentIndex,
     required this.navigationShell,
     required this.children,
   });
 
-  // final int currentIndex;
   final StatefulNavigationShell navigationShell;
   final List<Widget> children;
 
