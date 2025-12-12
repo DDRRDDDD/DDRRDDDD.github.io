@@ -24,6 +24,7 @@ class SectionTitle extends StatelessWidget {
       children: [
         Text(
           title,
+          textAlign: TextAlign.center,
           style: GoogleFonts.notoSansKr(
             textStyle: context.textTheme.sectionTitle,
             color: context.colorTheme.textMain,
@@ -41,6 +42,7 @@ class SectionTitle extends StatelessWidget {
         if (subtitle != null)
           Text(
             subtitle!,
+            textAlign: TextAlign.center,
             style: GoogleFonts.notoSansKr(
               textStyle: context.textTheme.sectionDescription,
               color: context.colorTheme.textSub,
