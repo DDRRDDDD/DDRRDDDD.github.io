@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:rive_native/rive_native.dart';
 
-import 'datasource/rive_manager.dart';
+import 'datasource/rive_file_manager.dart';
 import 'extension/brightness_extension.dart';
 import 'route/route.dart';
+import 'theme/chip_color_theme.dart';
 import 'theme/color_theme.dart';
+import 'theme/text_theme.dart';
 import 'widget/responsive_layout.dart';
 import 'widget/theme_mode_provider.dart';
 
@@ -33,6 +35,8 @@ class MyPortfolioApp extends StatelessWidget {
             splashFactory: NoSplash.splashFactory,
             extensions: [
               ColorThemeExtension.from(brightness),
+              ChipColorThemeExtension.from(brightness),
+              TextThemeExtension.defaultTheme(),
             ],
           ),
         ),
@@ -40,3 +44,5 @@ class MyPortfolioApp extends StatelessWidget {
     );
   }
 }
+
+/// 웹 어셈블리 모드 --wasm
