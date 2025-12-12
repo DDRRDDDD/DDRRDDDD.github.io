@@ -1,108 +1,119 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
-import 'package:gap/gap.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../extension/theme_extension.dart';
-import '../theme/font_theme.dart';
-import '../widget/custom_text.dart';
+import '../theme/chip_color_theme.dart';
+import '../widget/grid_dot_background.dart';
+import '../widget/my_avatar.dart';
 
 class HeroSection extends StatelessWidget {
   const HeroSection({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return FractionallySizedBox(
-      widthFactor: 0.7,
-      child: Column(
-        crossAxisAlignment: .start,
+    return GridDotContainer(
+      dotColor: context.colorTheme.primary.withValues(alpha: 0.3),
+      padding: const EdgeInsets.only(
+        top: 120,
+        bottom: 200,
+      ),
+      child: Row(
+        mainAxisAlignment: .spaceBetween,
         children: [
-          Animate(
-            effects: [
-              FadeEffect(
-                duration: 500.ms,
-                delay: 100.ms,
+          Column(
+            crossAxisAlignment: .start,
+            spacing: 24,
+            children: [
+              Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                children: [
+                  _HeroChip(
+                    chipColor: context.chipColorTheme.heroPrimary,
+                    label: '집요한 문제 해결',
+                  ),
+                  _HeroChip(
+                    chipColor: context.chipColorTheme.neutral,
+                    label: '소통을 설계하는 아키텍처',
+                  ),
+                ],
               ),
-              SlideEffect(
-                begin: const Offset(0, 0.3),
-                end: Offset.zero,
-                duration: 500.ms,
-                delay: 100.ms,
+              Text.rich(
+                TextSpan(
+                  style: GoogleFonts.notoSansKr(
+                    textStyle: context.textTheme.heroTitle,
+                    color: context.colorTheme.textMain,
+                  ),
+                  text: '안녕하세요,\n플러터 개발자\n',
+                  children: [
+                    TextSpan(
+                      style: GoogleFonts.notoSansKr(
+                        textStyle: context.textTheme.heroTitle,
+                        color: context.colorTheme.primary,
+                      ),
+                      text: '김용민',
+                    ),
+                    TextSpan(
+                      text: '입니다.',
+                    ),
+                  ],
+                ),
               ),
-            ],
-            child: CustomText(
-              fontStyle: Pretendard.title,
-              color: context.colorTheme.primary,
-              text: '안녕하세요. 저는 플러터 개발자',
-            ),
-          ),
-          const Gap(30),
-          Animate(
-            effects: [
-              FadeEffect(
-                duration: 500.ms,
-                delay: 200.ms,
-              ),
-              SlideEffect(
-                begin: const Offset(0, 0.3),
-                end: Offset.zero,
-                duration: 500.ms,
-                delay: 200.ms,
-              ),
-            ],
-            child: CustomText(
-              fontStyle: Pretendard.display,
-              color: context.colorTheme.textMain,
-              text: '김용민입니다.',
-            ),
-          ),
-          const Gap(24),
-          Animate(
-            effects: [
-              FadeEffect(
-                duration: 500.ms,
-                delay: 300.ms,
-              ),
-              SlideEffect(
-                begin: const Offset(0, 0.3),
-                end: Offset.zero,
-                duration: 500.ms,
-                delay: 300.ms,
-              ),
-            ],
-            child: ConstrainedBox(
-              constraints: BoxConstraints(maxWidth: 900),
-              child: CustomText(
-                fontStyle: Pretendard.display,
-                color: context.colorTheme.textSub,
-                text: '저는 사용자 친화적인 애플리케이션을\n만들기 위해 야호하는 개발자입니다.',
-              ),
-            ),
-          ),
-          const Gap(32),
-          Animate(
-            effects: [
-              FadeEffect(
-                duration: 500.ms,
-                delay: 400.ms,
-              ),
-              SlideEffect(
-                begin: const Offset(0, 0.3),
-                end: Offset.zero,
-                duration: 500.ms,
-                delay: 400.ms,
+              ConstrainedBox(
+                constraints: const BoxConstraints(
+                  maxWidth: 500,
+                  minWidth: 300,
+                ),
+                child: Text(
+                  '27만 명이 사용하는 오픈소스 WebDriverManager의 Docker 환경 호환성 문제를 해결하여 '
+                  '공식 PR을 머지시킨 경험은 이러한 집요함의 결과입니다. '
+                  '단순히 기능을 구현하는 것에 그치지 않고, 깊이 있는 원인 분석을 통해 문제를 끝까지 해결합니다.',
+                  style: GoogleFonts.notoSansKr(
+                    textStyle: context.textTheme.bodyLead,
+                    color: context.colorTheme.textMain,
+                  ),
+                ),
               ),
             ],
-            child: ConstrainedBox(
-              constraints: BoxConstraints(maxWidth: 600),
-              child: CustomText(
-                fontStyle: Pretendard.subtitle,
-                color: context.colorTheme.textSub,
-                text: '사용자에게 최고의 경험을 제공하는 앱을 개발하고 있습니다.'
-                        ' 제 포트폴리오를 방문해 주셔서 진심으로 감사드립니다.',
-              ),
-            ),
           ),
+          const MyAvatar(),
         ],
+      ),
+    );
+  }
+}
+
+class _HeroChip extends StatelessWidget {
+  const _HeroChip({
+    super.key,
+    required this.chipColor,
+    required this.label,
+  });
+
+  final ChipColor chipColor;
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 12,
+        vertical: 6,
+      ),
+      decoration: ShapeDecoration(
+        color: chipColor.background,
+        shape: StadiumBorder(
+          side: BorderSide(
+            color: chipColor.border,
+          ),
+        ),
+      ),
+      child: Text(
+        label,
+        style: GoogleFonts.notoSansKr(
+          textStyle: context.textTheme.heroBadge,
+          color: chipColor.foreground,
+        ),
       ),
     );
   }
