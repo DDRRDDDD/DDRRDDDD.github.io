@@ -5,12 +5,14 @@ class GridDotContainer extends StatelessWidget {
     super.key,
     this.padding,
     this.dotSpacing = 40.0,
+    this.width = 1000.0,
     required this.dotColor,
     required this.child,
   });
 
   final EdgeInsetsGeometry? padding;
   final double dotSpacing;
+  final double width;
   final Color dotColor;
   final Widget child;
 
@@ -21,9 +23,14 @@ class GridDotContainer extends StatelessWidget {
         color: dotColor,
         spacing: dotSpacing,
       ),
-      child: Padding(
-        padding: padding ?? EdgeInsets.zero,
-        child: child,
+      child: Center(
+        child: SizedBox(
+          width: width,
+          child: Padding(
+            padding: padding ?? EdgeInsets.zero,
+            child: child,
+          ),
+        ),
       ),
     );
   }
