@@ -27,18 +27,22 @@ final GoRouter router = GoRouter(
         ),
         SectionBranch(
           path: '/about-me',
+          menuName: 'About',
           builder: (_, _) => const AboutMeSection(),
         ),
         SectionBranch(
           path: '/skills',
+          menuName: 'Skills',
           builder: (_, _) => const SkillsSection(),
         ),
         SectionBranch(
           path: '/project',
+          menuName: 'Project',
           builder: (_, _) => const ProjectSection(),
         ),
         SectionBranch(
           path: '/contact',
+          menuName: 'Contact',
           builder: (_, _) => const ContactSection(),
         ),
       ],
@@ -48,11 +52,11 @@ final GoRouter router = GoRouter(
 
 Widget _portfolioContainerBuilder(
   BuildContext context,
-  StatefulNavigationShell shell,
+  StatefulNavigationShell navigationShell,
   List<Widget> children,
 ) {
   return MyPortfolioSectionContainer(
-    currentIndex: shell.currentIndex,
+    navigationShell: navigationShell,
     children: children,
   );
 }
