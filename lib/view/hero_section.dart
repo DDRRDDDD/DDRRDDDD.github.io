@@ -12,10 +12,11 @@ class HeroSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridDotContainer(
+      width: 1000,
       dotColor: context.colorTheme.primary.withValues(alpha: 0.3),
       padding: const EdgeInsets.only(
         top: 120,
-        bottom: 200,
+        bottom: 180,
       ),
       child: Row(
         mainAxisAlignment: .spaceBetween,
