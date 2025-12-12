@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
+import 'package:collection/collection.dart';
 
 import '../extension/theme_extension.dart';
+import '../route/section_branch.dart';
 import '../widget/main_app_bar.dart';
 import '../widget/theme_toggle.dart';
 
@@ -28,11 +30,13 @@ class MyPortfolioScaffold extends StatelessWidget {
 class MyPortfolioSectionContainer extends StatefulWidget {
   const MyPortfolioSectionContainer({
     super.key,
-    required this.currentIndex,
+    // required this.currentIndex,
+    required this.navigationShell,
     required this.children,
   });
 
-  final int currentIndex;
+  // final int currentIndex;
+  final StatefulNavigationShell navigationShell;
   final List<Widget> children;
 
   @override
@@ -54,12 +58,8 @@ class _MyPortfolioSectionContainerState
   @override
   void didUpdateWidget(MyPortfolioSectionContainer oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.currentIndex != widget.currentIndex) {
-      _controller.scrollToIndex(
-        widget.currentIndex,
-        preferPosition: .begin,
-        duration: const Duration(milliseconds: 500),
-      );
+    if (oldWidget.navigationShell != widget.navigationShell) {
+      _scrollToIndex(widget.navigationShell.currentIndex);
     }
   }
 
@@ -69,14 +69,10 @@ class _MyPortfolioSectionContainerState
     super.dispose();
   }
 
-  int get _computeItemCount {
-    return widget.children.length * 2;
-  }
-
   void _scrollToIndex(int index) {
     _controller.scrollToIndex(
       index,
-      preferPosition: .begin,
+      preferPosition: .middle,
       duration: const Duration(milliseconds: 500),
     );
   }
@@ -92,12 +88,13 @@ class _MyPortfolioSectionContainerState
           floating: true,
           delegate: MainAppBarDelegate(
             onMenuTap: _scrollToIndex,
-            labels: const ['About', 'Skills', 'Project', 'Contact'],
+            labels: widget.navigationShell.route.branches
+                .whereType<SectionBranch>()
+                .menuNames,
           ),
         ),
-        const SliverGap(70),
         SliverList.builder(
-          itemCount: _computeItemCount,
+          itemCount: widget.children.length,
           itemBuilder: _buildSectionItem,
         ),
       ],
@@ -105,20 +102,11 @@ class _MyPortfolioSectionContainerState
   }
 
   Widget _buildSectionItem(_, int index) {
-    if (index.isOdd) {
-      return const Gap(120);
-    }
-
-    final int itemIndex = index ~/ 2;
-
     return AutoScrollTag(
-      index: itemIndex,
-      key: ValueKey(itemIndex),
+      index: index,
+      key: ValueKey(index),
       controller: _controller,
-      child: FractionallySizedBox(
-        widthFactor: 0.6,
-        child: widget.children.elementAt(itemIndex),
-      ),
+      child: widget.children.elementAt(index),
     );
   }
 }
