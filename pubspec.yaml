@@ -25,6 +25,7 @@ dependencies:
   google_fonts: ^6.3.3
   vector_graphics: ^1.1.18
   http: ^1.6.0
+  envied: ^1.1.1
 
 # rive 버전 강제
 # (dev.14 버전 rive_native 호환성 문제가 존재함)
