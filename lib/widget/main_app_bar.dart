@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
+import '../extension/route_extension.dart';
 import '../extension/theme_extension.dart';
+import '../route/section_branch.dart';
 import 'developer_bragging.dart';
 import 'menu_text_button.dart';
 
 class MainAppBarDelegate extends SliverPersistentHeaderDelegate {
-  const MainAppBarDelegate({
-    required this.labels,
-    this.onMenuTap,
-  });
-
-  final List<String> labels;
-  final ValueChanged<int>? onMenuTap;
+  const MainAppBarDelegate();
 
   @override
   double get maxExtent {
@@ -25,11 +22,13 @@ class MainAppBarDelegate extends SliverPersistentHeaderDelegate {
 
   @override
   bool shouldRebuild(MainAppBarDelegate oldDelegate) {
-    return oldDelegate.onMenuTap != onMenuTap;
+    return false;
   }
 
   @override
   Widget build(BuildContext context, double shrinkOffset, _) {
+    final List<SectionBranch> menuBranches = context.menuSectionBranches;
+
     return Container(
       alignment: .center,
       decoration: BoxDecoration(
@@ -45,15 +44,14 @@ class MainAppBarDelegate extends SliverPersistentHeaderDelegate {
         child: Row(
           children: [
             DeveloperBragging(
-              onTap: () => onMenuTap?.call(0),
+              onTap: () => context.go('/'),
               enabled: shrinkOffset < maxExtent,
             ),
             const Spacer(),
-            ...List.generate(
-              labels.length,
-              (index) => MenuTextButton(
-                onTap: () => onMenuTap?.call(index + 1),
-                text: labels.elementAt(index),
+            ...menuBranches.map(
+              (branch) => MenuTextButton(
+                onTap: () => context.go(branch.initialLocation ?? '/'),
+                text: branch.menuName!,
               ),
             ),
           ],

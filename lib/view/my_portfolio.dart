@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 
 import '../extension/theme_extension.dart';
-import '../route/section_branch.dart';
 import '../widget/main_app_bar.dart';
 import '../widget/theme_toggle.dart';
 
@@ -29,11 +27,11 @@ class MyPortfolioScaffold extends StatelessWidget {
 class MyPortfolioSectionContainer extends StatefulWidget {
   const MyPortfolioSectionContainer({
     super.key,
-    required this.navigationShell,
+    required this.currentIndex,
     required this.children,
   });
 
-  final StatefulNavigationShell navigationShell;
+  final int currentIndex;
   final List<Widget> children;
 
   @override
@@ -55,8 +53,8 @@ class _MyPortfolioSectionContainerState
   @override
   void didUpdateWidget(MyPortfolioSectionContainer oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.navigationShell != widget.navigationShell) {
-      _scrollToIndex(widget.navigationShell.currentIndex);
+    if (oldWidget.currentIndex != widget.currentIndex) {
+      _scrollToIndex(widget.currentIndex);
     }
   }
 
@@ -80,15 +78,10 @@ class _MyPortfolioSectionContainerState
       physics: const ClampingScrollPhysics(),
       controller: _controller,
       slivers: [
-        SliverPersistentHeader(
+        const SliverPersistentHeader(
           pinned: true,
           floating: true,
-          delegate: MainAppBarDelegate(
-            onMenuTap: _scrollToIndex,
-            labels: widget.navigationShell.route.branches
-                .whereType<SectionBranch>()
-                .menuNames,
-          ),
+          delegate: MainAppBarDelegate(),
         ),
         SliverList.builder(
           itemCount: widget.children.length,
