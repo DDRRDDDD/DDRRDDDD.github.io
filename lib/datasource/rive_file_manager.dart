@@ -4,11 +4,11 @@ class RiveFileManager {
   static RiveFileManager? _instance;
 
   final File myAvatarFile;
-  final File appBarLeadingFile;
+  final File developBragging;
 
   const RiveFileManager._internal({
     required this.myAvatarFile,
-    required this.appBarLeadingFile,
+    required this.developBragging,
   });
 
   factory RiveFileManager() {
@@ -30,7 +30,7 @@ class RiveFileManager {
 
     _instance = RiveFileManager._internal(
       myAvatarFile: files.elementAt(0)!,
-      appBarLeadingFile: files.elementAt(1)!,
+      developBragging: files.elementAt(1)!,
     );
   }
 }
