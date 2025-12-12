@@ -10,14 +10,17 @@ import '../view/contact_section.dart';
 import 'section_branch.dart';
 
 typedef NavigatorKey = GlobalKey<NavigatorState>;
+typedef RouteStateKey = GlobalKey<StatefulNavigationShellState>;
 
 final NavigatorKey rootNavigatorKey = NavigatorKey(debugLabel: 'root');
+final RouteStateKey routeStateKey = RouteStateKey(debugLabel: 'route');
 
 final GoRouter router = GoRouter(
   initialLocation: '/',
   navigatorKey: rootNavigatorKey,
   routes: [
     StatefulShellRoute(
+      key: routeStateKey,
       builder: _portfolioBuilder,
       navigatorContainerBuilder: _portfolioContainerBuilder,
       branches: [
@@ -56,7 +59,7 @@ Widget _portfolioContainerBuilder(
   List<Widget> children,
 ) {
   return MyPortfolioSectionContainer(
-    navigationShell: navigationShell,
+    currentIndex: navigationShell.currentIndex,
     children: children,
   );
 }
