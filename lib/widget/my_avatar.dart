@@ -30,7 +30,7 @@ class _MyAvatarState extends State<MyAvatar> {
   @override
   Widget build(BuildContext context) {
     return SizedBox.square(
-      dimension: 500,
+      dimension: 350,
       child: Container(
         clipBehavior: Clip.hardEdge,
         decoration: BoxDecoration(
@@ -39,6 +39,7 @@ class _MyAvatarState extends State<MyAvatar> {
         child: RiveWidget(
           controller: _controller,
           hitTestBehavior: RiveHitTestBehavior.transparent,
+          layoutScaleFactor: 1.0,
           cursor: SystemMouseCursors.click,
           fit: Fit.cover,
         ),
