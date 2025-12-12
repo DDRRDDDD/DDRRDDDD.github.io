@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
 
 import '../datasource/rive_file_manager.dart';
+import '../extension/theme_extension.dart';
 
 class MyAvatar extends StatefulWidget {
   const MyAvatar({super.key});
@@ -29,20 +30,23 @@ class _MyAvatarState extends State<MyAvatar> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox.square(
-      dimension: 350,
-      child: Container(
-        clipBehavior: Clip.hardEdge,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
+    return Container(
+      width: 350,
+      height: 350,
+      clipBehavior: Clip.hardEdge,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          color: context.colorTheme.outline,
+          width: 2,
         ),
-        child: RiveWidget(
-          controller: _controller,
-          hitTestBehavior: RiveHitTestBehavior.transparent,
-          layoutScaleFactor: 1.0,
-          cursor: SystemMouseCursors.click,
-          fit: Fit.cover,
-        ),
+      ),
+      child: RiveWidget(
+        controller: _controller,
+        hitTestBehavior: RiveHitTestBehavior.transparent,
+        layoutScaleFactor: 1.0,
+        cursor: SystemMouseCursors.click,
+        fit: Fit.cover,
       ),
     );
   }
