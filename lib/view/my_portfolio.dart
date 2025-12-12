@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
-import 'package:collection/collection.dart';
 
 import '../extension/theme_extension.dart';
 import '../route/section_branch.dart';
