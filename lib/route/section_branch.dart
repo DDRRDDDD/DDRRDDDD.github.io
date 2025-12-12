@@ -25,9 +25,3 @@ class SectionBranch extends StatefulShellBranch {
     );
   }
 }
-
-extension SectionBranchListExtension on Iterable<SectionBranch> {
-  List<String> get menuNames {
-    return map((branch) => branch.menuName).nonNulls.toList();
-  }
-}
