@@ -8,10 +8,12 @@ class SectionTitle extends StatelessWidget {
     super.key,
     required this.title,
     this.subtitle,
+    this.showDivider = true,
   });
 
   final String title;
   final String? subtitle;
+  final bool showDivider;
 
   @override
   Widget build(BuildContext context) {
@@ -27,14 +29,15 @@ class SectionTitle extends StatelessWidget {
             color: context.colorTheme.textMain,
           ),
         ),
-        Container(
-          decoration: ShapeDecoration(
-            color: context.colorTheme.primary,
-            shape: const StadiumBorder(),
+        if (showDivider)
+          Container(
+            decoration: ShapeDecoration(
+              color: context.colorTheme.primary,
+              shape: const StadiumBorder(),
+            ),
+            width: 60,
+            height: 4,
           ),
-          width: 60,
-          height: 4,
-        ),
         if (subtitle != null)
           Text(
             subtitle!,
