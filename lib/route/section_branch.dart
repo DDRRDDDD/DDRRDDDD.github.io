@@ -3,22 +3,31 @@ import 'package:go_router/go_router.dart';
 
 @immutable
 class SectionBranch extends StatefulShellBranch {
+  final String? menuName;
+
   SectionBranch._({
-    required super.routes,
-    super.initialLocation,
     super.preload,
+    super.initialLocation,
+    required super.routes,
+    this.menuName,
   });
 
   factory SectionBranch({
     required String path,
     required GoRouterWidgetBuilder builder,
+    String? menuName,
   }) {
     return SectionBranch._(
       preload: true,
       initialLocation: path,
-      routes: [
-        GoRoute(path: path, builder: builder),
-      ],
+      routes: [GoRoute(path: path, builder: builder)],
+      menuName: menuName,
     );
+  }
+}
+
+extension SectionBranchListExtension on Iterable<SectionBranch> {
+  List<String> get menuNames {
+    return map((branch) => branch.menuName).nonNulls.toList();
   }
 }
