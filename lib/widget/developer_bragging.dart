@@ -4,8 +4,8 @@ import 'package:rive/rive.dart';
 import '../datasource/rive_file_manager.dart';
 import '../extension/theme_extension.dart';
 
-class AppBarLeading extends StatefulWidget {
-  const AppBarLeading({
+class DeveloperBragging extends StatefulWidget {
+  const DeveloperBragging({
     super.key,
     this.onTap,
     this.enabled = true,
@@ -15,33 +15,33 @@ class AppBarLeading extends StatefulWidget {
   final bool enabled;
 
   @override
-  State<AppBarLeading> createState() => _AppBarLeadingState();
+  State<DeveloperBragging> createState() => _DeveloperBraggingState();
 }
 
-class _AppBarLeadingState extends State<AppBarLeading> {
+class _DeveloperBraggingState extends State<DeveloperBragging> {
   late RiveWidgetController _controller;
+  late ViewModelInstance _viewModel;
   late bool _isPlaying;
 
   @override
   void initState() {
     super.initState();
 
-    final File riveFile = RiveFileManager().appBarLeadingFile;
+    final File riveFile = RiveFileManager().developBragging;
     _controller = RiveWidgetController(riveFile);
+    _viewModel = _controller.dataBind(DataBind.auto());
     _isPlaying = widget.enabled;
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-
-    final ViewModelInstance instance = _controller.dataBind(DataBind.auto());
-    instance.color('text main')?.value = context.colorTheme.textMain;
-    instance.color('background')?.value = context.colorTheme.background;
+    _viewModel.color('text main')?.value = context.colorTheme.textMain;
+    _viewModel.color('background')?.value = context.colorTheme.background;
   }
 
   @override
-  void didUpdateWidget(AppBarLeading oldWidget) {
+  void didUpdateWidget(DeveloperBragging oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.enabled != widget.enabled) {
       _isPlaying = widget.enabled;
@@ -50,6 +50,7 @@ class _AppBarLeadingState extends State<AppBarLeading> {
 
   @override
   void dispose() {
+    _viewModel.dispose();
     _controller.dispose();
     super.dispose();
   }
