@@ -4,6 +4,32 @@ import '../extension/let_extension.dart';
 
 typedef SvgEntry = MapEntry<String, PictureInfo>;
 
+const List<String> skillIconPaths = [
+  'assets/skill/copilot.svg',
+  'assets/skill/css.svg',
+  'assets/skill/dart.svg',
+  'assets/skill/docker.svg',
+  'assets/skill/figma.svg',
+  'assets/skill/firebase.svg',
+  'assets/skill/flutter.svg',
+  'assets/skill/gemini.svg',
+  'assets/skill/github-actions.svg',
+  'assets/skill/github.svg',
+  'assets/skill/html.svg',
+  'assets/skill/java.svg',
+  'assets/skill/jenkins.svg',
+  'assets/skill/js.svg',
+  'assets/skill/mariadb.svg',
+  'assets/skill/mysql.svg',
+  'assets/skill/nginx.svg',
+  'assets/skill/riverpod.svg',
+  'assets/skill/selenium.svg',
+  'assets/skill/slack.svg',
+  'assets/skill/spring.svg',
+  'assets/skill/supabase.svg',
+  'assets/skill/ubuntu.svg',
+];
+
 class SvgManager {
   static SvgManager? _instance;
 
