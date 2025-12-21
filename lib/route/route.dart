@@ -50,6 +50,27 @@ final GoRouter router = GoRouter(
         ),
       ],
     ),
+    GoRoute(
+      path: '/email-dialog',
+      pageBuilder: (context, state) {
+        return CustomTransitionPage(
+          key: state.pageKey,
+          child: const EmailSendDialog(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return FadeTransition(
+              opacity: animation,
+              child: ScaleTransition(
+                scale: CurvedAnimation(parent: animation, curve: Curves.easeOutBack),
+                child: child,
+              ),
+            );
+          },
+          opaque: false,
+          barrierDismissible: true,
+          barrierColor: Colors.black.withValues(alpha: 0.5),
+        );
+      },
+    ),
   ],
 );
 

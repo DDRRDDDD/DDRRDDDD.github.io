@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../extension/theme_extension.dart';
@@ -27,7 +28,7 @@ class ContactSection extends StatelessWidget {
                 '새로운 기회를 기다리고 있습니다!',
           ),
           ElevatedButton.icon(
-            onPressed: () {},
+            onPressed: () => context.push('/email-dialog'),
             style: ElevatedButton.styleFrom(
               shape: const StadiumBorder(),
               padding: const EdgeInsets.symmetric(
@@ -50,3 +51,17 @@ class ContactSection extends StatelessWidget {
     );
   }
 }
+
+class EmailSendDialog extends StatelessWidget {
+  const EmailSendDialog({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 500,
+      height: 500,
+      color: Colors.blueAccent,
+    );
+  }
+}
+

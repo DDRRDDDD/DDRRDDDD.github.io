@@ -1,0 +1,153 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_layout_grid/flutter_layout_grid.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import '../extension/grid_extension.dart';
+import '../extension/theme_extension.dart';
+import 'about_section.dart';
+import 'hero_section.dart';
+import 'info_section.dart';
+import 'skill_section.dart';
+import 'social_section.dart';
+
+class BentoGrid extends StatelessWidget {
+  static const double bentoWidth = 240;
+  static const double bentoHeight = 220;
+  static const double bentoGap = 20;
+
+  const BentoGrid({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: context.colorTheme.background,
+      body: SingleChildScrollView(
+        padding: EdgeInsets.symmetric(
+          horizontal: MediaQuery.sizeOf(context).width * 0.05,
+          vertical: 50,
+        ),
+        child: Center(
+          child: LayoutGrid(
+            areas: '''
+                  hero    hero   skill  social  
+                  hero    hero   skill  info
+                  about   about  about  about   
+                  ''',
+            columnSizes: bentoWidth.px * 4,
+            rowSizes: bentoHeight.px * 3,
+            columnGap: bentoGap,
+            rowGap: bentoGap,
+            children: [
+              const NamedAreaGridPlacement(
+                areaName: 'hero',
+                child: HeroSection(),
+              ),
+              const NamedAreaGridPlacement(
+                areaName: 'social',
+                child: SocialSection(),
+              ),
+              const NamedAreaGridPlacement(
+                areaName: 'about',
+                child: AboutSection(),
+              ),
+              const NamedAreaGridPlacement(
+                areaName: 'skill',
+                child: SkillSection(),
+              ),
+              const NamedAreaGridPlacement(
+                areaName: 'info',
+                child: InfoSection(),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  // 반복되는 카드 위젯을 만드는 헬퍼 함수
+  Widget _buildCard({
+    required Color color,
+    required String title,
+    Color textColor = Colors.black,
+    double fontSize = 24,
+    IconData? icon,
+    bool isCenter = true,
+  }) {
+    return Container(
+      padding: const EdgeInsets.all(24),
+      width: double.infinity,
+      height: double.infinity,
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.circular(24), // 둥근 모서리 (Bento 스타일)
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Column(
+        mainAxisAlignment: isCenter
+            ? MainAxisAlignment.center
+            : MainAxisAlignment.start,
+        crossAxisAlignment: isCenter
+            ? CrossAxisAlignment.center
+            : CrossAxisAlignment.start,
+        children: [
+          if (icon != null) ...[
+            FaIcon(icon, size: 40, color: textColor),
+            const SizedBox(height: 16),
+          ],
+          Text(
+            title,
+            style: TextStyle(
+              fontSize: fontSize,
+              fontWeight: FontWeight.bold,
+              color: textColor,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class BentoContainer extends StatelessWidget {
+  static const BorderRadius borderRadius = BorderRadius.all(
+    Radius.circular(24),
+  );
+
+  const BentoContainer({
+    super.key,
+    this.width = double.infinity,
+    this.height = double.infinity,
+    this.color = Colors.transparent,
+    required this.child,
+  });
+
+  final double width;
+  final double height;
+  final Color color;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: width,
+      height: height,
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: color,
+          borderRadius: borderRadius,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: child,
+        ),
+      ),
+    );
+  }
+}
