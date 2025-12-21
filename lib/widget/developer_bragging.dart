@@ -65,10 +65,10 @@ class _DeveloperBraggingState extends State<DeveloperBragging> {
           onTap: widget.onTap,
           child: SizedBox.square(
             dimension: 55,
-            child: RiveWidget(
-              controller: _controller,
-              fit: Fit.cover,
-            ),
+            // child: RiveWidget(
+            //   controller: _controller,
+            //   fit: Fit.cover,
+            // ),
           ),
         ),
       ),
