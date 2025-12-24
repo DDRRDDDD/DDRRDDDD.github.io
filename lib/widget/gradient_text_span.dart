@@ -4,8 +4,8 @@ import 'dart:ui' as ui;
 class GradientTextSpan extends TextSpan {
   const GradientTextSpan._({
     super.text,
-    super.children,
     super.style,
+    super.children,
     super.recognizer,
     super.mouseCursor,
     super.onEnter,
