@@ -27,13 +27,13 @@ class GradientTextSpan extends TextSpan {
       text: TextSpan(text: text, style: style),
     );
 
-    final Paint paint = Paint()
-      ..shader = ui.Gradient.linear(
-        Offset.zero,
-        Offset(textWidth, 0),
-        colors,
-        colorStops,
-      );
+    final Gradient gradient = LinearGradient(
+      colors: colors,
+      stops: colorStops,
+    );
+
+    final Rect rect = Offset.zero & Size.fromWidth(textWidth);
+    final Paint paint = Paint()..shader = gradient.createShader(rect);
 
     return GradientTextSpan._(
       style: style.copyWith(foreground: paint),
@@ -41,4 +41,3 @@ class GradientTextSpan extends TextSpan {
     );
   }
 }
-
