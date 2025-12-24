@@ -32,7 +32,7 @@ class GradientTextSpan extends TextSpan {
       stops: colorStops,
     );
 
-    final Rect rect = Offset.zero & Size.fromWidth(textWidth);
+    final Rect rect = Offset.zero & Size(textWidth, 0);π
     final Paint paint = Paint()..shader = gradient.createShader(rect);
 
     return GradientTextSpan._(
