@@ -48,7 +48,6 @@ class HeroSection extends StatelessWidget {
                   context.colorTheme.primary,
                   ColorThemeExtension.primaryGradientEnd,
                 ],
-                colorStops: [0.8, 1.0],
                 text: '플러터 개발자\n',
               ),
               TextSpan(
