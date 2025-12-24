@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../extension/grid_extension.dart';
 import '../extension/theme_extension.dart';
+import '../widget/theme_toggle.dart';
 import 'about_section.dart';
 import 'hero_section.dart';
 import 'info_section.dart';
@@ -62,55 +63,7 @@ class BentoGrid extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-
-  // 반복되는 카드 위젯을 만드는 헬퍼 함수
-  Widget _buildCard({
-    required Color color,
-    required String title,
-    Color textColor = Colors.black,
-    double fontSize = 24,
-    IconData? icon,
-    bool isCenter = true,
-  }) {
-    return Container(
-      padding: const EdgeInsets.all(24),
-      width: double.infinity,
-      height: double.infinity,
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.circular(24), // 둥근 모서리 (Bento 스타일)
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Column(
-        mainAxisAlignment: isCenter
-            ? MainAxisAlignment.center
-            : MainAxisAlignment.start,
-        crossAxisAlignment: isCenter
-            ? CrossAxisAlignment.center
-            : CrossAxisAlignment.start,
-        children: [
-          if (icon != null) ...[
-            FaIcon(icon, size: 40, color: textColor),
-            const SizedBox(height: 16),
-          ],
-          Text(
-            title,
-            style: TextStyle(
-              fontSize: fontSize,
-              fontWeight: FontWeight.bold,
-              color: textColor,
-            ),
-          ),
-        ],
-      ),
+      floatingActionButton: const BrightnessToggle(),
     );
   }
 }
