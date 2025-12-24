@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:ui' as ui;
 
 class GradientTextSpan extends TextSpan {
   const GradientTextSpan._({
@@ -32,7 +31,7 @@ class GradientTextSpan extends TextSpan {
       stops: colorStops,
     );
 
-    final Rect rect = Offset.zero & Size(textWidth, 0);π
+    final Rect rect = Offset.zero & Size(textWidth, 0);
     final Paint paint = Paint()..shader = gradient.createShader(rect);
 
     return GradientTextSpan._(
