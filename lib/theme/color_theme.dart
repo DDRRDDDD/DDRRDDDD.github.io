@@ -26,7 +26,7 @@ const darkColorTheme = ColorThemeExtension._(
 
 class ColorThemeExtension extends ThemeExtension<ColorThemeExtension> {
   static const Color defaultPrimary = Color(0xFF02569B);
-  static const Color primaryGradientEnd = Color(0xFF6200EE);
+  static const Color primaryGradientEnd = Color(0xFF6A11CB);
 
   final Color primary;
   final Color secondary;
