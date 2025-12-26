@@ -57,3 +57,4 @@ flutter:
         - package: vector_graphics_compiler
 
     - assets/rive/
+    - assets/google_fonts/
