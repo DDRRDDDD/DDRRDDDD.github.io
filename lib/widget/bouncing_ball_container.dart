@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'dart:math' as math;
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -161,7 +160,7 @@ class BouncingBallController extends ChangeNotifier with LeadingDebounce {
     }
 
     _world?.stepDt(1 / 60);
-    debounce(_spawnBall, 30.milliseconds);
+    debounce(_spawnBall, 34.milliseconds);
     notifyListeners();
   }
 
@@ -196,7 +195,7 @@ class BouncingBallController extends ChangeNotifier with LeadingDebounce {
     final double halfWidth = (containerSize.width / scale) / 2;
     final double halfHeight = (containerSize.height / scale) / 2;
 
-    final double randomPercent = Random().nextDouble().clamp(0.4, 0.6);
+    final double randomPercent = Random().nextDouble().clamp(0.49, 0.51);
     final double xPos = lerpDouble(-halfWidth, halfWidth, randomPercent)!;
     final double yPos = -halfHeight - 3.0; // - 3.0: 컨테이너 영역 위쪽 바깥에서 생성
 
