@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 
-import 'bento_grid/bento_grid.dart';
+import 'view/bento_grid.dart';
 import 'datasource/rive_file_manager.dart';
 import 'datasource/svg_manager.dart';
 import 'extension/brightness_extension.dart';

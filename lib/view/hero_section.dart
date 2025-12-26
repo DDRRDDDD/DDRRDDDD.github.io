@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../extension/theme_extension.dart';
 import '../theme/color_theme.dart';
-import '../widget/gradient_text_span.dart';
+import '../widget/gradient_text.dart';
 import '../widget/label_chip.dart';
 
 class HeroSection extends StatelessWidget {
@@ -29,28 +29,34 @@ class HeroSection extends StatelessWidget {
             ),
           ],
         ),
-        Text.rich(
-          TextSpan(
-            style: context.textTheme.heroTitle.copyWith(
-              color: context.colorTheme.textMain,
+        Column(
+          mainAxisSize: .min,
+          crossAxisAlignment: .start,
+          children: [
+            Text(
+              '안녕하세요,',
+              style: context.textTheme.heroTitle.copyWith(
+                color: context.colorTheme.textMain,
+              ),
             ),
-            children: [
-              TextSpan(
-                text: '안녕하세요,\n',
-              ),
-              GradientTextSpan(
-                style: context.textTheme.heroTitle,
+            GradientText(
+              '플러터 개발자',
+              style: context.textTheme.heroTitle,
+              gradient: const LinearGradient(
                 colors: [
-                  context.colorTheme.primary,
-                  ColorThemeExtension.primaryGradientEnd,
+                  Color(0xFF02569B),
+                  Color(0xFF6366F1),
+                  Color(0xFFD500F9),
                 ],
-                text: '플러터 개발자\n',
               ),
-              TextSpan(
-                text: '김용민입니다.',
+            ),
+            Text(
+              '김용민입니다.',
+              style: context.textTheme.heroTitle.copyWith(
+                color: context.colorTheme.textMain,
               ),
-            ],
-          ),
+            ),
+          ],
         ),
         ConstrainedBox(
           constraints: const BoxConstraints(

@@ -31,7 +31,7 @@ class SkillSection extends StatelessWidget {
             skillIconPaths.length,
             (index) => BallOption(
               pictureInfo: SvgManager().lookup(skillIconPaths.elementAt(index)),
-              width: 0.30 + Random().nextDouble() * 0.30,
+              width: 0.3 + Random().nextDouble() * 0.30,
               color: Colors.white,
             ),
           ),
@@ -41,6 +41,13 @@ class SkillSection extends StatelessWidget {
   }
 }
 
+// skill section
+// title subTitle 작성
 // L 34 M 30 S 26
 // svg 높이 너비 맞추기
 // 색상 결정 공 색, border color,
+
+// 네비게이션 (제미나이 참고)
+// 마우스 호버 애니메이션 (확장/축소)
+// 클릭 애니메이션 (축소/확장)
+// rive theme toggle 변경 (커스터마이징 후 적용) 좋아요 확인
