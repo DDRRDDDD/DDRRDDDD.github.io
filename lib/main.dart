@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -15,10 +16,10 @@ import 'widget/theme_mode_provider.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   usePathUrlStrategy();
+  GoogleFonts.config.allowRuntimeFetching = false;
   await Future.wait([
     RiveFileManager.init(),
     SvgManager.init(skillIconPaths),
-    GoogleFonts.pendingFonts([GoogleFonts.notoSansKr()]),
   ]);
   runApp(const MyPortfolioApp());
 }
@@ -27,7 +28,7 @@ class MyPortfolioApp extends StatelessWidget {
   const MyPortfolioApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {π
     return BrightnessProvider(
       builder: (_, brightness) => ResponsiveLayout(
         child: MaterialApp(
