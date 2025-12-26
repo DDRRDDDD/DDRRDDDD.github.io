@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:vector_graphics/vector_graphics.dart';
 
 import '../datasource/svg_manager.dart';
 import '../extension/theme_extension.dart';
@@ -13,9 +12,12 @@ class SkillSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    for (int i = 0; i < skillIconPaths.length; i++) {
-      _skillBallOption(i);
-    }
+    // for (int i = 0; i < skillIconPaths.length; i++) {
+    //   final String path = skillIconPaths.elementAt(i);
+    //   final PictureInfo pictureInfo = SvgManager().lookup(path)!;
+    //
+    //   print(pictureInfo.size);
+    // }
 
     return Container(
       decoration: BoxDecoration(
@@ -36,13 +38,6 @@ class SkillSection extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  void _skillBallOption(int index) {
-    final String path = skillIconPaths.elementAt(index);
-    final PictureInfo pictureInfo = SvgManager().lookup(path)!;
-
-    print(pictureInfo.size);
   }
 }
 

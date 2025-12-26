@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import 'bento_grid/bento_grid.dart';
 import 'datasource/rive_file_manager.dart';
@@ -16,7 +14,7 @@ import 'widget/theme_mode_provider.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   usePathUrlStrategy();
-  GoogleFonts.config.allowRuntimeFetching = false;
+
   await Future.wait([
     RiveFileManager.init(),
     SvgManager.init(skillIconPaths),
@@ -28,16 +26,17 @@ class MyPortfolioApp extends StatelessWidget {
   const MyPortfolioApp({super.key});
 
   @override
-  Widget build(BuildContext context) {π
+  Widget build(BuildContext context) {
+    // TwoDimensionalScrollView
     return BrightnessProvider(
       builder: (_, brightness) => ResponsiveLayout(
         child: MaterialApp(
           title: '김용민 | 플러터 개발자',
           debugShowCheckedModeBanner: false,
-          // routerConfig: router,
           home: const BentoGrid(),
           themeMode: brightness.themeMode,
           theme: ThemeData(
+            fontFamily: 'Noto_Sans',
             splashFactory: NoSplash.splashFactory,
             extensions: [
               ColorThemeExtension.from(brightness),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../extension/theme_extension.dart';
 import '../theme/color_theme.dart';
@@ -32,8 +31,7 @@ class HeroSection extends StatelessWidget {
         ),
         Text.rich(
           TextSpan(
-            style: GoogleFonts.notoSansKr(
-              textStyle: context.textTheme.heroTitle,
+            style: context.textTheme.heroTitle.copyWith(
               color: context.colorTheme.textMain,
             ),
             children: [
@@ -41,9 +39,7 @@ class HeroSection extends StatelessWidget {
                 text: '안녕하세요,\n',
               ),
               GradientTextSpan(
-                style: GoogleFonts.notoSansKr(
-                  textStyle: context.textTheme.heroTitle,
-                ),
+                style: context.textTheme.heroTitle,
                 colors: [
                   context.colorTheme.primary,
                   ColorThemeExtension.primaryGradientEnd,
@@ -65,8 +61,7 @@ class HeroSection extends StatelessWidget {
             '임시방편은 없습니다. 집요하게 문제의 뿌리를 뽑습니다. \n'
             '27만 명이 사용하는 오픈소스의 오류를 해결하여 기여한 경험이 저를 증명합니다. '
             '단순한 기능 구현을 넘어, 코드로 제품의 신뢰를 쌓는 개발자가 되고 싶습니다.',
-            style: GoogleFonts.notoSansKr(
-              textStyle: context.textTheme.bodyLead,
+            style: context.textTheme.bodyLead.copyWith(
               color: context.colorTheme.textMain,
             ),
           ),

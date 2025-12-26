@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../extension/theme_extension.dart';
 
@@ -26,8 +25,7 @@ class MenuTextButton extends StatelessWidget {
       return (states) => textStyle!;
     }
 
-    return (states) => GoogleFonts.notoSansKr(
-      textStyle: context.textTheme.buttonText,
+    return (states) => context.textTheme.buttonText.copyWith(
       color: context.colorTheme.textMain,
     );
   }

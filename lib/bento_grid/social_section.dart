@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../extension/theme_extension.dart';
 import 'bento_grid.dart';
@@ -47,8 +46,7 @@ class SocialSection extends StatelessWidget {
           child: Center(
             child: Text(
               'Contact Me',
-              style: GoogleFonts.notoSansKr(
-                textStyle: context.textTheme.sectionTitle,
+              style: context.textTheme.sectionTitle.copyWith(
                 color: context.colorTheme.background,
               ),
             ),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../extension/theme_extension.dart';
 import 'bento_grid.dart';
@@ -17,8 +16,7 @@ class InfoSection extends StatelessWidget {
         children: [
           Text(
             '인적 사항',
-            style: GoogleFonts.notoSansKr(
-              textStyle: context.textTheme.cardTitle,
+            style: context.textTheme.cardTitle.copyWith(
               color: Colors.white,
             ),
           ),
@@ -57,8 +55,7 @@ class _InfoRow extends StatelessWidget {
       children: [
         Text(
           '$title ',
-          style: GoogleFonts.notoSansKr(
-            textStyle: context.textTheme.bodyRegular,
+          style: context.textTheme.bodyRegular.copyWith(
             fontWeight: FontWeight.w600,
             color: Colors.white,
           ),
@@ -71,8 +68,7 @@ class _InfoRow extends StatelessWidget {
             children: [
               Text(
                 '•  ',
-                style: GoogleFonts.notoSansKr(
-                  textStyle: context.textTheme.bodyRegular,
+                style: context.textTheme.bodyRegular.copyWith(
                   height: 1.5,
                   color: Colors.white,
                 ),
@@ -80,8 +76,7 @@ class _InfoRow extends StatelessWidget {
               Expanded(
                 child: Text(
                   contents.elementAt(index),
-                  style: GoogleFonts.notoSansKr(
-                    textStyle: context.textTheme.bodyRegular,
+                  style: context.textTheme.bodyRegular.copyWith(
                     color: Colors.white,
                   ),
                 ),

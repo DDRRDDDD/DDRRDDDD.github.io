@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../extension/theme_extension.dart';
 import '../theme/chip_color_theme.dart';
@@ -31,8 +30,7 @@ class LabelChip extends StatelessWidget {
       ),
       child: Text(
         label,
-        style: GoogleFonts.notoSansKr(
-          textStyle: context.textTheme.heroBadge,
+        style: context.textTheme.heroBadge.copyWith(
           color: chipColor.foreground,
         ),
       ),

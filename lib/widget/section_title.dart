@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../extension/theme_extension.dart';
 
@@ -25,8 +24,7 @@ class SectionTitle extends StatelessWidget {
         Text(
           title,
           textAlign: TextAlign.center,
-          style: GoogleFonts.notoSansKr(
-            textStyle: context.textTheme.sectionTitle,
+          style: context.textTheme.sectionTitle.copyWith(
             color: context.colorTheme.textMain,
           ),
         ),
@@ -43,8 +41,7 @@ class SectionTitle extends StatelessWidget {
           Text(
             subtitle!,
             textAlign: TextAlign.center,
-            style: GoogleFonts.notoSansKr(
-              textStyle: context.textTheme.sectionDescription,
+            style: context.textTheme.sectionDescription.copyWith(
               color: context.colorTheme.textSub,
             ),
           ),

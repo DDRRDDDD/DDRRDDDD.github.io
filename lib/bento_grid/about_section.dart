@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../extension/theme_extension.dart';
 import 'bento_grid.dart';
@@ -62,7 +61,7 @@ class _CompetencyCard extends StatelessWidget {
         color: context.colorTheme.outline,
         child: Column(
           crossAxisAlignment: .start,
-          spacing: 16,
+          spacing: 12,
           children: [
             Row(
               spacing: 16,
@@ -70,8 +69,7 @@ class _CompetencyCard extends StatelessWidget {
                 _buildIconBadge(),
                 Text(
                   title,
-                  style: GoogleFonts.notoSansKr(
-                    textStyle: context.textTheme.cardTitle,
+                  style: context.textTheme.cardTitle.copyWith(
                     color: context.colorTheme.textMain,
                   ),
                 ),
@@ -79,8 +77,7 @@ class _CompetencyCard extends StatelessWidget {
             ),
             Text(
               description,
-              style: GoogleFonts.notoSansKr(
-                textStyle: context.textTheme.bodyRegular,
+              style: context.textTheme.bodyRegular.copyWith(
                 color: context.colorTheme.textSub,
               ),
             ),
