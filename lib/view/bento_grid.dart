@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../extension/grid_extension.dart';
 import '../extension/theme_extension.dart';
@@ -69,6 +68,8 @@ class BentoGrid extends StatelessWidget {
 }
 
 class BentoContainer extends StatelessWidget {
+  static const EdgeInsets contentPadding = EdgeInsets.all(24);
+
   static const BorderRadius borderRadius = BorderRadius.all(
     Radius.circular(24),
   );
