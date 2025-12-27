@@ -160,7 +160,7 @@ class BouncingBallController extends ChangeNotifier with LeadingDebounce {
     }
 
     _world?.stepDt(1 / 60);
-    debounce(_spawnBall, 34.milliseconds);
+    debounce(_spawnBall, 68.milliseconds);
     notifyListeners();
   }
 
