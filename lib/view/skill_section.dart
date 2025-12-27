@@ -25,6 +25,15 @@ class SkillSection extends StatelessWidget {
       ),
       child: Stack(
         children: [
+          LayoutBuilder(
+            builder: (_, constraints) => BouncingBallContainer(
+              containerSize: constraints.biggest,
+              ballOptions: SkillOptions.values
+                  .map(_toSkillBallOption)
+                  .toList()
+                ..shuffle(),
+            ),
+          ),
           Padding(
             padding: BentoContainer.contentPadding,
             child: Column(
@@ -34,7 +43,7 @@ class SkillSection extends StatelessWidget {
                 Text(
                   '보유 기술',
                   style: context.textTheme.cardTitle.copyWith(
-                    color: Colors.white,
+                    color: context.colorTheme.textMain,
                   ),
                 ),
                 ConstrainedBox(
@@ -49,13 +58,6 @@ class SkillSection extends StatelessWidget {
                   ),
                 ),
               ],
-            ),
-          ),
-          LayoutBuilder(
-            builder: (_, constraints) => BouncingBallContainer(
-              containerSize: constraints.biggest,
-              ballOptions: SkillOptions.values.map(_toSkillBallOption).toList()
-                ..shuffle(),
             ),
           ),
         ],

@@ -40,11 +40,24 @@ class _BouncingBallContainerState extends State<BouncingBallContainer>
   }
 
   @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  void _onTapDown(TapDownDetails details) {
+    _controller.applyBlast(details.localPosition);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return CustomPaint(
-      size: widget.containerSize,
-      painter: PhysicsBallPainter(
-        controller: _controller,
+    return GestureDetector(
+      onTapDown: _onTapDown,
+      child: CustomPaint(
+        size: widget.containerSize,
+        painter: PhysicsBallPainter(
+          controller: _controller,
+        ),
       ),
     );
   }
@@ -69,7 +82,7 @@ class PhysicsBallPainter extends CustomPainter {
 
     for (final body in controller.currentBalls) {
       final Shape shape = body.fixtures.first.shape;
-      final BallOption option = body.userData as BallOption; // 캐스팅 명시
+      final BallOption option = body.userData as BallOption;
 
       // 공의 실제 반지름(픽셀 단위) 및 중심 좌표 계산
       final Offset centerOffset =
@@ -85,35 +98,26 @@ class PhysicsBallPainter extends CustomPainter {
       );
 
       if (option.pictureInfo != null) {
-        canvas.save(); // 현 상태 저장
+        canvas.save();
 
-        // [순서 A] 공의 중심으로 캔버스 이동
-        canvas.translate(centerOffset.dx, centerOffset.dy);
-
-        // [순서 B] 공의 회전 적용
-        canvas.rotate(body.angle);
-
-        // [순서 C] 아이콘 크기 압축 (여기서 비대한 크기가 공 크기로 줄어듦)
         final double iconTargetSize = radius * 2 * 0.7; // 공 지름의 70%
         final double svgWidth = option.pictureInfo!.size.width;
 
+        canvas.translate(centerOffset.dx, centerOffset.dy);
+        canvas.rotate(body.angle);
         canvas.scale(iconTargetSize / svgWidth);
-
-        // [순서 D] 중심점 보정 (이제 자(Ruler)가 줄어들었으므로 원본 크기의 절반만큼만 이동)
-        // [주의] 이 줄을 drawPicture보다 반드시 먼저 실행해야 합니다.
         canvas.translate(-svgWidth / 2, -svgWidth / 2);
-
-        // [순서 E] 드디어 그리기
-        // 이 시점의 캔버스는 이미 공 중심에 있고, 회전되어 있으며, 크기도 공에 맞춰 압축된 상태입니다.
         canvas.drawPicture(option.pictureInfo!.picture);
 
-        canvas.restore(); // 다음 공을 위해 캔버스 복구
+        canvas.restore();
       }
     }
   }
 }
 
 class BouncingBallController extends ChangeNotifier with LeadingDebounce {
+  static const double defaultScale = 100.0;
+
   final double gravity;
   final double scale;
   final Size containerSize;
@@ -121,10 +125,11 @@ class BouncingBallController extends ChangeNotifier with LeadingDebounce {
 
   Ticker? _ticker;
   World? _world;
+  bool _isLidClosed = false;
 
   BouncingBallController({
-    this.gravity = 15.0,
-    this.scale = 100.0,
+    this.gravity = 25.0,
+    this.scale = defaultScale,
     required this.containerSize,
     required this.ballOptions,
     required TickerProvider vsync,
@@ -151,8 +156,48 @@ class BouncingBallController extends ChangeNotifier with LeadingDebounce {
     return currentBalls.every((body) => !body.isAwake);
   }
 
+  void applyBlast(Offset localPosition) {
+    if (_world == null || !_isLidClosed) {
+      return;
+    }
+
+    // 1. 좌표 변환 (사용 중인 Viewport 변환 로직 유지)
+    final double worldX = (localPosition.dx - containerSize.width / 2) / scale;
+    final double worldY = (localPosition.dy - containerSize.height / 2) / scale;
+
+    final Vector2 blastPoint = Vector2(worldX, worldY);
+
+    const double blastForce = 15.0;
+    const double blastRadius = 4.0;
+
+    _world!.queryAABB(
+      BlastQueryCallback(
+        blastPoint: blastPoint,
+        blastRadius: blastRadius,
+        blastForce: blastForce,
+      ),
+      AABB()
+        ..lowerBound.setValues(
+          blastPoint.x - blastRadius,
+          blastPoint.y - blastRadius,
+        )
+        ..upperBound.setValues(
+          blastPoint.x + blastRadius,
+          blastPoint.y + blastRadius,
+        ),
+    );
+
+    if (_ticker?.isActive == false) {
+      _ticker?.start();
+    }
+  }
+
   Future<void> _tick(Duration elapsed) async {
     final bool isAllBallsDisplayed = this.isAllBallsDisplayed;
+
+    if (isAllBallsDisplayed && !_isLidClosed) {
+      _closeLid();
+    }
 
     if (isAllBallsDisplayed && _isWorldSleeping) {
       _ticker?.stop();
@@ -160,7 +205,7 @@ class BouncingBallController extends ChangeNotifier with LeadingDebounce {
     }
 
     _world?.stepDt(1 / 60);
-    debounce(_spawnBall, 68.milliseconds);
+    debounce(_spawnBall, 80.milliseconds);
     notifyListeners();
   }
 
@@ -185,6 +230,36 @@ class BouncingBallController extends ChangeNotifier with LeadingDebounce {
         .createFixture(FixtureDef(containerShape, friction: 0.5));
   }
 
+  void _closeLid() {
+    if (_isLidClosed || _world == null || !isAllBallsDisplayed) {
+      return;
+    }
+
+    final double halfWidth = (containerSize.width / scale) / 2;
+    final double halfHeight = (containerSize.height / scale) / 2;
+
+    final Body lastBall = currentBalls.last;
+    final double lastBallRadius = lastBall.fixtures.first.shape.radius;
+
+    // 마지막 공의 '윗부분'이 컨테이너의 상단 경계선(-halfHeight)보다 아래로 내려왔을 때 닫음
+    // 공이 경계선에 걸쳐서 생성되는 도중에 닫히면 끼임 현상이 발생할 수 있으므로 반지름만큼 여유를 둡니다.
+    if (lastBall.position.y - lastBallRadius < -halfHeight) {
+      return;
+    }
+
+    final Shape lidShape = EdgeShape()
+      ..set(
+        Vector2(-halfWidth, -halfHeight),
+        Vector2(halfWidth, -halfHeight),
+      );
+
+    _world!
+        .createBody(BodyDef(type: BodyType.static))
+        .createFixture(FixtureDef(lidShape, friction: 0.5, restitution: 0.2));
+
+    _isLidClosed = true;
+  }
+
   void _spawnBall() {
     final int currentBallCount = currentBalls.length;
 
@@ -195,7 +270,7 @@ class BouncingBallController extends ChangeNotifier with LeadingDebounce {
     final double halfWidth = (containerSize.width / scale) / 2;
     final double halfHeight = (containerSize.height / scale) / 2;
 
-    final double randomPercent = Random().nextDouble().clamp(0.49, 0.51);
+    final double randomPercent = Random().nextDouble().clamp(0.4, 0.6);
     final double xPos = lerpDouble(-halfWidth, halfWidth, randomPercent)!;
     final double yPos = -halfHeight - 3.0; // - 3.0: 컨테이너 영역 위쪽 바깥에서 생성
 
@@ -227,6 +302,45 @@ class BouncingBallController extends ChangeNotifier with LeadingDebounce {
   }
 }
 
+/// 1. 폭발 로직을 담당하는 QueryCallback 구현체 정의
+class BlastQueryCallback extends QueryCallback {
+  final Vector2 blastPoint;
+  final double blastRadius;
+  final double blastForce;
+
+  BlastQueryCallback({
+    required this.blastPoint,
+    required this.blastRadius,
+    required this.blastForce,
+  });
+
+  @override
+  bool reportFixture(Fixture fixture) {
+    final Body body = fixture.body;
+
+    // 두 점 사이의 벡터 및 거리 계산
+    final Vector2 direction = body.position - blastPoint;
+    final double distance = direction.length;
+
+    // 실제 원형 범위 내에 있는지 확인 (AABB는 사각형이므로 원형 필터링 필요)
+    if (distance < blastRadius && distance > 0) {
+      // 거리에 따른 힘의 감쇄 (가까울수록 강함)
+      final double forceMagnitude = (1 - (distance / blastRadius)) * blastForce;
+
+      // 벡터 정규화 및 충격량 계산
+      // (direction / distance)는 정규화된 방향 벡터입니다.
+      final Vector2 impulse = direction..scale(forceMagnitude / distance);
+
+      // 잠든 바디를 깨우고 물리적인 힘 적용
+      body.setAwake(true);
+      body.applyLinearImpulse(impulse);
+    }
+
+    // true를 반환해야 범위 내의 다음 Fixture를 계속 탐색함
+    return true;
+  }
+}
+
 class BallOption {
   final double width;
   final Color color;
@@ -237,16 +351,6 @@ class BallOption {
     required this.color,
     this.pictureInfo,
   });
-
-  BallOption.randomColor({
-    required this.width,
-    this.pictureInfo,
-  }) : color = Color.fromARGB(
-          255,
-          Random().nextInt(200) + 50,
-          Random().nextInt(200) + 50,
-          Random().nextInt(200) + 50,
-        );
 
   double get radius {
     return width / 2;
