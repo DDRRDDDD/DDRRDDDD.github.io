@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 
 import '../datasource/svg_manager.dart';
@@ -10,44 +8,97 @@ import 'bento_grid.dart';
 class SkillSection extends StatelessWidget {
   const SkillSection({super.key});
 
+  BallOption _toSkillBallOption(SkillOptions skill) {
+    return BallOption(
+      pictureInfo: SvgManager().lookup(skill.assetPath),
+      width: skill.size / BouncingBallController.defaultScale,
+      color: Colors.white,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    // for (int i = 0; i < skillIconPaths.length; i++) {
-    //   final String path = skillIconPaths.elementAt(i);
-    //   final PictureInfo pictureInfo = SvgManager().lookup(path)!;
-    //
-    //   print(pictureInfo.size);
-    // }
-
     return Container(
       decoration: BoxDecoration(
-        color: context.colorTheme.surfaceAlt,
+        color: context.colorTheme.outline,
         borderRadius: BentoContainer.borderRadius,
       ),
-      child: LayoutBuilder(
-        builder: (_, constraints) => BouncingBallContainer(
-          containerSize: constraints.biggest,
-          ballOptions: List.generate(
-            skillIconPaths.length,
-            (index) => BallOption(
-              pictureInfo: SvgManager().lookup(skillIconPaths.elementAt(index)),
-              width: 0.3 + Random().nextDouble() * 0.30,
-              color: Colors.white,
+      child: Stack(
+        children: [
+          Padding(
+            padding: BentoContainer.contentPadding,
+            child: Column(
+              crossAxisAlignment: .start,
+              spacing: 10,
+              children: [
+                Text(
+                  '보유 기술',
+                  style: context.textTheme.cardTitle.copyWith(
+                    color: Colors.white,
+                  ),
+                ),
+                ConstrainedBox(
+                  constraints: const BoxConstraints(
+                    maxWidth: 170,
+                  ),
+                  child: Text(
+                    '부딪히며 습득하고,\n끊임없이 경험을 쌓아 올렸습니다.',
+                    style: context.textTheme.labelSmall.copyWith(
+                      color: context.colorTheme.textSub,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
-        ),
+          LayoutBuilder(
+            builder: (_, constraints) => BouncingBallContainer(
+              containerSize: constraints.biggest,
+              ballOptions: SkillOptions.values.map(_toSkillBallOption).toList()
+                ..shuffle(),
+            ),
+          ),
+        ],
       ),
     );
   }
 }
 
-// skill section
-// title subTitle 작성
-// L 34 M 30 S 26
-// svg 높이 너비 맞추기
-// 색상 결정 공 색, border color,
+enum SkillOptions {
+  copilot(_smallSize),
+  css(_smallSize),
+  figma(_smallSize),
+  gemini(_smallSize),
+  githubactions(_smallSize),
+  html(_smallSize),
+  js(_smallSize),
+  mariadb(_smallSize),
+  mysql(_smallSize),
+  nginx(_smallSize),
+  selenium(_smallSize),
+  slack(_smallSize),
+  ubuntu(_smallSize),
+  docker(_mediumSize),
+  jenkins(_mediumSize),
+  firebase(_mediumSize),
+  supabase(_mediumSize),
+  github(_mediumSize),
+  riverpod(_largeSize),
+  dart(_largeSize),
+  flutter(_largeSize),
+  java(_largeSize),
+  spring(_largeSize),
+  ;
 
-// 네비게이션 (제미나이 참고)
-// 마우스 호버 애니메이션 (확장/축소)
-// 클릭 애니메이션 (축소/확장)
-// rive theme toggle 변경 (커스터마이징 후 적용) 좋아요 확인
+  static const double _largeSize = 60.0;
+  static const double _mediumSize = 52.0;
+  static const double _smallSize = 44.0;
+
+  final double size;
+
+  String get assetPath {
+    return 'assets/skill/$name.svg';
+  }
+
+  const SkillOptions(this.size);
+}

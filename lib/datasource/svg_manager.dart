@@ -13,7 +13,7 @@ const List<String> skillIconPaths = [
   'assets/skill/firebase.svg',
   'assets/skill/flutter.svg',
   'assets/skill/gemini.svg',
-  'assets/skill/github-actions.svg',
+  'assets/skill/githubactions.svg',
   'assets/skill/github.svg',
   'assets/skill/html.svg',
   'assets/skill/java.svg',
