@@ -7,10 +7,11 @@ const lightColorTheme = ColorThemeExtension._(
   secondary: Color(0xFF42A5F5),
   background: Color(0xFFF9FAFB),
   surface: Color(0xFFFFFFFF),
-  surfaceAlt: Color(0xFFF9FAFB),
+  surfaceAlt: Color(0xFFE5E7EB),
   textMain: Color(0xFF1F2937),
   textSub: Color(0xFF4B5563),
-  outline: Color(0xFFE5E7EB),
+  outline: Color(0x0d000000),
+  glassOverlay: Color(0xB3FFFFFF),
 );
 
 const darkColorTheme = ColorThemeExtension._(
@@ -18,15 +19,15 @@ const darkColorTheme = ColorThemeExtension._(
   secondary: Color(0xFF013E73),
   background: Color(0xFF111827),
   surface: Color(0xFF1F2937),
-  surfaceAlt: Color(0xFF374151),
+  surfaceAlt: Color(0xFF1F2937),
   textMain: Color(0xFFF3F4F6),
   textSub: Color(0xFFD1D5DB),
-  outline: Color(0xFF1F2937),
+  outline: Color(0x14FFFFFF),
+  glassOverlay: Color(0x991E293B),
 );
 
 class ColorThemeExtension extends ThemeExtension<ColorThemeExtension> {
   static const Color defaultPrimary = Color(0xFF02569B);
-  static const Color primaryGradientEnd = Color(0xFF6A11CB);
 
   final Color primary;
   final Color secondary;
@@ -36,6 +37,7 @@ class ColorThemeExtension extends ThemeExtension<ColorThemeExtension> {
   final Color textMain;
   final Color textSub;
   final Color outline;
+  final Color glassOverlay;
 
   factory ColorThemeExtension.from(Brightness brightness) {
     return brightness.isLight ? lightColorTheme : darkColorTheme;
@@ -50,6 +52,7 @@ class ColorThemeExtension extends ThemeExtension<ColorThemeExtension> {
     required this.textMain,
     required this.textSub,
     required this.outline,
+    required this.glassOverlay,
   });
 
   @override
@@ -62,6 +65,7 @@ class ColorThemeExtension extends ThemeExtension<ColorThemeExtension> {
     Color? textMain,
     Color? textSub,
     Color? outline,
+    Color? glassOverlay,
   }) {
     return ColorThemeExtension._(
       primary: primary ?? this.primary,
@@ -72,6 +76,7 @@ class ColorThemeExtension extends ThemeExtension<ColorThemeExtension> {
       textMain: textMain ?? this.textMain,
       textSub: textSub ?? this.textSub,
       outline: outline ?? this.outline,
+      glassOverlay: glassOverlay ?? this.glassOverlay,
     );
   }
 
@@ -90,6 +95,7 @@ class ColorThemeExtension extends ThemeExtension<ColorThemeExtension> {
       textMain: Color.lerp(textMain, other.textMain, t)!,
       textSub: Color.lerp(textSub, other.textSub, t)!,
       outline: Color.lerp(outline, other.outline, t)!,
+      glassOverlay: Color.lerp(glassOverlay, other.glassOverlay, t)!,
     );
   }
 }
