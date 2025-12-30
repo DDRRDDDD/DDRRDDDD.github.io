@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../extension/let_extension.dart';
+
 typedef BrightnessBuilder =
     Widget Function(
       BuildContext context,
@@ -19,18 +21,15 @@ class BrightnessProvider extends StatefulWidget {
 }
 
 class _BrightnessProviderState extends State<BrightnessProvider> {
-  late final ValueNotifier<Brightness?> _notifier;
+  late final ValueNotifier<Brightness> _notifier;
 
   @override
   void initState() {
     super.initState();
-    _notifier = ValueNotifier<Brightness?>(null);
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    _notifier.value = MediaQuery.platformBrightnessOf(context);
+    _notifier = WidgetsBinding.instance
+        .platformDispatcher
+        .platformBrightness
+        .let(ValueNotifier.new);
   }
 
   @override
@@ -56,15 +55,15 @@ class _BrightnessProviderState extends State<BrightnessProvider> {
   }
 }
 
-class BrightnessModel extends InheritedNotifier<ValueNotifier<Brightness?>> {
+class BrightnessModel extends InheritedNotifier<ValueNotifier<Brightness>> {
   const BrightnessModel({
     super.key,
     required super.notifier,
     required super.child,
   });
 
-  static ValueNotifier<Brightness?> of(BuildContext context) {
-    final ValueNotifier<Brightness?>? notifier = context
+  static ValueNotifier<Brightness> of(BuildContext context) {
+    final ValueNotifier<Brightness>? notifier = context
         .dependOnInheritedWidgetOfExactType<BrightnessModel>()
         ?.notifier;
 
@@ -76,7 +75,6 @@ class BrightnessModel extends InheritedNotifier<ValueNotifier<Brightness?>> {
   }
 
   static Brightness valueOf(BuildContext context) {
-    final ValueNotifier<Brightness?> notifier = of(context);
-    return notifier.value ?? MediaQuery.platformBrightnessOf(context);
+    return of(context).value;
   }
 }

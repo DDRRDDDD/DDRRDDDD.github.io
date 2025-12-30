@@ -13,3 +13,9 @@ extension BrightnessExtension on Brightness {
     return this == Brightness.light;
   }
 }
+
+extension BrightnessNotifierExtension on ValueNotifier<Brightness> {
+  void toggle() {
+    value = value.opposite;
+  }
+}
