@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
 
 import '../datasource/rive_file_manager.dart';
+import '../extension/brightness_extension.dart';
 import '../extension/theme_extension.dart';
 import 'glass_container.dart';
+import 'theme_mode_provider.dart';
 
 class ThemeToggleButton extends StatefulWidget {
   static const double buttonSize = 56.0;
@@ -28,7 +30,7 @@ class _ThemeToggleButtonState extends State<ThemeToggleButton> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _viewModel.color('stroke')?.value = context.colorTheme.textSub;
+    _viewModel.boolean('isLight')?.value = BrightnessModel.valueOf(context).isLight;
   }
 
   @override
@@ -47,7 +49,7 @@ class _ThemeToggleButtonState extends State<ThemeToggleButton> {
         ThemeToggleButton.buttonSize / 2,
       ),
       child: InkWell(
-        onTap: () {},
+        onTap: BrightnessModel.of(context).toggle,
         customBorder: const CircleBorder(),
         child: SizedBox.square(
           dimension: 20,
@@ -60,3 +62,4 @@ class _ThemeToggleButtonState extends State<ThemeToggleButton> {
     );
   }
 }
+

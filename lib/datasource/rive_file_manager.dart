@@ -5,10 +5,12 @@ class RiveFileManager {
 
   final File myAvatarFile;
   final File developBragging;
+  final File themeToggle;
 
   const RiveFileManager._internal({
     required this.myAvatarFile,
     required this.developBragging,
+    required this.themeToggle,
   });
 
   factory RiveFileManager() {
@@ -30,11 +32,13 @@ class RiveFileManager {
     final List<File?> files = await Future.wait([
       File.asset('assets/rive/my_avatar.riv', riveFactory: Factory.rive),
       File.asset('assets/rive/developer_bragging.riv', riveFactory: Factory.rive),
+      File.asset('assets/rive/theme_toggle.riv', riveFactory: Factory.rive),
     ]);
 
     _instance = RiveFileManager._internal(
       myAvatarFile: files.elementAt(0)!,
       developBragging: files.elementAt(1)!,
+      themeToggle: files.elementAt(2)!,
     );
   }
 }
