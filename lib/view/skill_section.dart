@@ -20,7 +20,7 @@ class SkillSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: context.colorTheme.outline,
+        color: context.colorTheme.surfaceAlt,
         borderRadius: BentoContainer.borderRadius,
       ),
       child: Stack(
@@ -80,6 +80,7 @@ enum SkillOptions {
   selenium(_smallSize),
   slack(_smallSize),
   ubuntu(_smallSize),
+  rive(_smallSize),
   docker(_mediumSize),
   jenkins(_mediumSize),
   firebase(_mediumSize),
@@ -97,6 +98,10 @@ enum SkillOptions {
   static const double _smallSize = 44.0;
 
   final double size;
+
+  static List<String> get allAssetPaths {
+    return SkillOptions.values.map((skill) => skill.assetPath).toList();
+  }
 
   String get assetPath {
     return 'assets/skill/$name.svg';

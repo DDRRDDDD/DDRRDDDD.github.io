@@ -8,6 +8,7 @@ import 'extension/brightness_extension.dart';
 import 'theme/chip_color_theme.dart';
 import 'theme/color_theme.dart';
 import 'theme/text_theme.dart';
+import 'view/skill_section.dart';
 import 'widget/responsive_layout.dart';
 import 'widget/theme_mode_provider.dart';
 
@@ -17,7 +18,7 @@ Future<void> main() async {
 
   await Future.wait([
     RiveFileManager.init(),
-    SvgManager.init(skillIconPaths),
+    SvgManager.init(SkillOptions.allAssetPaths),
   ]);
   runApp(const MyPortfolioApp());
 }
@@ -50,4 +51,6 @@ class MyPortfolioApp extends StatelessWidget {
   }
 }
 
-/// 웹 어셈블리 모드 --wasm
+// 네비게이션 (제미나이 참고)
+// 마우스 호버 애니메이션 (확장/축소)
+// 클릭 애니메이션 (축소/확장)
