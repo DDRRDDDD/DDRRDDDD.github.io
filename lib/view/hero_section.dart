@@ -44,9 +44,9 @@ class HeroSection extends StatelessWidget {
               style: context.textTheme.heroTitle,
               gradient: const LinearGradient(
                 colors: [
-                  Color(0xFF02569B),
-                  Color(0xFF6366F1),
-                  Color(0xFFD500F9),
+                  ColorThemeExtension.defaultPrimary,
+                  ColorThemeExtension.indigoVivid,
+                  ColorThemeExtension.electricMagenta,
                 ],
               ),
             ),

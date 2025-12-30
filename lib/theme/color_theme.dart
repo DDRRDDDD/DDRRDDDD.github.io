@@ -28,6 +28,8 @@ const darkColorTheme = ColorThemeExtension._(
 
 class ColorThemeExtension extends ThemeExtension<ColorThemeExtension> {
   static const Color defaultPrimary = Color(0xFF02569B);
+  static const Color indigoVivid = Color(0xFF6366F1);
+  static const Color electricMagenta = Color(0xFFD500F9);
 
   final Color primary;
   final Color secondary;
