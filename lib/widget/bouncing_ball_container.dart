@@ -161,7 +161,6 @@ class BouncingBallController extends ChangeNotifier with LeadingDebounce {
       return;
     }
 
-    // 1. 좌표 변환 (사용 중인 Viewport 변환 로직 유지)
     final double worldX = (localPosition.dx - containerSize.width / 2) / scale;
     final double worldY = (localPosition.dy - containerSize.height / 2) / scale;
 
@@ -241,9 +240,11 @@ class BouncingBallController extends ChangeNotifier with LeadingDebounce {
     final Body lastBall = currentBalls.last;
     final double lastBallRadius = lastBall.fixtures.first.shape.radius;
 
-    // 마지막 공의 '윗부분'이 컨테이너의 상단 경계선(-halfHeight)보다 아래로 내려왔을 때 닫음
-    // 공이 경계선에 걸쳐서 생성되는 도중에 닫히면 끼임 현상이 발생할 수 있으므로 반지름만큼 여유를 둡니다.
-    if (lastBall.position.y - lastBallRadius < -halfHeight) {
+    final double safetyBuffer = lastBallRadius * 0.5;
+
+    // 공의 가장 윗부분이 (상단 경계선 + 여유분)보다 더 아래(Y값이 더 큰 쪽)에 있는지 확인
+    // Y축은 아래로 갈수록 커지므로, '-halfHeight + buffer' 보다 커야 완전히 통과한 것입니다.
+    if (lastBall.position.y - lastBallRadius < -halfHeight + safetyBuffer) {
       return;
     }
 
@@ -256,7 +257,6 @@ class BouncingBallController extends ChangeNotifier with LeadingDebounce {
     _world!
         .createBody(BodyDef(type: BodyType.static))
         .createFixture(FixtureDef(lidShape, friction: 0.5, restitution: 0.2));
-
     _isLidClosed = true;
   }
 
@@ -270,7 +270,7 @@ class BouncingBallController extends ChangeNotifier with LeadingDebounce {
     final double halfWidth = (containerSize.width / scale) / 2;
     final double halfHeight = (containerSize.height / scale) / 2;
 
-    final double randomPercent = Random().nextDouble().clamp(0.4, 0.6);
+    final double randomPercent = Random().nextDouble().clamp(0.3, 0.7);
     final double xPos = lerpDouble(-halfWidth, halfWidth, randomPercent)!;
     final double yPos = -halfHeight - 3.0; // - 3.0: 컨테이너 영역 위쪽 바깥에서 생성
 
@@ -302,7 +302,7 @@ class BouncingBallController extends ChangeNotifier with LeadingDebounce {
   }
 }
 
-/// 1. 폭발 로직을 담당하는 QueryCallback 구현체 정의
+/// 폭발 로직을 담당하는 QueryCallback 구현체 정의
 class BlastQueryCallback extends QueryCallback {
   final Vector2 blastPoint;
   final double blastRadius;
