@@ -3,8 +3,8 @@ import 'package:rive/rive.dart';
 
 import '../datasource/rive_file_manager.dart';
 import '../extension/brightness_extension.dart';
-import '../extension/theme_extension.dart';
 import 'glass_container.dart';
+import 'interactive_scale_detector.dart';
 import 'theme_mode_provider.dart';
 
 class ThemeToggleButton extends StatefulWidget {
@@ -30,7 +30,7 @@ class _ThemeToggleButtonState extends State<ThemeToggleButton> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _viewModel.boolean('isLight')?.value = BrightnessModel.valueOf(context).isLight;
+    _viewModel.boolean('isLight')?.value = BrightnessProvider.of(context).value.isLight;
   }
 
   @override
@@ -42,15 +42,15 @@ class _ThemeToggleButtonState extends State<ThemeToggleButton> {
 
   @override
   Widget build(BuildContext context) {
-    return GlassContainer(
-      width: ThemeToggleButton.buttonSize,
-      height: ThemeToggleButton.buttonSize,
-      borderRadius: BorderRadius.circular(
-        ThemeToggleButton.buttonSize / 2,
-      ),
-      child: InkWell(
-        onTap: BrightnessModel.of(context).toggle,
-        customBorder: const CircleBorder(),
+    return InteractiveScaleDetector(
+      hoverScale: 0.08,
+      onTap: BrightnessProvider.of(context).toggle,
+      child: GlassContainer(
+        width: ThemeToggleButton.buttonSize,
+        height: ThemeToggleButton.buttonSize,
+        borderRadius: BorderRadius.circular(
+          ThemeToggleButton.buttonSize / 2,
+        ),
         child: SizedBox.square(
           dimension: 20,
           child: RiveWidget(

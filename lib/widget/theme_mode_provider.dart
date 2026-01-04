@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../extension/let_extension.dart';
+import 'provider.dart';
 
 typedef BrightnessBuilder =
     Widget Function(
@@ -15,6 +16,10 @@ class BrightnessProvider extends StatefulWidget {
   });
 
   final BrightnessBuilder builder;
+
+  static ValueNotifier<Brightness> of(BuildContext context) {
+    return Provider.of<ValueNotifier<Brightness>>(context);
+  }
 
   @override
   State<BrightnessProvider> createState() => _BrightnessProviderState();
@@ -40,7 +45,7 @@ class _BrightnessProviderState extends State<BrightnessProvider> {
 
   @override
   Widget build(BuildContext context) {
-    return BrightnessModel(
+    return Provider<ValueNotifier<Brightness>>(
       notifier: _notifier,
       child: Builder(
         builder: _buildWithBrightness,
@@ -49,32 +54,8 @@ class _BrightnessProviderState extends State<BrightnessProvider> {
   }
 
   Widget _buildWithBrightness(BuildContext context) {
-    final Brightness brightness = BrightnessModel.valueOf(context);
+    final Brightness brightness = BrightnessProvider.of(context).value;
 
     return widget.builder(context, brightness);
-  }
-}
-
-class BrightnessModel extends InheritedNotifier<ValueNotifier<Brightness>> {
-  const BrightnessModel({
-    super.key,
-    required super.notifier,
-    required super.child,
-  });
-
-  static ValueNotifier<Brightness> of(BuildContext context) {
-    final ValueNotifier<Brightness>? notifier = context
-        .dependOnInheritedWidgetOfExactType<BrightnessModel>()
-        ?.notifier;
-
-    if (notifier != null) {
-      return notifier;
-    }
-
-    throw FlutterError('상위 위젯 트리에서 BrightnessModel를 찾을 수 없습니다.');
-  }
-
-  static Brightness valueOf(BuildContext context) {
-    return of(context).value;
   }
 }
