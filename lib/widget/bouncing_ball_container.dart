@@ -192,13 +192,8 @@ class BouncingBallController extends ChangeNotifier with LeadingDebounce {
   }
 
   Future<void> _tick(Duration elapsed) async {
-    final bool isAllBallsDisplayed = this.isAllBallsDisplayed;
-
-    if (isAllBallsDisplayed && !_isLidClosed) {
-      _closeLid();
-    }
-
     if (isAllBallsDisplayed && _isWorldSleeping) {
+      _closeLid();
       _ticker?.stop();
       return;
     }
@@ -236,17 +231,6 @@ class BouncingBallController extends ChangeNotifier with LeadingDebounce {
 
     final double halfWidth = (containerSize.width / scale) / 2;
     final double halfHeight = (containerSize.height / scale) / 2;
-
-    final Body lastBall = currentBalls.last;
-    final double lastBallRadius = lastBall.fixtures.first.shape.radius;
-
-    final double safetyBuffer = lastBallRadius * 0.5;
-
-    // 공의 가장 윗부분이 (상단 경계선 + 여유분)보다 더 아래(Y값이 더 큰 쪽)에 있는지 확인
-    // Y축은 아래로 갈수록 커지므로, '-halfHeight + buffer' 보다 커야 완전히 통과한 것입니다.
-    if (lastBall.position.y - lastBallRadius < -halfHeight + safetyBuffer) {
-      return;
-    }
 
     final Shape lidShape = EdgeShape()
       ..set(
