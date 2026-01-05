@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../extension/let_extension.dart';
 import '../extension/widget_states_extension.dart';
 import 'provider.dart';
 
@@ -17,6 +16,10 @@ class InteractiveScaleDetector extends StatefulWidget {
   final VoidCallback? onHover;
   final double hoverScale;
   final Widget child;
+
+  static WidgetStatesController of(BuildContext context) {
+    return Provider.of<WidgetStatesController>(context);
+  }
 
   @override
   State<InteractiveScaleDetector> createState() {
