@@ -3,6 +3,8 @@ import 'package:rive/rive.dart';
 
 import '../datasource/rive_file_manager.dart';
 import '../extension/brightness_extension.dart';
+import '../extension/widget_states_extension.dart';
+import '../theme/color_theme.dart';
 import 'glass_container.dart';
 import 'interactive_scale_detector.dart';
 import 'theme_mode_provider.dart';
@@ -30,7 +32,8 @@ class _ThemeToggleButtonState extends State<ThemeToggleButton> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _viewModel.boolean('isLight')?.value = BrightnessProvider.of(context).value.isLight;
+    _viewModel.boolean('isLight')?.value =
+        BrightnessProvider.of(context).value.isLight;
   }
 
   @override
@@ -40,26 +43,38 @@ class _ThemeToggleButtonState extends State<ThemeToggleButton> {
     super.dispose();
   }
 
+  Color get _hoverBorderColor {
+    return ColorThemeExtension.indigoVivid.withValues(alpha: 0.6);
+  }
+
+  Border? _resolveBorder(BuildContext context) {
+    return InteractiveScaleDetector.of(context).value.isHovered
+        ? Border.all(color: _hoverBorderColor)
+        : null;
+  }
+
   @override
   Widget build(BuildContext context) {
     return InteractiveScaleDetector(
-      hoverScale: 0.13,
+      hoverScale: 0.08,
       onTap: BrightnessProvider.of(context).toggle,
-      child: GlassContainer(
-        width: ThemeToggleButton.buttonSize,
-        height: ThemeToggleButton.buttonSize,
-        borderRadius: BorderRadius.circular(
-          ThemeToggleButton.buttonSize / 2,
-        ),
-        child: SizedBox.square(
-          dimension: 20,
-          child: RiveWidget(
-            controller: _controller,
-            fit: Fit.cover,
+      child: Builder(
+        builder: (context) => GlassContainer(
+          width: ThemeToggleButton.buttonSize,
+          height: ThemeToggleButton.buttonSize,
+          borderRadius: BorderRadius.circular(
+            ThemeToggleButton.buttonSize / 2,
+          ),
+          border: _resolveBorder(context),
+          child: SizedBox.square(
+            dimension: 20,
+            child: RiveWidget(
+              controller: _controller,
+              fit: Fit.cover,
+            ),
           ),
         ),
       ),
     );
   }
 }
-
