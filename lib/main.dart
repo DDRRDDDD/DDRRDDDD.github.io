@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 
-import 'view/bento_grid.dart';
+import 'view/main_grid.dart';
 import 'datasource/rive_file_manager.dart';
 import 'datasource/svg_manager.dart';
 import 'extension/brightness_extension.dart';
@@ -34,7 +34,7 @@ class MyPortfolioApp extends StatelessWidget {
         child: MaterialApp(
           title: '김용민 | 플러터 개발자',
           debugShowCheckedModeBanner: false,
-          home: const BentoGrid(),
+          home: const MainGrid(),
           themeMode: brightness.themeMode,
           theme: ThemeData(
             fontFamily: 'Noto_Sans',

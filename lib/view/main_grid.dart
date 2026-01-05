@@ -11,8 +11,8 @@ import 'info_section.dart';
 import 'skill_section.dart';
 import 'social_section.dart';
 
-class BentoGrid extends StatelessWidget {
-  const BentoGrid({super.key});
+class MainGrid extends StatelessWidget {
+  const MainGrid({super.key});
 
   @override
   Widget build(BuildContext context) {
