@@ -43,7 +43,7 @@ class _ThemeToggleButtonState extends State<ThemeToggleButton> {
   @override
   Widget build(BuildContext context) {
     return InteractiveScaleDetector(
-      hoverScale: 0.08,
+      hoverScale: 0.13,
       onTap: BrightnessProvider.of(context).toggle,
       child: GlassContainer(
         width: ThemeToggleButton.buttonSize,
