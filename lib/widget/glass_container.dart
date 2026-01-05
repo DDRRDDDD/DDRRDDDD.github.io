@@ -9,13 +9,22 @@ const Radius _defaultRadius = Radius.circular(24);
 class GlassContainer extends StatelessWidget {
   const GlassContainer({
     super.key,
-    required this.child,
     this.width,
     this.height,
     this.border,
     this.borderRadius,
     this.padding,
+    required this.child,
   });
+
+  const GlassContainer.bento({
+    super.key,
+    this.border,
+    this.borderRadius,
+    this.padding,
+    required this.child,
+  })  : width = double.infinity,
+        height = double.infinity;
 
   final Widget child;
   final double? width;

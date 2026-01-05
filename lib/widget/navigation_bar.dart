@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 
 import '../extension/theme_extension.dart';
+import '../extension/widget_states_extension.dart';
+import '../theme/color_theme.dart';
 import 'brightness_button.dart';
 import 'glass_container.dart';
+import 'interactive_scale_detector.dart';
 
 class FloatingNavigationBar extends StatefulWidget {
   const FloatingNavigationBar({super.key});
@@ -13,6 +17,18 @@ class FloatingNavigationBar extends StatefulWidget {
 
 class _FloatingNavigationBarState extends State<FloatingNavigationBar>
     with SingleTickerProviderStateMixin {
+  late int _selectedIndex;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedIndex = 0;
+  }
+
+  void _onItemChanged(int index) {
+    setState(() =>_selectedIndex = index);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -24,9 +40,25 @@ class _FloatingNavigationBarState extends State<FloatingNavigationBar>
           child: Column(
             spacing: 12,
             children: [
-              _buildNavItem(0, Icons.person_outline, "ABOUT ME"),
-              _buildSpacer(context.colorTheme.outline),
-              _buildNavItem(1, Icons.rocket_launch_outlined, "PROJECTS"),
+              _NavigationItem(
+                index: 0,
+                selectedIndex: _selectedIndex,
+                onChanged: _onItemChanged,
+                icon: Icons.person_outline,
+                label: 'ABOUT ME',
+              ),
+              Gap(
+                1,
+                crossAxisExtent: 24,
+                color: context.colorTheme.outline.withValues(alpha: 0.1),
+              ),
+              _NavigationItem(
+                index: 1,
+                selectedIndex: _selectedIndex,
+                onChanged: _onItemChanged,
+                icon: Icons.rocket_launch_outlined,
+                label: 'PROJECTS',
+              ),
             ],
           ),
         ),
@@ -34,35 +66,64 @@ class _FloatingNavigationBarState extends State<FloatingNavigationBar>
       ],
     );
   }
+}
 
-  Widget _buildSpacer(Color color) {
-    return ColoredBox(
-      color: color.withValues(alpha: 0.1),
-      child: SizedBox(height: 1, width: 24),
-    );
+class _NavigationItem extends StatelessWidget {
+  const _NavigationItem({
+    super.key,
+    this.onChanged,
+    required this.index,
+    required this.selectedIndex,
+    required this.icon,
+    required this.label,
+  });
+
+  final ValueChanged<int>? onChanged;
+  final int index;
+  final int selectedIndex;
+  final IconData icon;
+  final String label;
+
+  bool get _isSelected {
+    return index == selectedIndex;
   }
 
-  // 네비게이션 아이템 빌더
-  Widget _buildNavItem(int index, IconData icon, String label) {
-    int selectedIndex = 0; // This should be managed by the state
-    bool isActive = selectedIndex == index;
-    bool isDark = Theme.of(context).brightness == Brightness.dark;
+  Color _resolveBoxColor(BuildContext context) {
+    return _isSelected
+        ? ColorThemeExtension.indigoVivid
+        : Colors.transparent;
+  }
 
-    return GestureDetector(
-      onTap: () => setState(() => selectedIndex = index),
-      child: Container(
-        width: 40,
-        height: 40,
-        decoration: BoxDecoration(
-          color: isActive ? const Color(0xFF6366F1) : Colors.transparent,
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: Icon(
-          icon,
-          color: isActive
-              ? Colors.white
-              : context.colorTheme.textSub,
-          size: 20,
+  Color _resolveLabelColor(BuildContext context) {
+    final WidgetStates states = InteractiveScaleDetector.of(context).value;
+
+    if (!states.isHovered) {
+      return context.colorTheme.textSub;
+    }
+
+    return _isSelected ? Colors.white : ColorThemeExtension.indigoVivid;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return InteractiveScaleDetector(
+      hoverScale: _isSelected ? 0.08 : 0.16,
+      onTap: () => onChanged?.call(index),
+      child: Builder(
+        builder: (context) => AnimatedContainer(
+          height: 40,
+          width: 40,
+          curve: Curves.easeOutCubic,
+          duration: const Duration(milliseconds: 150),
+          decoration: BoxDecoration(
+            color: _resolveBoxColor(context),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Icon(
+            icon,
+            color: _resolveLabelColor(context),
+            size: 20,
+          ),
         ),
       ),
     );
