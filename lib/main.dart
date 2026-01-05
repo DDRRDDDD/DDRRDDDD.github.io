@@ -51,7 +51,3 @@ class MyPortfolioApp extends StatelessWidget {
     );
   }
 }
-
-// 네비게이션 (제미나이 참고)
-// 마우스 호버 애니메이션 (확장/축소)
-// 클릭 애니메이션 (축소/확장)

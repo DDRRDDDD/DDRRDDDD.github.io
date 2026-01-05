@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
 
 import '../datasource/rive_file_manager.dart';
-import '../extension/theme_extension.dart';
 
 class MyAvatar extends StatefulWidget {
   const MyAvatar({super.key});

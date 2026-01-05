@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 
 import '../extension/grid_extension.dart';
-import '../extension/theme_extension.dart';
 import '../widget/bento_container.dart';
 import '../widget/navigation_bar.dart';
 import 'about_section.dart';
