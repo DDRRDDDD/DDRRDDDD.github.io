@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 
 import '../extension/theme_extension.dart';
+import '../extension/widget_states_extension.dart';
 import '../theme/color_theme.dart';
 import '../widget/bento_container.dart';
 import '../widget/interactive_scale_detector.dart';
@@ -10,23 +11,31 @@ import '../widget/interactive_scale_detector.dart';
 class PersonalInfoBentoCard extends StatelessWidget {
   const PersonalInfoBentoCard({super.key});
 
+  Color get _hoverBorderColor {
+    return ColorThemeExtension.indigoVivid.withValues(alpha: 0.3);
+  }
+
+  Border? _resolveBorder(BuildContext context) {
+    return InteractiveScaleDetector.of(context).value.isHovered
+        ? Border.all(color: _hoverBorderColor)
+        : null;
+  }
+
   @override
   Widget build(BuildContext context) {
     return InteractiveScaleDetector(
       child: Builder(
         builder: (context) => BentoContainer(
           color: context.colorTheme.surface,
+          border: _resolveBorder(context),
           child: Column(
             crossAxisAlignment: .start,
             children: [
-              Align(
-                alignment: .centerLeft,
-                child: Text(
-                  '활동 및 자격 사항',
-                  style: context.textTheme.timelineTitle.copyWith(
-                    color: context.colorTheme.textMain,
-                    fontWeight: FontWeight.w900,
-                  ),
+              Text(
+                '활동 및 자격 사항',
+                style: context.textTheme.timelineTitle.copyWith(
+                  color: context.colorTheme.textMain,
+                  fontWeight: FontWeight.w900,
                 ),
               ),
               const Gap(9),

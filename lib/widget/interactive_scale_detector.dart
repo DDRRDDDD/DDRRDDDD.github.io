@@ -8,7 +8,7 @@ class InteractiveScaleDetector extends StatefulWidget {
     super.key,
     this.onTap,
     this.onHover,
-    this.hoverScale = 0.04,
+    this.hoverScale = 0.03,
     required this.child,
   });
 

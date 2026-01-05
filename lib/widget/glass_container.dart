@@ -3,8 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import '../extension/theme_extension.dart';
-
-const Radius _defaultRadius = Radius.circular(24);
+import 'bento_container.dart';
 
 class GlassContainer extends StatelessWidget {
   const GlassContainer({
@@ -17,15 +16,6 @@ class GlassContainer extends StatelessWidget {
     required this.child,
   });
 
-  const GlassContainer.bento({
-    super.key,
-    this.border,
-    this.borderRadius,
-    this.padding,
-    required this.child,
-  })  : width = double.infinity,
-        height = double.infinity;
-
   final Widget child;
   final double? width;
   final double? height;
@@ -37,7 +27,7 @@ class GlassContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: borderRadius
-          ?? const BorderRadius.all(_defaultRadius),
+          ?? const BorderRadius.all(defaultRadius),
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 16, sigmaY: 16),
         child: AnimatedContainer(
@@ -47,7 +37,7 @@ class GlassContainer extends StatelessWidget {
           decoration: BoxDecoration(
             color: context.colorTheme.glassOverlay,
             borderRadius: borderRadius
-                ?? const BorderRadius.all(_defaultRadius),
+                ?? const BorderRadius.all(defaultRadius),
             border: border
                 ?? Border.all(color: context.colorTheme.outline),
           ),
