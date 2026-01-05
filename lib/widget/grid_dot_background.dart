@@ -1,36 +1,29 @@
 import 'package:flutter/material.dart';
 
+import '../extension/theme_extension.dart';
+
 class GridDotContainer extends StatelessWidget {
   const GridDotContainer({
     super.key,
-    this.padding,
     this.dotSpacing = 40.0,
-    this.width = 1000.0,
     required this.dotColor,
     required this.child,
   });
 
-  final EdgeInsetsGeometry? padding;
   final double dotSpacing;
-  final double width;
   final Color dotColor;
   final Widget child;
 
   @override
   Widget build(BuildContext context) {
-    return CustomPaint(
-      painter: _GridPatternPainter(
-        color: dotColor,
-        spacing: dotSpacing,
-      ),
-      child: Center(
-        child: SizedBox(
-          width: width,
-          child: Padding(
-            padding: padding ?? EdgeInsets.zero,
-            child: child,
-          ),
+    return ColoredBox(
+      color: context.colorTheme.background,
+      child: CustomPaint(
+        painter: _GridPatternPainter(
+          color: dotColor,
+          spacing: dotSpacing,
         ),
+        child: child,
       ),
     );
   }
@@ -54,8 +47,11 @@ class _GridPatternPainter extends CustomPainter {
 
     const double radius = 1.0;
 
-    for (double x = 0; x < size.width; x += spacing) {
-      for (double y = 0; y < size.height; y += spacing) {
+    final double startX = (size.width % spacing) / 2;
+    final double startY = (size.height % spacing) / 2;
+
+    for (double x = startX; x <= size.width; x += spacing) {
+      for (double y = startY; y <= size.height; y += spacing) {
         canvas.drawCircle(Offset(x, y), radius, paint);
       }
     }
