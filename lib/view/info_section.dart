@@ -1,90 +1,119 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 
 import '../extension/theme_extension.dart';
-import 'bento_grid.dart';
+import '../theme/color_theme.dart';
+import '../widget/bento_container.dart';
+import '../widget/interactive_scale_detector.dart';
 
-class InfoSection extends StatelessWidget {
-  const InfoSection({super.key});
+class PersonalInfoBentoCard extends StatelessWidget {
+  const PersonalInfoBentoCard({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BentoContainer(
-      color: Colors.black,
-      child: Column(
-        crossAxisAlignment: .start,
-        children: [
-          Text(
-            '인적 사항',
-            style: context.textTheme.cardTitle.copyWith(
-              color: Colors.white,
-            ),
+    return InteractiveScaleDetector(
+      child: Builder(
+        builder: (context) => BentoContainer(
+          color: context.colorTheme.surface,
+          child: Column(
+            crossAxisAlignment: .start,
+            children: [
+              Align(
+                alignment: .centerLeft,
+                child: Text(
+                  '활동 및 자격 사항',
+                  style: context.textTheme.timelineTitle.copyWith(
+                    color: context.colorTheme.textMain,
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+              ),
+              const Gap(12),
+              const _InfoRow(
+                label: '오픈소스 기여',
+                content: 'WebDriverManager PR',
+                icon: FontAwesomeIcons.github,
+                isHighlighted: true,
+              ),
+              const _InfoRow(
+                label: '자격증',
+                content: '정보처리산업기사',
+                icon: FontAwesomeIcons.certificate,
+              ),
+            ],
           ),
-          const Gap(16),
-          const _InfoRow(
-            title: '오픈 소스 기여 경험',
-            contents: ['WebDriverManager\n프로젝트 PR'],
-          ),
-          const Gap(8),
-          const _InfoRow(
-            title: '자격증 보유',
-            contents: ['정보처리산업기사 보유'],
-          ),
-        ],
+        ),
       ),
     );
   }
 }
 
-// '자격증 및 오픈 소스 영역',
-
 class _InfoRow extends StatelessWidget {
-  const _InfoRow({
-    super.key,
-    required this.title,
-    required this.contents,
-  });
+  final String label;
+  final String content;
+  final IconData icon;
+  final bool isHighlighted;
 
-  final String title;
-  final List<String> contents;
+  const _InfoRow({
+    required this.label,
+    required this.content,
+    required this.icon,
+    this.isHighlighted = false,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: .start,
-      children: [
-        Text(
-          '$title ',
-          style: context.textTheme.bodyRegular.copyWith(
-            fontWeight: FontWeight.w600,
-            color: Colors.white,
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(
+            color: context.colorTheme.outline.withValues(alpha: 0.1),
           ),
         ),
-        const Gap(4),
-        ...List.generate(
-          contents.length,
-          (index) => Row(
-            crossAxisAlignment: .start,
-            children: [
-              Text(
-                '•  ',
-                style: context.textTheme.bodyRegular.copyWith(
-                  height: 1.5,
-                  color: Colors.white,
-                ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          vertical: 12,
+        ),
+        child: Column(
+          crossAxisAlignment: .start,
+          spacing: 4,
+          children: [
+            Text(
+              label,
+              style: TextStyle(
+                fontSize: 9,
+                letterSpacing: 1.0,
+                fontWeight: FontWeight.w900,
+                color: context.colorTheme.textSub.withValues(alpha: 0.6),
               ),
-              Expanded(
-                child: Text(
-                  contents.elementAt(index),
-                  style: context.textTheme.bodyRegular.copyWith(
-                    color: Colors.white,
+            ),
+            Row(
+              spacing: 6,
+              crossAxisAlignment: .end,
+              children: [
+                FaIcon(
+                  icon,
+                  size: 14,
+                  color: ColorThemeExtension.indigoVivid,
+                ),
+                Expanded(
+                  child: Text(
+                    content,
+                    overflow: TextOverflow.ellipsis,
+                    style: context.textTheme.labelSmall.copyWith(
+                      color: isHighlighted
+                          ? ColorThemeExtension.indigoVivid
+                          : context.colorTheme.textMain,
+                    ),
                   ),
                 ),
-              ),
-            ],
-          ),
+              ],
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }

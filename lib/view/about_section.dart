@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../extension/theme_extension.dart';
+import '../widget/bento_container.dart';
 import '../widget/interactive_scale_detector.dart';
-import 'bento_grid.dart';
 
 class AboutSection extends StatelessWidget {
   const AboutSection({super.key});
@@ -12,7 +12,7 @@ class AboutSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: .spaceBetween,
-      spacing: BentoGrid.bentoGap,
+      spacing: BentoContainer.bentoGap,
       children: [
         _CompetencyCard(
           color: Colors.orange,

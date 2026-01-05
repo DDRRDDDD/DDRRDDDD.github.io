@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../extension/theme_extension.dart';
-import 'bento_grid.dart';
+import '../widget/bento_container.dart';
 
 class SocialSection extends StatelessWidget {
   const SocialSection({super.key});
@@ -12,12 +12,12 @@ class SocialSection extends StatelessWidget {
     return Wrap(
       alignment: .spaceBetween,
       runAlignment: .spaceBetween,
-      spacing: BentoGrid.bentoGap,
-      runSpacing: BentoGrid.bentoGap,
+      spacing: BentoContainer.bentoGap,
+      runSpacing: BentoContainer.bentoGap,
       children: [
         BentoContainer(
-          width: (BentoGrid.bentoWidth - BentoGrid.bentoGap) / 2,
-          height: (BentoGrid.bentoHeight - BentoGrid.bentoGap) / 2,
+          width: (BentoContainer.bentoWidth - BentoContainer.bentoGap) / 2,
+          height: (BentoContainer.bentoHeight - BentoContainer.bentoGap) / 2,
           color: context.colorTheme.textMain,
           child: Center(
             child: FaIcon(
@@ -28,8 +28,8 @@ class SocialSection extends StatelessWidget {
           ),
         ),
         BentoContainer(
-          width: (BentoGrid.bentoWidth - BentoGrid.bentoGap) / 2,
-          height: (BentoGrid.bentoHeight - BentoGrid.bentoGap) / 2,
+          width: (BentoContainer.bentoWidth - BentoContainer.bentoGap) / 2,
+          height: (BentoContainer.bentoHeight - BentoContainer.bentoGap) / 2,
           color: context.colorTheme.textMain,
           child: Center(
             child: FaIcon(
@@ -40,8 +40,8 @@ class SocialSection extends StatelessWidget {
           ),
         ),
         BentoContainer(
-          height: (BentoGrid.bentoHeight - BentoGrid.bentoGap) / 2,
-          width: BentoGrid.bentoWidth,
+          height: (BentoContainer.bentoHeight - BentoContainer.bentoGap) / 2,
+          width: BentoContainer.bentoWidth,
           color: context.colorTheme.textSub,
           child: Center(
             child: Text(

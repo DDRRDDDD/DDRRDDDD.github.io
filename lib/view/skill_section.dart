@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../datasource/svg_manager.dart';
 import '../extension/theme_extension.dart';
+import '../widget/bento_container.dart';
 import '../widget/bouncing_ball_container.dart';
-import 'bento_grid.dart';
 
 class SkillSection extends StatelessWidget {
   const SkillSection({super.key});
@@ -42,8 +42,9 @@ class SkillSection extends StatelessWidget {
               children: [
                 Text(
                   '보유 기술',
-                  style: context.textTheme.cardTitle.copyWith(
+                  style: context.textTheme.timelineTitle.copyWith(
                     color: context.colorTheme.textMain,
+                    fontWeight: FontWeight.w900,
                   ),
                 ),
                 ConstrainedBox(
