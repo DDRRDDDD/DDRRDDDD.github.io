@@ -23,7 +23,7 @@ class InfoSection extends StatelessWidget {
           const Gap(16),
           const _InfoRow(
             title: '오픈 소스 기여 경험',
-            contents: ['WebDriverManager 프로젝트 PR'],
+            contents: ['WebDriverManager\n프로젝트 PR'],
           ),
           const Gap(8),
           const _InfoRow(
