@@ -9,6 +9,11 @@ class SocialSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double boxWidth =
+        (BentoContainer.bentoWidth - BentoContainer.bentoGap) / 2;
+    final double boxHeight =
+        (BentoContainer.bentoHeight - BentoContainer.bentoGap) / 2;
+
     return Wrap(
       alignment: .spaceBetween,
       runAlignment: .spaceBetween,
@@ -16,8 +21,8 @@ class SocialSection extends StatelessWidget {
       runSpacing: BentoContainer.bentoGap,
       children: [
         BentoContainer(
-          width: (BentoContainer.bentoWidth - BentoContainer.bentoGap) / 2,
-          height: (BentoContainer.bentoHeight - BentoContainer.bentoGap) / 2,
+          width: boxWidth,
+          height: boxHeight,
           color: context.colorTheme.textMain,
           child: Center(
             child: FaIcon(
@@ -28,8 +33,8 @@ class SocialSection extends StatelessWidget {
           ),
         ),
         BentoContainer(
-          width: (BentoContainer.bentoWidth - BentoContainer.bentoGap) / 2,
-          height: (BentoContainer.bentoHeight - BentoContainer.bentoGap) / 2,
+          width: boxWidth,
+          height: boxHeight,
           color: context.colorTheme.textMain,
           child: Center(
             child: FaIcon(
@@ -40,7 +45,7 @@ class SocialSection extends StatelessWidget {
           ),
         ),
         BentoContainer(
-          height: (BentoContainer.bentoHeight - BentoContainer.bentoGap) / 2,
+          height: boxHeight,
           width: BentoContainer.bentoWidth,
           color: context.colorTheme.textSub,
           child: Center(
