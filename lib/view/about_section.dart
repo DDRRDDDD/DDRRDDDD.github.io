@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../extension/theme_extension.dart';
+import '../widget/interactive_scale_detector.dart';
 import 'bento_grid.dart';
 
 class AboutSection extends StatelessWidget {
@@ -57,31 +58,33 @@ class _CompetencyCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: BentoContainer(
-        color: context.colorTheme.outline,
-        child: Column(
-          crossAxisAlignment: .start,
-          spacing: 12,
-          children: [
-            Row(
-              spacing: 16,
-              children: [
-                _buildIconBadge(),
-                Text(
-                  title,
-                  style: context.textTheme.cardTitle.copyWith(
-                    color: context.colorTheme.textMain,
+      child: InteractiveScaleDetector(
+        child: BentoContainer(
+          color: context.colorTheme.surfaceAlt,
+          child: Column(
+            crossAxisAlignment: .start,
+            spacing: 12,
+            children: [
+              Row(
+                spacing: 16,
+                children: [
+                  _buildIconBadge(),
+                  Text(
+                    title,
+                    style: context.textTheme.cardTitle.copyWith(
+                      color: context.colorTheme.textMain,
+                    ),
                   ),
-                ),
-              ],
-            ),
-            Text(
-              description,
-              style: context.textTheme.bodyRegular.copyWith(
-                color: context.colorTheme.textSub,
+                ],
               ),
-            ),
-          ],
+              Text(
+                description,
+                style: context.textTheme.bodyRegular.copyWith(
+                  color: context.colorTheme.textSub,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
