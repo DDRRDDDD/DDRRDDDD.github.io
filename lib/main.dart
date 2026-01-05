@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 
-import 'view/main_grid.dart';
 import 'datasource/rive_file_manager.dart';
 import 'datasource/svg_manager.dart';
 import 'extension/brightness_extension.dart';
+import 'route/route.dart';
 import 'theme/chip_color_theme.dart';
 import 'theme/color_theme.dart';
 import 'theme/text_theme.dart';
@@ -31,14 +31,15 @@ class MyPortfolioApp extends StatelessWidget {
     // TwoDimensionalScrollView
     return BrightnessProvider(
       builder: (_, brightness) => ResponsiveLayout(
-        child: MaterialApp(
+        child: MaterialApp.router(
           title: '김용민 | 플러터 개발자',
           debugShowCheckedModeBanner: false,
-          home: const MainGrid(),
+          routerConfig: router,
           themeMode: brightness.themeMode,
           theme: ThemeData(
             fontFamily: 'Noto_Sans',
             splashFactory: NoSplash.splashFactory,
+            scaffoldBackgroundColor: Colors.transparent,
             extensions: [
               ColorThemeExtension.from(brightness),
               ChipColorThemeExtension.from(brightness),
