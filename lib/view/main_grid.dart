@@ -18,7 +18,6 @@ class MainGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
-      backgroundColor: context.colorTheme.background,
       floatingActionButtonLocation: const NavigationBarLocation(),
       floatingActionButton: const FloatingNavigationBar(),
       body: SingleChildScrollView(
