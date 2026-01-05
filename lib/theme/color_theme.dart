@@ -18,7 +18,7 @@ const darkColorTheme = ColorThemeExtension._(
   primary: ColorThemeExtension.defaultPrimary,
   secondary: Color(0xFF013E73),
   background: Color(0xFF111827),
-  surface: Color(0xFF1F2937),
+  surface: Color(0x801E293B),
   surfaceAlt: Color(0xFF1F2937),
   textMain: Color(0xFFF3F4F6),
   textSub: Color(0xFFD1D5DB),

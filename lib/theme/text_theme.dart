@@ -65,7 +65,9 @@ class TextThemeExtension extends ThemeExtension<TextThemeExtension> {
   final TextStyle buttonText;
   final TextStyle labelSmall;
 
-  factory TextThemeExtension.defaultTheme() => defaultTextTheme;
+  factory TextThemeExtension.defaultTheme() {
+    return defaultTextTheme;
+  }
 
   const TextThemeExtension._({
     required this.heroTitle,
