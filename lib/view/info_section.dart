@@ -29,17 +29,17 @@ class PersonalInfoBentoCard extends StatelessWidget {
                   ),
                 ),
               ),
-              const Gap(12),
+              const Gap(9),
               const _InfoRow(
                 label: '오픈소스 기여',
                 content: 'WebDriverManager PR',
-                icon: FontAwesomeIcons.github,
+                icon: FontAwesomeIcons.githubAlt,
                 isHighlighted: true,
               ),
               const _InfoRow(
                 label: '자격증',
                 content: '정보처리산업기사',
-                icon: FontAwesomeIcons.certificate,
+                icon: FontAwesomeIcons.stamp,
               ),
             ],
           ),
@@ -78,7 +78,7 @@ class _InfoRow extends StatelessWidget {
         ),
         child: Column(
           crossAxisAlignment: .start,
-          spacing: 4,
+          spacing: 8,
           children: [
             Text(
               label,
@@ -86,16 +86,15 @@ class _InfoRow extends StatelessWidget {
                 fontSize: 9,
                 letterSpacing: 1.0,
                 fontWeight: FontWeight.w900,
-                color: context.colorTheme.textSub.withValues(alpha: 0.6),
+                color: context.colorTheme.textSub.withValues(alpha: 0.5),
               ),
             ),
             Row(
               spacing: 6,
-              crossAxisAlignment: .end,
               children: [
                 FaIcon(
                   icon,
-                  size: 14,
+                  size: context.textTheme.labelSmall.fontSize,
                   color: ColorThemeExtension.indigoVivid,
                 ),
                 Expanded(
@@ -103,6 +102,8 @@ class _InfoRow extends StatelessWidget {
                     content,
                     overflow: TextOverflow.ellipsis,
                     style: context.textTheme.labelSmall.copyWith(
+                      height: 1.2,
+                      fontWeight: FontWeight.w600,
                       color: isHighlighted
                           ? ColorThemeExtension.indigoVivid
                           : context.colorTheme.textMain,
