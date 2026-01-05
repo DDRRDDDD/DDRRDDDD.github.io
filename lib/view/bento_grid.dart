@@ -3,7 +3,7 @@ import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 
 import '../extension/grid_extension.dart';
 import '../extension/theme_extension.dart';
-import '../widget/theme_toggle.dart';
+import '../widget/navigation_bar.dart';
 import 'about_section.dart';
 import 'hero_section.dart';
 import 'info_section.dart';
@@ -20,7 +20,10 @@ class BentoGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
       backgroundColor: context.colorTheme.background,
+      floatingActionButtonLocation: const NavigationBarLocation(),
+      floatingActionButton: const FloatingNavigationBar(),
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(
           horizontal: MediaQuery.sizeOf(context).width * 0.05,
@@ -62,7 +65,6 @@ class BentoGrid extends StatelessWidget {
           ),
         ),
       ),
-      floatingActionButton: const BrightnessToggle(),
     );
   }
 }
