@@ -18,7 +18,7 @@ class SkillSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return DecoratedBox(
       decoration: BoxDecoration(
         color: context.colorTheme.surfaceAlt,
         borderRadius: BentoContainer.borderRadius,
@@ -35,7 +35,7 @@ class SkillSection extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: BentoContainer.contentPadding,
+            padding: BentoContainer.cardPadding,
             child: Column(
               crossAxisAlignment: .start,
               spacing: 10,
@@ -53,7 +53,7 @@ class SkillSection extends StatelessWidget {
                   ),
                   child: Text(
                     '부딪히며 습득하고,\n끊임없이 경험을 쌓아 올렸습니다.',
-                    style: context.textTheme.labelSmall.copyWith(
+                    style: context.textTheme.labelMedium.copyWith(
                       color: context.colorTheme.textSub,
                     ),
                   ),
