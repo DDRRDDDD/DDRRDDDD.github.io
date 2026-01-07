@@ -12,13 +12,13 @@ class PersonalInfoBentoCard extends StatelessWidget {
   const PersonalInfoBentoCard({super.key});
 
   Color get _hoverBorderColor {
-    return ColorThemeExtension.indigoVivid.withValues(alpha: 0.3);
+    return ColorThemeExtension.indigoVivid.withValues(alpha: 0.4);
   }
 
   Border? _resolveBorder(BuildContext context) {
     return InteractiveScaleDetector.of(context).value.isHovered
         ? Border.all(color: _hoverBorderColor)
-        : null;
+        : Border.all(color: context.colorTheme.outline);
   }
 
   @override
@@ -103,14 +103,14 @@ class _InfoRow extends StatelessWidget {
               children: [
                 FaIcon(
                   icon,
-                  size: context.textTheme.labelSmall.fontSize,
+                  size: context.textTheme.labelMedium.fontSize,
                   color: ColorThemeExtension.indigoVivid,
                 ),
                 Expanded(
                   child: Text(
                     content,
                     overflow: TextOverflow.ellipsis,
-                    style: context.textTheme.labelSmall.copyWith(
+                    style: context.textTheme.labelMedium.copyWith(
                       height: 1.2,
                       fontWeight: FontWeight.w600,
                       color: isHighlighted
