@@ -28,7 +28,6 @@ class MyPortfolioApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TwoDimensionalScrollView
     return BrightnessProvider(
       builder: (_, brightness) => ResponsiveLayout(
         child: MaterialApp.router(
