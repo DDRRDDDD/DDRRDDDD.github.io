@@ -8,12 +8,14 @@ class InteractiveScaleDetector extends StatefulWidget {
     super.key,
     this.onTap,
     this.onHover,
+    this.enabled = true,
     this.hoverScale = 0.03,
     required this.child,
   });
 
   final VoidCallback? onTap;
   final VoidCallback? onHover;
+  final bool enabled;
   final double hoverScale;
   final Widget child;
 
@@ -43,15 +45,35 @@ class _InteractiveScaleDetectorState extends State<InteractiveScaleDetector> {
   }
 
   MouseCursor get _cursor {
-    return widget.onTap != null ? SystemMouseCursors.click : MouseCursor.defer;
+    if (!widget.enabled) {
+      return SystemMouseCursors.forbidden;
+    }
+
+    if (widget.onTap != null) {
+      return SystemMouseCursors.click;
+    }
+
+    return MouseCursor.defer;
   }
 
   double _resolveScale(WidgetStates states) {
-    double scale = 1.0;
-    scale += states.isHovered ? widget.hoverScale : 0.0;
-    scale -= states.isPressed ? widget.hoverScale : 0.0;
+    final bool isClickable = widget.onTap != null && widget.enabled;
 
-    return scale;
+    if (isClickable && states.isPressed) {
+      return states.isHovered ? 1.0 : 1.0 - widget.hoverScale;
+    }
+
+    if (states.isHovered) {
+      return 1.0 + widget.hoverScale;
+    }
+
+    return 1.0;
+  }
+
+  void _handleTap() {
+    if (widget.enabled) {
+      widget.onTap?.call();
+    }
   }
 
   @override
@@ -70,7 +92,7 @@ class _InteractiveScaleDetectorState extends State<InteractiveScaleDetector> {
         child: GestureDetector(
           onTapUp: (_) {
             _controller.pressOff();
-            widget.onTap?.call();
+            _handleTap();
           },
           onTapCancel: () {
             _controller.pressOff();
