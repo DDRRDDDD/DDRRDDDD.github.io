@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:gap/gap.dart';
 
+import '../extension/let_extension.dart';
+import '../extension/number_extension.dart';
 import '../extension/theme_extension.dart';
+import '../extension/widget_states_extension.dart';
+import '../theme/color_theme.dart';
 import '../widget/bento_container.dart';
+import '../widget/interactive_scale_detector.dart';
 
 class SocialSection extends StatelessWidget {
   const SocialSection({super.key});
@@ -20,44 +27,224 @@ class SocialSection extends StatelessWidget {
       spacing: BentoContainer.bentoGap,
       runSpacing: BentoContainer.bentoGap,
       children: [
-        BentoContainer(
-          width: boxWidth,
-          height: boxHeight,
-          color: context.colorTheme.textMain,
-          child: Center(
-            child: FaIcon(
-              FontAwesomeIcons.github,
-              color: context.colorTheme.background,
-              size: 40,
-            ),
-          ),
-        ),
-        BentoContainer(
-          width: boxWidth,
-          height: boxHeight,
-          color: context.colorTheme.textMain,
-          child: Center(
-            child: FaIcon(
-              FontAwesomeIcons.bloggerB,
-              color: context.colorTheme.background,
-              size: 40,
-            ),
-          ),
-        ),
-        BentoContainer(
-          height: boxHeight,
-          width: BentoContainer.bentoWidth,
-          color: context.colorTheme.textSub,
-          child: Center(
-            child: Text(
-              'Contact Me',
-              style: context.textTheme.sectionTitle.copyWith(
-                color: context.colorTheme.background,
+        InteractiveScaleDetector(
+          hoverScale: 0.06,
+          onTap: () => Uri
+              .parse('https://github.com/DDRRDDDD')
+              .let(launchUrl),
+          child: BentoContainer(
+            width: boxWidth,
+            height: boxHeight,
+            border: Border.all(color: context.colorTheme.outline),
+            color: context.colorTheme.surface,
+            child: Center(
+              child: FaIcon(
+                FontAwesomeIcons.github,
+                color: context.colorTheme.textMain,
+                size: 40,
               ),
             ),
           ),
         ),
+        InteractiveScaleDetector(
+          enabled: false,
+          hoverScale: 0.06,
+          child: BentoContainer(
+            width: boxWidth,
+            height: boxHeight,
+            border: Border.all(color: context.colorTheme.outline),
+            color: context.colorTheme.surface,
+            child: Center(
+              child: FaIcon(
+                FontAwesomeIcons.bloggerB,
+                color: context.colorTheme.textMain,
+                size: 40,
+              ),
+            ),
+          ),
+        ),
+        const IndigoFluidCard(),
       ],
+    );
+  }
+}
+
+class IndigoFluidCard extends StatelessWidget {
+  const IndigoFluidCard({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return InteractiveScaleDetector(
+      child: _AwesomeContainer(
+        child: Padding(
+          padding: BentoContainer.contentPadding,
+          child: Row(
+            mainAxisAlignment: .spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: .start,
+                mainAxisAlignment: .center,
+                children: [
+                  Text(
+                    '함께 일하고',
+                    style: context.textTheme.heroTitle.copyWith(
+                      color: Colors.white,
+                      fontSize: 18,
+                    ),
+                  ),
+                  Text(
+                    '싶습니다',
+                    style: context.textTheme.heroTitle.copyWith(
+                      color: Colors.white,
+                      fontSize: 22,
+                    ),
+                  ),
+                  const Gap(8),
+                  Text(
+                    '작은 제안도 소중히 받겠습니다',
+                    style: context.textTheme.labelSmall.copyWith(
+                      color: darkColorTheme.textMain.withValues(alpha: 0.8),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox.square(
+                dimension: 48,
+                child: DecoratedBox(
+                  decoration: ShapeDecoration(
+                    color: Colors.white,
+                    shape: CircleBorder(),
+                    shadows: [
+                      BoxShadow(
+                        blurRadius: 10,
+                        color: ColorThemeExtension.shadow,
+                        offset: Offset(0, 5),
+                      ),
+                    ],
+                  ),
+                  child: Icon(
+                    Icons.arrow_forward_rounded,
+                    color: ColorThemeExtension.indigoVivid,
+                    size: 24,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _AwesomeContainer extends StatelessWidget {
+  const _AwesomeContainer({
+    super.key,
+    required this.child,
+  });
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    final bool isHovered = InteractiveScaleDetector.of(context).value.isHovered;
+
+    return SizedBox(
+      width: BentoContainer.bentoWidth,
+      height: (BentoContainer.bentoHeight - BentoContainer.bentoGap) / 2,
+      child: ClipRRect(
+        borderRadius: BentoContainer.borderRadius,
+        child: ColoredBox(
+          color: const Color(0xFF4F46E5),
+          child: Stack(
+            children: [
+              // Top-Left Blob (Purple)
+              const Positioned(
+                top: -50,
+                left: -30,
+                child: SizedBox.square(
+                  dimension: 180,
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      gradient: LinearGradient(
+                        colors: [
+                          Colors.transparent,
+                          Color(0x999C27B0), // opacity 60%
+                        ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              // Bottom-Right Blob (Blue)
+              const Positioned(
+                bottom: -50,
+                right: -30,
+                child: SizedBox.square(
+                  dimension: 150,
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      gradient: LinearGradient(
+                        colors: [
+                          Colors.transparent,
+                          Color(0x992196F3), // opacity 60%
+                        ],
+                        begin: Alignment.bottomRight,
+                        end: Alignment.topLeft,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+
+              Positioned(
+                top: 12,
+                right: 60,
+                child: Transform.rotate(
+                  angle: 12.radian,
+                  child: FaIcon(
+                    FontAwesomeIcons.code,
+                    size: 24,
+                    color: Colors.white.withValues(
+                      alpha: isHovered ? 0.2 : 0.1,
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                bottom: -5,
+                left: 40,
+                child: Transform.rotate(
+                  angle: -12.radian,
+                  child: Icon(
+                    Icons.terminal,
+                    size: 24,
+                    color: Colors.white.withValues(
+                      alpha: isHovered ? 0.2 : 0.1,
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                top: 35,
+                left: -10,
+                child: Icon(
+                  Icons.auto_awesome,
+                  size: 40,
+                  color: ColorThemeExtension.electricMagenta.withValues(
+                    alpha: isHovered ? 0.4 : 0.2,
+                  ),
+                ),
+              ),
+              child,
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
