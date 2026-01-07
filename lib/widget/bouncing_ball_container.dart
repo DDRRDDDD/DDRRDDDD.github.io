@@ -256,7 +256,7 @@ class BouncingBallController extends ChangeNotifier with LeadingDebounce {
 
     final double randomPercent = Random().nextDouble().clamp(0.3, 0.7);
     final double xPos = lerpDouble(-halfWidth, halfWidth, randomPercent)!;
-    final double yPos = -halfHeight - 3.0; // - 3.0: 컨테이너 영역 위쪽 바깥에서 생성
+    final double yPos = -halfHeight - 1.0; // - 1.0: 컨테이너 영역 위쪽 바깥에서 생성
 
     final BallOption ballOption = ballOptions.elementAt(currentBallCount);
 
