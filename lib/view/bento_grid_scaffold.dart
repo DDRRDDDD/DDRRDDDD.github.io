@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 import '../extension/brightness_extension.dart';
 import '../extension/theme_extension.dart';
@@ -10,14 +9,14 @@ import '../widget/theme_mode_provider.dart';
 class BentoGridScaffold extends StatelessWidget {
   const BentoGridScaffold({
     super.key,
-    required this.navigationShell,
+    required this.child,
   });
 
-  factory BentoGridScaffold.shell(_, _, StatefulNavigationShell shell) {
-    return BentoGridScaffold(navigationShell: shell);
+  factory BentoGridScaffold.shell(_, _, Widget child) {
+    return BentoGridScaffold(child: child);
   }
 
-  final StatefulNavigationShell navigationShell;
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +28,7 @@ class BentoGridScaffold extends StatelessWidget {
         dotColor: context.colorTheme.primary.withValues(
           alpha: BrightnessProvider.of(context).value.isLight ? 0.25 : 0.4,
         ),
-        child: navigationShell,
+        child: child,
       ),
     );
   }
