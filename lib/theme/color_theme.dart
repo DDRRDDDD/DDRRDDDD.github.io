@@ -31,6 +31,8 @@ class ColorThemeExtension extends ThemeExtension<ColorThemeExtension> {
   static const Color indigoVivid = Color(0xFF6366F1);
   static const Color electricMagenta = Color(0xFFD500F9);
 
+  static const Color shadow = Color(0x33000000);
+
   final Color primary;
   final Color secondary;
   final Color background;
