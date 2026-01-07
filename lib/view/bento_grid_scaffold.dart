@@ -1,35 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
-import '../extension/brightness_extension.dart';
-import '../extension/theme_extension.dart';
-import '../widget/grid_dot_background.dart';
 import '../widget/navigation_bar.dart';
-import '../widget/theme_mode_provider.dart';
 
 class BentoGridScaffold extends StatelessWidget {
   const BentoGridScaffold({
     super.key,
-    required this.child,
+    required this.shell,
   });
 
-  factory BentoGridScaffold.shell(_, _, Widget child) {
-    return BentoGridScaffold(child: child);
+  factory BentoGridScaffold.shell(_, _, StatefulNavigationShell shell) {
+    return BentoGridScaffold(shell: shell);
   }
 
-  final Widget child;
+  final StatefulNavigationShell shell;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
-      floatingActionButtonLocation: const NavigationBarLocation(),
-      floatingActionButton: const FloatingNavigationBar(),
-      body: GridDotContainer(
-        dotColor: context.colorTheme.primary.withValues(
-          alpha: BrightnessProvider.of(context).value.isLight ? 0.25 : 0.4,
-        ),
-        child: child,
+      body: shell,
+      floatingActionButton: FloatingNavigationBar(
+        onNavigate: shell.goBranch,
+        currentIndex: shell.currentIndex,
+        items: const [
+          NavigationItem(
+            size: 24,
+            icon: Icons.person_outline,
+            label: 'ABOUT ME',
+          ),
+          NavigationItem(
+            size: 20,
+            icon: Icons.rocket_launch_outlined,
+            label: 'PROJECTS',
+          ),
+        ],
       ),
+      floatingActionButtonLocation: const NavigationBarLocation(),
     );
   }
 }
