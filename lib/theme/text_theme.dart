@@ -5,6 +5,7 @@ const defaultTextTheme = TextThemeExtension._(
     fontWeight: FontWeight.w900,
     fontSize: 60.0,
     height: 1.1,
+    letterSpacing: -0.5,
   ),
   heroBadge: TextStyle(
     fontWeight: FontWeight.w700,
@@ -46,10 +47,15 @@ const defaultTextTheme = TextThemeExtension._(
     fontWeight: FontWeight.w700,
     fontSize: 16.0,
   ),
-  labelSmall: TextStyle(
+  labelMedium: TextStyle(
     fontWeight: FontWeight.w500,
     fontSize: 12.0,
     letterSpacing: -0.1,
+  ),
+  labelSmall: TextStyle(
+    fontWeight: FontWeight.w500,
+    fontSize: 9.0,
+    letterSpacing: 0.2,
   ),
 );
 
@@ -63,6 +69,7 @@ class TextThemeExtension extends ThemeExtension<TextThemeExtension> {
   final TextStyle bodyLead;
   final TextStyle bodyRegular;
   final TextStyle buttonText;
+  final TextStyle labelMedium;
   final TextStyle labelSmall;
 
   factory TextThemeExtension.defaultTheme() {
@@ -79,6 +86,7 @@ class TextThemeExtension extends ThemeExtension<TextThemeExtension> {
     required this.bodyLead,
     required this.bodyRegular,
     required this.buttonText,
+    required this.labelMedium,
     required this.labelSmall,
   });
 
@@ -94,6 +102,7 @@ class TextThemeExtension extends ThemeExtension<TextThemeExtension> {
     TextStyle? bodyRegular,
     TextStyle? buttonText,
     TextStyle? labelSmall,
+    TextStyle? labelMedium,
   }) {
     return TextThemeExtension._(
       heroTitle: heroTitle ?? this.heroTitle,
@@ -105,7 +114,8 @@ class TextThemeExtension extends ThemeExtension<TextThemeExtension> {
       bodyLead: bodyLead ?? this.bodyLead,
       bodyRegular: bodyRegular ?? this.bodyRegular,
       buttonText: buttonText ?? this.buttonText,
-      labelSmall: labelSmall ?? this.labelSmall,
+      labelMedium: labelSmall ?? this.labelMedium,
+      labelSmall: labelSmall ?? this.labelSmall
     );
   }
 
@@ -125,6 +135,7 @@ class TextThemeExtension extends ThemeExtension<TextThemeExtension> {
       bodyLead: TextStyle.lerp(bodyLead, other.bodyLead, t)!,
       bodyRegular: TextStyle.lerp(bodyRegular, other.bodyRegular, t)!,
       buttonText: TextStyle.lerp(buttonText, other.buttonText, t)!,
+      labelMedium: TextStyle.lerp(labelMedium, other.labelMedium, t)!,
       labelSmall: TextStyle.lerp(labelSmall, other.labelSmall, t)!,
     );
   }
