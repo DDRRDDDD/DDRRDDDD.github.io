@@ -9,24 +9,45 @@ import 'glass_container.dart';
 import 'interactive_scale_detector.dart';
 
 class FloatingNavigationBar extends StatefulWidget {
-  const FloatingNavigationBar({super.key});
+  const FloatingNavigationBar({
+    super.key,
+    this.onNavigate,
+    this.currentIndex = 0,
+    this.items = const [],
+  });
+
+  final ValueChanged<int>? onNavigate;
+  final int currentIndex;
+  final List<NavigationItem> items;
 
   @override
   State<FloatingNavigationBar> createState() => _FloatingNavigationBarState();
 }
 
-class _FloatingNavigationBarState extends State<FloatingNavigationBar>
-    with SingleTickerProviderStateMixin {
-  late int _selectedIndex;
+class _FloatingNavigationBarState extends State<FloatingNavigationBar> {
+  late int _currentIndex;
 
   @override
   void initState() {
     super.initState();
-    _selectedIndex = 0;
+    _currentIndex = widget.currentIndex;
   }
 
-  void _onItemChanged(int index) {
-    setState(() =>_selectedIndex = index);
+  @override
+  void didUpdateWidget(FloatingNavigationBar oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.currentIndex != widget.currentIndex) {
+      setState(() => _currentIndex = widget.currentIndex);
+    }
+  }
+
+  int get _computedItemCount {
+    return widget.items.length * 2 - 1;
+  }
+
+  void _onNavigate(int itemIndex) {
+    setState(() => _currentIndex = itemIndex);
+    widget.onNavigate?.call(_currentIndex);
   }
 
   @override
@@ -39,31 +60,32 @@ class _FloatingNavigationBarState extends State<FloatingNavigationBar>
           padding: const EdgeInsets.all(10),
           child: Column(
             spacing: 12,
-            children: [
-              _NavigationItem(
-                index: 0,
-                selectedIndex: _selectedIndex,
-                onChanged: _onItemChanged,
-                icon: Icons.person_outline,
-                label: 'ABOUT ME',
-              ),
-              Gap(
-                1,
-                crossAxisExtent: 24,
-                color: context.colorTheme.outline.withValues(alpha: 0.1),
-              ),
-              _NavigationItem(
-                index: 1,
-                selectedIndex: _selectedIndex,
-                onChanged: _onItemChanged,
-                icon: Icons.rocket_launch_outlined,
-                label: 'PROJECTS',
-              ),
-            ],
+            children: List.generate(
+              _computedItemCount,
+              _buildSeparatedItem,
+            ),
           ),
         ),
         const ThemeToggleButton(),
       ],
+    );
+  }
+
+  Widget _buildSeparatedItem(int index) {
+    final int itemIndex = index ~/ 2;
+
+    if (index.isOdd) {
+      return Gap(
+        1,
+        crossAxisExtent: 24,
+        color: context.colorTheme.outline.withValues(alpha: 0.1),
+      );
+    }
+
+    return _NavigationItem(
+      onNavigate: () => _onNavigate(itemIndex),
+      isSelected: widget.currentIndex == itemIndex,
+      item: widget.items.elementAt(itemIndex),
     );
   }
 }
@@ -71,28 +93,14 @@ class _FloatingNavigationBarState extends State<FloatingNavigationBar>
 class _NavigationItem extends StatelessWidget {
   const _NavigationItem({
     super.key,
-    this.onChanged,
-    required this.index,
-    required this.selectedIndex,
-    required this.icon,
-    required this.label,
+    this.isSelected = false,
+    this.onNavigate,
+    required this.item,
   });
 
-  final ValueChanged<int>? onChanged;
-  final int index;
-  final int selectedIndex;
-  final IconData icon;
-  final String label;
-
-  bool get _isSelected {
-    return index == selectedIndex;
-  }
-
-  Color _resolveBoxColor(BuildContext context) {
-    return _isSelected
-        ? ColorThemeExtension.indigoVivid
-        : Colors.transparent;
-  }
+  final bool isSelected;
+  final VoidCallback? onNavigate;
+  final NavigationItem item;
 
   Color _resolveLabelColor(BuildContext context) {
     final WidgetStates states = InteractiveScaleDetector.of(context).value;
@@ -101,14 +109,14 @@ class _NavigationItem extends StatelessWidget {
       return context.colorTheme.textSub;
     }
 
-    return _isSelected ? Colors.white : ColorThemeExtension.indigoVivid;
+    return isSelected ? Colors.white : ColorThemeExtension.indigoVivid;
   }
 
   @override
   Widget build(BuildContext context) {
     return InteractiveScaleDetector(
-      hoverScale: _isSelected ? 0.08 : 0.16,
-      onTap: () => onChanged?.call(index),
+      hoverScale: isSelected ? 0.08 : 0.16,
+      onTap: onNavigate,
       child: Builder(
         builder: (context) => AnimatedContainer(
           height: 40,
@@ -116,13 +124,15 @@ class _NavigationItem extends StatelessWidget {
           curve: Curves.easeOutCubic,
           duration: const Duration(milliseconds: 150),
           decoration: BoxDecoration(
-            color: _resolveBoxColor(context),
+            color: isSelected
+                ? ColorThemeExtension.indigoVivid
+                : Colors.transparent,
             borderRadius: BorderRadius.circular(12),
           ),
           child: Icon(
-            icon,
+            item.icon,
+            size: item.size,
             color: _resolveLabelColor(context),
-            size: 20,
           ),
         ),
       ),
@@ -142,4 +152,16 @@ class NavigationBarLocation extends FloatingActionButtonLocation {
 
     return Offset(buttonX, buttonY);
   }
+}
+
+class NavigationItem {
+  const NavigationItem({
+    this.label,
+    this.size = 20,
+    required this.icon,
+  });
+
+  final String? label;
+  final double size;
+  final IconData icon;
 }
