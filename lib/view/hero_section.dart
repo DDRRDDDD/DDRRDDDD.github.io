@@ -48,7 +48,9 @@ class HeroSection extends StatelessWidget {
             ),
             GradientText(
               '플러터 개발자',
-              style: context.textTheme.heroTitle,
+              style: context.textTheme.heroTitle.copyWith(
+                fontSize: context.textTheme.heroTitle.fontSize! * 1.15,
+              ),
               gradient: const LinearGradient(
                 colors: [
                   ColorThemeExtension.defaultPrimary,
