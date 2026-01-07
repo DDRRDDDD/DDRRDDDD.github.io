@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../extension/brightness_extension.dart';
 import '../extension/theme_extension.dart';
+import 'theme_mode_provider.dart';
 
 class GridDotContainer extends StatelessWidget {
   const GridDotContainer({
@@ -9,6 +11,15 @@ class GridDotContainer extends StatelessWidget {
     required this.dotColor,
     required this.child,
   });
+
+  factory GridDotContainer.background(BuildContext context, Widget? child) {
+    return GridDotContainer(
+      dotColor: context.colorTheme.primary.withValues(
+        alpha: BrightnessProvider.of(context).value.isLight ? 0.25 : 0.4,
+      ),
+      child: child!,
+    );
+  }
 
   final double dotSpacing;
   final Color dotColor;

@@ -9,6 +9,7 @@ import 'theme/chip_color_theme.dart';
 import 'theme/color_theme.dart';
 import 'theme/text_theme.dart';
 import 'view/skill_section.dart';
+import 'widget/grid_dot_background.dart';
 import 'widget/responsive_layout.dart';
 import 'widget/theme_mode_provider.dart';
 
@@ -34,6 +35,7 @@ class MyPortfolioApp extends StatelessWidget {
           title: '김용민 | 플러터 개발자',
           debugShowCheckedModeBanner: false,
           routerConfig: router,
+          builder: GridDotContainer.background,
           themeMode: brightness.themeMode,
           theme: ThemeData(
             fontFamily: 'Noto_Sans',
