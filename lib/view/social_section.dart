@@ -16,61 +16,80 @@ class SocialSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double boxWidth =
-        (BentoContainer.bentoWidth - BentoContainer.bentoGap) / 2;
-    final double boxHeight =
-        (BentoContainer.bentoHeight - BentoContainer.bentoGap) / 2;
-
     return Wrap(
       alignment: .spaceBetween,
       runAlignment: .spaceBetween,
       spacing: BentoContainer.bentoGap,
       runSpacing: BentoContainer.bentoGap,
       children: [
-        InteractiveScaleDetector(
-          hoverScale: 0.06,
+        _SocialBox(
           onTap: () => Uri
               .parse('https://github.com/DDRRDDDD')
               .let(launchUrl),
-          child: BentoContainer(
-            width: boxWidth,
-            height: boxHeight,
-            border: Border.all(color: context.colorTheme.outline),
-            color: context.colorTheme.surface,
-            child: Center(
-              child: FaIcon(
-                FontAwesomeIcons.github,
-                color: context.colorTheme.textMain,
-                size: 40,
-              ),
+          child: Center(
+            child: FaIcon(
+              FontAwesomeIcons.github,
+              color: context.colorTheme.textMain,
+              size: 40,
             ),
           ),
         ),
-        InteractiveScaleDetector(
-          enabled: false,
-          hoverScale: 0.06,
-          child: BentoContainer(
-            width: boxWidth,
-            height: boxHeight,
-            border: Border.all(color: context.colorTheme.outline),
-            color: context.colorTheme.surface,
-            child: Center(
-              child: FaIcon(
-                FontAwesomeIcons.bloggerB,
-                color: context.colorTheme.textMain,
-                size: 40,
-              ),
+        _SocialBox(
+          child: Center(
+            child: FaIcon(
+              FontAwesomeIcons.bloggerB,
+              color: context.colorTheme.textMain,
+              size: 40,
             ),
           ),
         ),
-        const IndigoFluidCard(),
+        const _ContactMeCard(),
       ],
     );
   }
 }
 
-class IndigoFluidCard extends StatelessWidget {
-  const IndigoFluidCard({super.key});
+class _SocialBox extends StatelessWidget {
+  const _SocialBox({
+    super.key,
+    this.onTap,
+    required this.child,
+  });
+
+  final VoidCallback? onTap;
+  final Widget child;
+
+  Color get _hoverBorderColor {
+    return ColorThemeExtension.indigoVivid.withValues(alpha: 0.4);
+  }
+
+  Border? _resolveBorder(BuildContext context) {
+    return InteractiveScaleDetector.of(context).value.isHovered
+        ? Border.all(color: _hoverBorderColor)
+        : Border.all(color: context.colorTheme.outline);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return InteractiveScaleDetector(
+      hoverScale: 0.06,
+      enabled: onTap != null,
+      onTap: onTap,
+      child: Builder(
+        builder: (context) => BentoContainer(
+          width:  (BentoContainer.bentoWidth - BentoContainer.bentoGap) / 2,
+          height: (BentoContainer.bentoHeight - BentoContainer.bentoGap) / 2,
+          border: _resolveBorder(context),
+          color: context.colorTheme.surface,
+          child: child,
+        ),
+      ),
+    );
+  }
+}
+
+class _ContactMeCard extends StatelessWidget {
+  const _ContactMeCard({super.key});
 
   @override
   Widget build(BuildContext context) {
