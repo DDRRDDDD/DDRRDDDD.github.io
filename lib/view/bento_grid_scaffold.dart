@@ -21,15 +21,7 @@ class BentoGridScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
-      body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(
-          horizontal: MediaQuery.sizeOf(context).width * 0.05,
-          vertical: verticalPadding,
-        ),
-        child: Center(
-          child: shell,
-        ),
-      ),
+      body: shell,
       floatingActionButton: FloatingNavigationBar(
         onNavigate: shell.goBranch,
         currentIndex: shell.currentIndex,

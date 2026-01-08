@@ -15,43 +15,51 @@ class MainGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutGrid(
-      areas: '''
+    return SingleChildScrollView(
+      padding: EdgeInsets.symmetric(
+        horizontal: MediaQuery.sizeOf(context).width * 0.05,
+        vertical: 50,
+      ),
+      child: Center(
+        child: LayoutGrid(
+          areas: '''
              hero    hero   skill  social  
              hero    hero   skill  info
              about   about  about  about   
              ''',
-      columnSizes: BentoContainer.bentoWidth.px * 4,
-      rowSizes: BentoContainer.bentoHeight.px * 3,
-      columnGap: BentoContainer.bentoGap,
-      rowGap: BentoContainer.bentoGap,
-      children: [
-        const AnimateNamedGridPlacement(
-          order: 2,
-          areaName: 'hero',
-          child: HeroSection(),
+          columnSizes: BentoContainer.bentoWidth.px * 4,
+          rowSizes: BentoContainer.bentoHeight.px * 3,
+          columnGap: BentoContainer.bentoGap,
+          rowGap: BentoContainer.bentoGap,
+          children: [
+            const AnimateNamedGridPlacement(
+              order: 2,
+              areaName: 'hero',
+              child: HeroSection(),
+            ),
+            const AnimateNamedGridPlacement(
+              order: 3,
+              areaName: 'social',
+              child: SocialSection(),
+            ),
+            const AnimateNamedGridPlacement(
+              order: 5,
+              areaName: 'about',
+              child: AboutSection(),
+            ),
+            const AnimateNamedGridPlacement(
+              order: 1,
+              areaName: 'skill',
+              child: SkillSection(),
+            ),
+            const AnimateNamedGridPlacement(
+              order: 4,
+              areaName: 'info',
+              child: PersonalInfoBentoCard(),
+            ),
+          ],
         ),
-        const AnimateNamedGridPlacement(
-          order: 3,
-          areaName: 'social',
-          child: SocialSection(),
-        ),
-        const AnimateNamedGridPlacement(
-          order: 5,
-          areaName: 'about',
-          child: AboutSection(),
-        ),
-        const AnimateNamedGridPlacement(
-          order: 1,
-          areaName: 'skill',
-          child: SkillSection(),
-        ),
-        const AnimateNamedGridPlacement(
-          order: 4,
-          areaName: 'info',
-          child: PersonalInfoBentoCard(),
-        ),
-      ],
+      ),
     );
   }
 }
