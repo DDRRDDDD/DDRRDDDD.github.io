@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../extension/brightness_extension.dart';
 import '../extension/theme_extension.dart';
+import '../theme/color_theme.dart';
 import 'theme_mode_provider.dart';
 
 class GridDotContainer extends StatelessWidget {
@@ -14,7 +15,7 @@ class GridDotContainer extends StatelessWidget {
 
   factory GridDotContainer.background(BuildContext context, Widget? child) {
     return GridDotContainer(
-      dotColor: context.colorTheme.primary.withValues(
+      dotColor: ColorThemeExtension.defaultPrimary.withValues(
         alpha: BrightnessProvider.of(context).value.isLight ? 0.25 : 0.4,
       ),
       child: child!,
@@ -40,7 +41,6 @@ class GridDotContainer extends StatelessWidget {
   }
 }
 
-/// 실제 패턴을 그리는 Painter 클래스
 class _GridPatternPainter extends CustomPainter {
   final Color color;
   final double spacing;
