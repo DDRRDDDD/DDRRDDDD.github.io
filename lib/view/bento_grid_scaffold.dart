@@ -4,6 +4,8 @@ import 'package:go_router/go_router.dart';
 import '../widget/navigation_bar.dart';
 
 class BentoGridScaffold extends StatelessWidget {
+  static const double verticalPadding = 50;
+
   const BentoGridScaffold({
     super.key,
     required this.shell,
@@ -19,7 +21,13 @@ class BentoGridScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
-      body: shell,
+      body: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: MediaQuery.sizeOf(context).width * 0.05,
+          vertical: 50,
+        ),
+        child: shell,
+      ),
       floatingActionButton: FloatingNavigationBar(
         onNavigate: shell.goBranch,
         currentIndex: shell.currentIndex,

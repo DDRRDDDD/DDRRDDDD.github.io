@@ -1,9 +1,13 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 import '../extension/theme_extension.dart';
 import '../extension/widget_states_extension.dart';
 import '../theme/color_theme.dart';
+import '../view/bento_grid_scaffold.dart';
+import 'bento_container.dart';
 import 'brightness_button.dart';
 import 'glass_container.dart';
 import 'interactive_scale_detector.dart';
@@ -52,13 +56,21 @@ class _FloatingNavigationBarState extends State<FloatingNavigationBar> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    final Axis direction =
+        MediaQuery.sizeOf(context).height <
+            NavigationBarLocation.heightThreshold
+        ? .vertical
+        : .horizontal;
+
+    return Flex(
+      direction: direction,
       mainAxisSize: .min,
       spacing: 12,
       children: [
         GlassContainer(
           padding: const EdgeInsets.all(10),
-          child: Column(
+          child: Flex(
+            direction: direction,
             spacing: 12,
             children: List.generate(
               _computedItemCount,
@@ -103,13 +115,13 @@ class _NavigationItem extends StatelessWidget {
   final NavigationItem item;
 
   Color _resolveLabelColor(BuildContext context) {
-    final WidgetStates states = InteractiveScaleDetector.of(context).value;
-
-    if (!states.isHovered) {
-      return context.colorTheme.textSub;
+    if (isSelected) {
+      return Colors.white;
     }
 
-    return isSelected ? Colors.white : ColorThemeExtension.indigoVivid;
+    return InteractiveScaleDetector.of(context).value.isHovered
+        ? ColorThemeExtension.indigoVivid
+        : context.colorTheme.textSub;
   }
 
   @override
@@ -140,17 +152,47 @@ class _NavigationItem extends StatelessWidget {
   }
 }
 
-class NavigationBarLocation extends FloatingActionButtonLocation {
+class NavigationBarLocation extends StandardFabLocation {
+  static const double _padding = BentoGridScaffold.verticalPadding;
+  static const double _contentHeight =
+      BentoContainer.bentoHeight * 3 + BentoContainer.bentoGap * 2;
+  static const double _contentWidth =
+      BentoContainer.bentoWidth * 4 + BentoContainer.bentoGap * 3;
+
+  static const double heightThreshold = _contentHeight + 120.0;
+
   const NavigationBarLocation();
 
   @override
-  Offset getOffset(ScaffoldPrelayoutGeometry scaffoldGeometry) {
-    final double buttonX = 30.0 + scaffoldGeometry.minViewPadding.left;
-    final double buttonY =
-        (scaffoldGeometry.scaffoldSize.height / 2) -
-        (scaffoldGeometry.floatingActionButtonSize.height / 2);
+  double getOffsetX(ScaffoldPrelayoutGeometry geometry, _) {
+    final Size screenSize = geometry.scaffoldSize;
+    final double fabWidth = geometry.floatingActionButtonSize.width;
 
-    return Offset(buttonX, buttonY);
+    if (screenSize.height > heightThreshold) {
+      return (screenSize.width - fabWidth) / 2.0;
+    }
+
+    final double contentLeftX = (screenSize.width - _contentWidth) / 2.0;
+    final double targetX = contentLeftX - fabWidth - _padding;
+
+    return targetX.clamp(20.0, double.infinity);
+  }
+
+  @override
+  double getOffsetY(ScaffoldPrelayoutGeometry geometry, _) {
+    final Size screenSize = geometry.scaffoldSize;
+    final double fabHeight = geometry.floatingActionButtonSize.height;
+
+    if (screenSize.height > heightThreshold) {
+      final double targetY = _contentHeight + _padding * 2;
+
+      final double safeBottomY =
+          screenSize.height - geometry.minViewPadding.bottom - 20.0 - fabHeight;
+
+      return math.min(targetY, safeBottomY);
+    }
+
+    return (screenSize.height - fabHeight) / 2.0;
   }
 }
 
