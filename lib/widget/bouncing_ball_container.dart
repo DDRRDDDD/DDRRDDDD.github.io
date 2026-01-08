@@ -51,12 +51,15 @@ class _BouncingBallContainerState extends State<BouncingBallContainer>
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTapDown: _onTapDown,
-      child: CustomPaint(
-        size: widget.containerSize,
-        painter: PhysicsBallPainter(
-          controller: _controller,
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        onTapDown: _onTapDown,
+        child: CustomPaint(
+          size: widget.containerSize,
+          painter: PhysicsBallPainter(
+            controller: _controller,
+          ),
         ),
       ),
     );
