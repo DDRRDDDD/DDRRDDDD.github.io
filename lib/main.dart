@@ -10,7 +10,6 @@ import 'theme/color_theme.dart';
 import 'theme/text_theme.dart';
 import 'view/skill_section.dart';
 import 'widget/grid_dot_background.dart';
-import 'widget/responsive_layout.dart';
 import 'widget/theme_mode_provider.dart';
 
 Future<void> main() async {
@@ -30,23 +29,21 @@ class MyPortfolioApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BrightnessProvider(
-      builder: (_, brightness) => ResponsiveLayout(
-        child: MaterialApp.router(
-          title: '김용민 | 플러터 개발자',
-          debugShowCheckedModeBanner: false,
-          routerConfig: router,
-          builder: GridDotContainer.background,
-          themeMode: brightness.themeMode,
-          theme: ThemeData(
-            fontFamily: 'Noto_Sans',
-            splashFactory: NoSplash.splashFactory,
-            scaffoldBackgroundColor: Colors.transparent,
-            extensions: [
-              ColorThemeExtension.from(brightness),
-              ChipColorThemeExtension.from(brightness),
-              TextThemeExtension.defaultTheme(),
-            ],
-          ),
+      builder: (_, brightness) => MaterialApp.router(
+        title: '김용민 | 플러터 개발자',
+        debugShowCheckedModeBanner: false,
+        routerConfig: router,
+        builder: GridDotContainer.background,
+        themeMode: brightness.themeMode,
+        theme: ThemeData(
+          fontFamily: 'Noto_Sans',
+          splashFactory: NoSplash.splashFactory,
+          scaffoldBackgroundColor: Colors.transparent,
+          extensions: [
+            ColorThemeExtension.from(brightness),
+            ChipColorThemeExtension.from(brightness),
+            TextThemeExtension.defaultTheme(),
+          ],
         ),
       ),
     );
