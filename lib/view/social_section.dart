@@ -94,6 +94,7 @@ class _ContactMeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InteractiveScaleDetector(
+      onTap: () {}, /// TODO 드로우 형식 폼 열기
       child: _AwesomeContainer(
         child: Padding(
           padding: BentoContainer.contentPadding,
@@ -141,10 +142,12 @@ class _ContactMeCard extends StatelessWidget {
                       ),
                     ],
                   ),
-                  child: Icon(
-                    Icons.arrow_forward_rounded,
-                    color: ColorThemeExtension.indigoVivid,
-                    size: 24,
+                  child: Center(
+                    child: FaIcon(
+                      FontAwesomeIcons.envelope,
+                      color: ColorThemeExtension.indigoVivid,
+                      size: 24,
+                    ),
                   ),
                 ),
               ),
