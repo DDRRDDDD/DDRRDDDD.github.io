@@ -5,6 +5,7 @@ import '../extension/grid_extension.dart';
 import '../widget/animate_named_grid_placement.dart';
 import '../widget/bento_container.dart';
 import 'about_section.dart';
+import 'bento_grid_scaffold.dart';
 import 'hero_section.dart';
 import 'info_section.dart';
 import 'skill_section.dart';
@@ -18,15 +19,15 @@ class MainGrid extends StatelessWidget {
     return SingleChildScrollView(
       padding: EdgeInsets.symmetric(
         horizontal: MediaQuery.sizeOf(context).width * 0.05,
-        vertical: 50,
+        vertical: BentoGridScaffold.verticalPadding,
       ),
       child: Center(
         child: LayoutGrid(
           areas: '''
-             hero    hero   skill  social  
-             hero    hero   skill  info
-             about   about  about  about   
-             ''',
+                 hero    hero   skill  social  
+                 hero    hero   skill  info
+                 about   about  about  about   
+                 ''',
           columnSizes: BentoContainer.bentoWidth.px * 4,
           rowSizes: BentoContainer.bentoHeight.px * 3,
           columnGap: BentoContainer.bentoGap,
