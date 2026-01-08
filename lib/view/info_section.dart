@@ -145,7 +145,9 @@ class _InfoRow extends StatelessWidget {
                   style: context.textTheme.labelMedium.copyWith(
                     height: 1.2,
                     fontWeight: FontWeight.w600,
-                    decoration: TextDecoration.underline,
+                    decoration: isHighlighted
+                        ? TextDecoration.underline
+                        : null,
                     decorationColor: isHighlighted
                         ? ColorThemeExtension.indigoVivid
                         : null,
@@ -162,12 +164,3 @@ class _InfoRow extends StatelessWidget {
     );
   }
 }
-
-/// _InfoRow(
-//                 onTap: () => Uri
-//                     .parse('https://github.com/bonigarcia/webdrivermanager/pull/1259')
-//                     .let(launchUrl),
-//                 label: '오픈소스 기여',
-//                 content: 'WebDriverManager PR',
-//                 icon: FontAwesomeIcons.githubAlt,
-//               ),
