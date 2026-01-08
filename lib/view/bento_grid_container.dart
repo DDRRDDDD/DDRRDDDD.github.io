@@ -26,17 +26,8 @@ class BentoGridContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PageTransitionSwitcher(
-      layoutBuilder: _buildLayout,
       transitionBuilder: _buildTransition,
       child: children.elementAt(currentIndex),
-    );
-  }
-
-  Widget _buildLayout(List<Widget> entries) {
-    return Stack(
-      alignment: Alignment.center,
-      fit: StackFit.expand,
-      children: entries,
     );
   }
 
