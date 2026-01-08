@@ -17,10 +17,10 @@ class MainGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutGrid(
       areas: '''
-                  hero    hero   skill  social  
-                  hero    hero   skill  info
-                  about   about  about  about   
-                  ''',
+             hero    hero   skill  social  
+             hero    hero   skill  info
+             about   about  about  about   
+             ''',
       columnSizes: BentoContainer.bentoWidth.px * 4,
       rowSizes: BentoContainer.bentoHeight.px * 3,
       columnGap: BentoContainer.bentoGap,
