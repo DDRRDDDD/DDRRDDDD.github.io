@@ -44,7 +44,7 @@ jobs:
         run: flutter pub get
 
       - name: 웹 빌드
-        run: flutter build web --base-href "${{ steps.pages.outputs.base_path }}/"
+        run: flutter build web --release --base-href "${{ steps.pages.outputs.base_path }}/"
 
 #      - name: Run tests
          # 애플리케이션의 테스트를 실행합니다.
