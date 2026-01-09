@@ -13,7 +13,6 @@ class ProjectGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       padding: EdgeInsets.symmetric(
-        horizontal: MediaQuery.sizeOf(context).width * 0.05,
         vertical: BentoGridScaffold.verticalPadding,
       ),
       child: Center(
