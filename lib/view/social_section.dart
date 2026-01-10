@@ -1,5 +1,7 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:gap/gap.dart';
 
@@ -94,7 +96,7 @@ class _ContactMeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InteractiveScaleDetector(
-      onTap: () {}, /// TODO 드로우 형식 폼 열기
+      onTap: () => context.go('/input'),
       child: _AwesomeContainer(
         child: Padding(
           padding: BentoContainer.contentPadding,
