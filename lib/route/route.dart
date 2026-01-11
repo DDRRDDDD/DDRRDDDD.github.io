@@ -5,7 +5,7 @@ import '../view/bento_grid_container.dart';
 import '../view/bento_grid_scaffold.dart';
 import '../view/main_grid.dart';
 import '../view/project_grid.dart';
-import '../widget/input_dialog.dart';
+import '../widget/contact_form_dialog.dart';
 import 'dialog_route.dart';
 
 typedef NavigationKey = GlobalKey<NavigatorState>;
@@ -29,7 +29,7 @@ final GoRouter router = GoRouter(
                   path: 'input',
                   parentNavigatorKey: rootNavigatorKey,
                   pageBuilder: (_, _) => DialogPage(
-                    child: InputDialog(),
+                    child: ContactFormDialog(),
                   ),
                 ),
               ],
