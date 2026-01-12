@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 
-import '../datasource/email_manager.dart';
 import '../extension/theme_extension.dart';
-import '../theme/color_theme.dart';
 import 'bento_container.dart';
 
 class ContactFormDialog extends StatelessWidget {
@@ -104,6 +100,7 @@ class _InputFieldContainer extends StatelessWidget {
         textTheme: Theme.of(context).textTheme.copyWith(
           bodyLarge: Theme.of(context).textTheme.bodyLarge?.copyWith(
             color: context.colorTheme.textMain,
+            fontSize: 12,
           ),
         ),
         inputDecorationTheme: InputDecorationTheme(
