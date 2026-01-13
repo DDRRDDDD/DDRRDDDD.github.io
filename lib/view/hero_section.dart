@@ -4,7 +4,7 @@ import '../extension/theme_extension.dart';
 import '../theme/color_theme.dart';
 import '../widget/gradient_text.dart';
 import '../widget/interactive_scale_detector.dart';
-import '../widget/label_chip.dart';
+import '../widget/chip.dart';
 
 class HeroSection extends StatelessWidget {
   const HeroSection({super.key});
