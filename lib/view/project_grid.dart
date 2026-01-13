@@ -5,6 +5,9 @@ import '../extension/grid_extension.dart';
 import '../widget/animate_named_grid_placement.dart';
 import '../widget/bento_container.dart';
 import 'bento_grid_scaffold.dart';
+import 'project_my_portfolio_section.dart';
+import 'project_my_turn_section.dart';
+import 'project_one_hour_section.dart';
 
 class ProjectGrid extends StatelessWidget {
   const ProjectGrid({super.key});
@@ -27,25 +30,25 @@ class ProjectGrid extends StatelessWidget {
           columnGap: BentoContainer.bentoGap,
           rowGap: BentoContainer.bentoGap,
           children: [
-            AnimateNamedGridPlacement(
+            const AnimateNamedGridPlacement(
               order: 1,
               areaName: 'main',
-              child: _buildColoredBox(Colors.redAccent),
+              child: ProjectOneHourSection(),
             ),
             AnimateNamedGridPlacement(
               order: 2,
               areaName: 'item1',
               child: _buildColoredBox(Colors.yellowAccent),
             ),
-            AnimateNamedGridPlacement(
+            const AnimateNamedGridPlacement(
               order: 3,
               areaName: 'sub_main',
-              child: _buildColoredBox(Colors.greenAccent),
+              child: ProjectMyTurnSection(),
             ),
-            AnimateNamedGridPlacement(
+            const AnimateNamedGridPlacement(
               order: 4,
               areaName: 'item2',
-              child: _buildColoredBox(Colors.purpleAccent),
+              child: ProjectMyPortfolioSection(),
             ),
           ],
         ),
