@@ -5,7 +5,7 @@ import '../extension/let_extension.dart';
 
 part 'email_manager.g.dart';
 
-@Envied(path: '.env')
+@Envied(path: 'config/.env')
 class EmailManager {
   static final EmailManager _instance = EmailManager._internal();
   static final Uri _baseUri = Uri.https('api.emailjs.com');
