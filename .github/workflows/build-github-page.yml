@@ -25,6 +25,9 @@ jobs:
       - name: 코드 체크아웃
         # 레포지토리의 코드를 가져옵니다.
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.SECRET_KEY }}
+          submodules: true
 
       - name: 플러터 환경 설정
         # 플러터 환경을 설정합니다.
