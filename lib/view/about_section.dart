@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../extension/theme_extension.dart';
 import '../widget/bento_container.dart';
+import '../widget/border_icon.dart';
 import '../widget/interactive_scale_detector.dart';
 
 class AboutSection extends StatelessWidget {
@@ -68,7 +69,12 @@ class _CompetencyCard extends StatelessWidget {
               Row(
                 spacing: 16,
                 children: [
-                  _buildIconBadge(),
+                  BorderIcon(
+                    padding: const EdgeInsets.all(12),
+                    size: 24,
+                    color: color,
+                    icon: icon,
+                  ),
                   Text(
                     title,
                     style: context.textTheme.cardTitle.copyWith(
@@ -86,24 +92,6 @@ class _CompetencyCard extends StatelessWidget {
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _buildIconBadge() {
-    return Container(
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: color.withValues(alpha: 0.3),
-        ),
-      ),
-      child: FaIcon(
-        icon,
-        color: color,
-        size: 24,
       ),
     );
   }
