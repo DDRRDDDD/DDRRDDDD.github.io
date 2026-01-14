@@ -21,9 +21,9 @@ class ProjectGrid extends StatelessWidget {
       child: Center(
         child: LayoutGrid(
           areas: '''
-              main    main   item1     item1  
+              main    main   sub_main  sub_main  
               main    main   sub_main  sub_main
-              item2   item2  sub_main  sub_main   
+              item    item   sub_main  sub_main   
               ''',
           columnSizes: BentoContainer.bentoWidth.px * 4,
           rowSizes: BentoContainer.bentoHeight.px * 3,
@@ -35,19 +35,14 @@ class ProjectGrid extends StatelessWidget {
               areaName: 'main',
               child: ProjectOneHourSection(),
             ),
-            AnimateNamedGridPlacement(
-              order: 2,
-              areaName: 'item1',
-              child: _buildColoredBox(Colors.yellowAccent),
-            ),
             const AnimateNamedGridPlacement(
               order: 3,
-              areaName: 'sub_main',
+              areaName: 'sub_main',π
               child: ProjectMyTurnSection(),
             ),
             const AnimateNamedGridPlacement(
               order: 4,
-              areaName: 'item2',
+              areaName: 'item',
               child: ProjectMyPortfolioSection(),
             ),
           ],
