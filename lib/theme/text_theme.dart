@@ -16,7 +16,7 @@ const defaultTextTheme = TextThemeExtension._(
     fontSize: 30.0,
   ),
   sectionDescription: TextStyle(
-    fontWeight: FontWeight.w400,
+    fontWeight: FontWeight.w500,
     fontSize: 16.0,
     letterSpacing: -0.2,
     height: 1.5,

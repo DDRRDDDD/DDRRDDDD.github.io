@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../theme/chip_color_theme.dart';
+import '../theme/chip_theme.dart';
 import '../theme/color_theme.dart';
 import '../theme/text_theme.dart';
 
@@ -13,7 +13,7 @@ extension ThemeShortcuts on BuildContext {
     return Theme.of(this).extension<TextThemeExtension>()!;
   }
 
-  ChipColorThemeExtension get chipColorTheme {
+  ChipColorThemeExtension get chipStyleTheme {
     return Theme.of(this).extension<ChipColorThemeExtension>()!;
   }
 }
