@@ -1,69 +1,10 @@
 import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
-import '../extension/theme_extension.dart';
 import '../theme/color_theme.dart';
-import 'bento_container.dart';
-
-class BeamBentoContainer extends StatefulWidget {
-  const BeamBentoContainer({super.key});
-
-  @override
-  State<BeamBentoContainer> createState() => _BeamBentoContainerState();
-}
-
-class _BeamBentoContainerState extends State<BeamBentoContainer>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 4),
-    )..repeat();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _controller,
-      builder: (context, child) => DecoratedBox(
-        position: .foreground,
-        decoration: ShapeDecoration(
-          shape: BeamBorder(
-            progress: _controller.value,
-            borderRadius: BentoContainer.borderRadius,
-            side: BorderSide(
-              color: context.colorTheme.outline,
-              width: 1.5,
-            ),
-          ),
-        ),
-        child: child,
-      ),
-      child: ClipRRect(
-        borderRadius: BentoContainer.borderRadius,
-        child: SizedBox.expand(
-          
-        ),
-      ),
-    );
-  }
-}
 
 class BeamBorder extends RoundedRectangleBorder {
-  final double progress;
-  final Color colorFrom;
-  final Color colorTo;
-
   const BeamBorder({
     required this.progress,
     required super.side,
@@ -71,6 +12,10 @@ class BeamBorder extends RoundedRectangleBorder {
     this.colorFrom = ColorThemeExtension.indigoVivid,
     this.colorTo = ColorThemeExtension.electricMagenta,
   });
+
+  final double progress;
+  final Color colorFrom;
+  final Color colorTo;
 
   @override
   void paint(Canvas canvas, Rect rect, {TextDirection? textDirection}) {
