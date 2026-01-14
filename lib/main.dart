@@ -5,7 +5,7 @@ import 'datasource/rive_file_manager.dart';
 import 'datasource/svg_manager.dart';
 import 'extension/brightness_extension.dart';
 import 'route/route.dart';
-import 'theme/chip_color_theme.dart';
+import 'theme/chip_theme.dart';
 import 'theme/color_theme.dart';
 import 'theme/text_theme.dart';
 import 'view/skill_section.dart';
