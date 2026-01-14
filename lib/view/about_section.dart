@@ -3,7 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../extension/theme_extension.dart';
 import '../widget/bento_container.dart';
-import '../widget/badge.dart';
+import '../widget/badge_icon.dart';
 import '../widget/scale_detector.dart';
 
 class AboutSection extends StatelessWidget {
