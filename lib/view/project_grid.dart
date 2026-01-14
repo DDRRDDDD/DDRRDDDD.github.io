@@ -36,12 +36,12 @@ class ProjectGrid extends StatelessWidget {
               child: ProjectOneHourSection(),
             ),
             const AnimateNamedGridPlacement(
-              order: 3,
+              order: 2,
               areaName: 'sub_main',
               child: ProjectMyTurnSection(),
             ),
             const AnimateNamedGridPlacement(
-              order: 4,
+              order: 3,
               areaName: 'item',
               child: ProjectMyPortfolioSection(),
             ),
