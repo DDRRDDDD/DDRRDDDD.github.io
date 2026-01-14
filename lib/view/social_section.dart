@@ -11,7 +11,7 @@ import '../extension/theme_extension.dart';
 import '../extension/widget_states_extension.dart';
 import '../theme/color_theme.dart';
 import '../widget/bento_container.dart';
-import '../widget/interactive_scale_detector.dart';
+import '../widget/scale_detector.dart';
 
 class SocialSection extends StatelessWidget {
   const SocialSection({super.key});
@@ -66,14 +66,14 @@ class _SocialBox extends StatelessWidget {
   }
 
   Border? _resolveBorder(BuildContext context) {
-    return InteractiveScaleDetector.of(context).value.isHovered
+    return ScaleDetector.of(context).value.isHovered
         ? Border.all(color: _hoverBorderColor)
         : Border.all(color: context.colorTheme.outline);
   }
 
   @override
   Widget build(BuildContext context) {
-    return InteractiveScaleDetector(
+    return ScaleDetector(
       hoverScale: 0.06,
       enabled: onTap != null,
       onTap: onTap,
@@ -95,7 +95,7 @@ class _ContactMeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InteractiveScaleDetector(
+    return ScaleDetector(
       onTap: () => context.go('/input'),
       child: _AwesomeContainer(
         child: Padding(
@@ -171,7 +171,7 @@ class _AwesomeContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isHovered = InteractiveScaleDetector.of(context).value.isHovered;
+    final bool isHovered = ScaleDetector.of(context).value.isHovered;
 
     return SizedBox(
       width: BentoContainer.bentoWidth,

@@ -3,8 +3,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../extension/theme_extension.dart';
 import '../widget/bento_container.dart';
-import '../widget/border_icon.dart';
-import '../widget/interactive_scale_detector.dart';
+import '../widget/badge.dart';
+import '../widget/scale_detector.dart';
 
 class AboutSection extends StatelessWidget {
   const AboutSection({super.key});
@@ -59,7 +59,7 @@ class _CompetencyCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: InteractiveScaleDetector(
+      child: ScaleDetector(
         child: BentoContainer(
           color: context.colorTheme.surfaceAlt,
           child: Column(
@@ -69,7 +69,7 @@ class _CompetencyCard extends StatelessWidget {
               Row(
                 spacing: 16,
                 children: [
-                  BorderIcon(
+                  BadgeIcon(
                     padding: const EdgeInsets.all(12),
                     size: 24,
                     color: color,

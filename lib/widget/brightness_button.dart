@@ -6,7 +6,7 @@ import '../extension/brightness_extension.dart';
 import '../extension/widget_states_extension.dart';
 import '../theme/color_theme.dart';
 import 'glass_container.dart';
-import 'interactive_scale_detector.dart';
+import 'scale_detector.dart';
 import 'theme_mode_provider.dart';
 
 class ThemeToggleButton extends StatefulWidget {
@@ -48,14 +48,14 @@ class _ThemeToggleButtonState extends State<ThemeToggleButton> {
   }
 
   Border? _resolveBorder(BuildContext context) {
-    return InteractiveScaleDetector.of(context).value.isHovered
+    return ScaleDetector.of(context).value.isHovered
         ? Border.all(color: _hoverBorderColor)
         : null;
   }
 
   @override
   Widget build(BuildContext context) {
-    return InteractiveScaleDetector(
+    return ScaleDetector(
       hoverScale: 0.08,
       onTap: BrightnessProvider.of(context).toggle,
       child: Builder(

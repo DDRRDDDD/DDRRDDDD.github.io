@@ -10,7 +10,7 @@ import '../view/bento_grid_scaffold.dart';
 import 'bento_container.dart';
 import 'brightness_button.dart';
 import 'glass_container.dart';
-import 'interactive_scale_detector.dart';
+import 'scale_detector.dart';
 
 class FloatingNavigationBar extends StatefulWidget {
   const FloatingNavigationBar({
@@ -119,14 +119,14 @@ class _NavigationItem extends StatelessWidget {
       return Colors.white;
     }
 
-    return InteractiveScaleDetector.of(context).value.isHovered
+    return ScaleDetector.of(context).value.isHovered
         ? ColorThemeExtension.indigoVivid
         : context.colorTheme.textSub;
   }
 
   @override
   Widget build(BuildContext context) {
-    return InteractiveScaleDetector(
+    return ScaleDetector(
       hoverScale: isSelected ? 0.08 : 0.16,
       onTap: onNavigate,
       child: Builder(

@@ -8,7 +8,7 @@ import '../extension/theme_extension.dart';
 import '../extension/widget_states_extension.dart';
 import '../theme/color_theme.dart';
 import '../widget/bento_container.dart';
-import '../widget/interactive_scale_detector.dart';
+import '../widget/scale_detector.dart';
 
 class PersonalInfoBentoCard extends StatelessWidget {
   const PersonalInfoBentoCard({super.key});
@@ -18,14 +18,14 @@ class PersonalInfoBentoCard extends StatelessWidget {
   }
 
   Border? _resolveBorder(BuildContext context) {
-    return InteractiveScaleDetector.of(context).value.isHovered
+    return ScaleDetector.of(context).value.isHovered
         ? Border.all(color: _hoverBorderColor)
         : Border.all(color: context.colorTheme.outline);
   }
 
   @override
   Widget build(BuildContext context) {
-    return InteractiveScaleDetector(
+    return ScaleDetector(
       child: Builder(
         builder: (context) => BentoContainer(
           color: context.colorTheme.surface,

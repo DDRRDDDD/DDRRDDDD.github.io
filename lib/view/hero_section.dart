@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../extension/theme_extension.dart';
 import '../theme/color_theme.dart';
 import '../widget/gradient_text.dart';
-import '../widget/interactive_scale_detector.dart';
+import '../widget/scale_detector.dart';
 import '../widget/chip.dart';
 
 class HeroSection extends StatelessWidget {
@@ -20,14 +20,14 @@ class HeroSection extends StatelessWidget {
           spacing: 8,
           runSpacing: 8,
           children: [
-            InteractiveScaleDetector(
+            ScaleDetector(
               hoverScale: 0.035,
               child: LabelChip(
                 chipColor: context.chipColorTheme.heroPrimary,
                 label: '집요한 문제 해결',
               ),
             ),
-            InteractiveScaleDetector(
+            ScaleDetector(
               hoverScale: 0.035,
               child: LabelChip(
                 chipColor: context.chipColorTheme.neutral,

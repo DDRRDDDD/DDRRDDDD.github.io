@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../extension/widget_states_extension.dart';
 import 'provider.dart';
 
-class InteractiveScaleDetector extends StatefulWidget {
-  const InteractiveScaleDetector({
+class ScaleDetector extends StatefulWidget {
+  const ScaleDetector({
     super.key,
     this.onTap,
     this.onHover,
@@ -24,12 +24,12 @@ class InteractiveScaleDetector extends StatefulWidget {
   }
 
   @override
-  State<InteractiveScaleDetector> createState() {
-    return _InteractiveScaleDetectorState();
+  State<ScaleDetector> createState() {
+    return _ScaleDetectorState();
   }
 }
 
-class _InteractiveScaleDetectorState extends State<InteractiveScaleDetector> {
+class _ScaleDetectorState extends State<ScaleDetector> {
   late final WidgetStatesController _controller;
 
   @override
