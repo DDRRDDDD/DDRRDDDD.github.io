@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 import '../extension/theme_extension.dart';
+import '../theme/color_theme.dart';
 import 'badge_icon.dart';
 import 'bento_container.dart';
 import 'chip.dart';
@@ -60,21 +61,37 @@ class SummaryCard extends StatelessWidget {
             ],
           ),
           const Spacer(),
-          Text(
-            titleLabel,
-            style: TextStyle(
-              color: context.colorTheme.secondary,
-              fontWeight: FontWeight.bold,
-              fontSize: 12,
-              letterSpacing: 1.2,
+          Padding(
+            padding: const EdgeInsets.only(left: 2),
+            child: Text(
+              titleLabel,
+              style: TextStyle(
+                color: lightColorTheme.secondary,
+                fontWeight: FontWeight.bold,
+                fontSize: 12,
+                shadows: [
+                  Shadow(
+                    offset: Offset(0, 1),
+                    blurRadius: 4.0,
+                    color: lightColorTheme.secondary.withValues(alpha: 0.4),
+                  ),
+                ],
+              ),
             ),
           ),
           if (title != null) ...[
-            const Gap(8),
+            const Gap(4),
             Text(
               title!,
               style: context.textTheme.sectionTitle.copyWith(
                 color: context.colorTheme.textMain,
+                shadows: [
+                  Shadow(
+                    offset: Offset(0, 1),
+                    blurRadius: 2.0,
+                    color: context.colorTheme.textSub.withValues(alpha: 0.2),
+                  ),
+                ],
               ),
             ),
           ],
@@ -83,6 +100,13 @@ class SummaryCard extends StatelessWidget {
             subTitle,
             style: context.textTheme.cardTitle.copyWith(
               color: context.colorTheme.textSub,
+              shadows: [
+                Shadow(
+                  offset: Offset(0, 1),
+                  blurRadius: 2.0,
+                  color: context.colorTheme.textSub.withValues(alpha: 0.2),
+                ),
+              ],
             ),
           ),
           if (description != null) ...[
@@ -93,7 +117,15 @@ class SummaryCard extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: context.textTheme.sectionDescription.copyWith(
                 color: context.colorTheme.textSub,
+                fontWeight: FontWeight.w600,
                 height: 0,
+                shadows: [
+                  Shadow(
+                    offset: Offset(0, 1),
+                    blurRadius: 4.0,
+                    color: context.colorTheme.textSub.withValues(alpha: 0.2),
+                  ),
+                ],
               ),
             ),
           ],
