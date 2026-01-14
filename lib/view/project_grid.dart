@@ -37,7 +37,7 @@ class ProjectGrid extends StatelessWidget {
             ),
             const AnimateNamedGridPlacement(
               order: 3,
-              areaName: 'sub_main',π
+              areaName: 'sub_main',
               child: ProjectMyTurnSection(),
             ),
             const AnimateNamedGridPlacement(
