@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../extension/theme_extension.dart';
-import '../theme/chip_color_theme.dart';
+import '../theme/chip_theme.dart';
 
 class LabelChip extends StatelessWidget {
   const LabelChip({
@@ -40,16 +41,18 @@ class LabelChip extends StatelessWidget {
   }
 }
 
-class BadgeChip extends StatelessWidget {
-  const BadgeChip({
+class IconLabelChip extends StatelessWidget {
+  const IconLabelChip({
     super.key,
     required this.chipColor,
+    required this.style,
     required this.icon,
     required this.label,
   });
 
-  final ChipColor chipColor;
   final IconData icon;
+  final TextStyle style;
+  final ChipColor chipColor;
   final String label;
 
   @override
@@ -65,14 +68,26 @@ class BadgeChip extends StatelessWidget {
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(
-          horizontal: 12,
-          vertical: 6,
+          horizontal: 8,
+          vertical: 4,
         ),
-        child: Text(
-          label,
-          style: context.textTheme.heroBadge.copyWith(
-            color: chipColor.foreground,
-          ),
+        child: Row(
+          spacing: 4,
+          mainAxisSize: .min,
+          children: [
+            FaIcon(
+              icon,
+              size: style.fontSize,
+              color: chipColor.foreground,
+            ),
+            Text(
+              label,
+              style: style.copyWith(
+                color: chipColor.foreground,
+                height: 1.5,
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -85,17 +100,24 @@ class TagChip extends StatelessWidget {
     required this.tag,
   });
 
+  const TagChip.mapped(
+    this.tag, {
+    super.key,
+  });
+
   final String tag;
 
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
       decoration: BoxDecoration(
+        // color: const Color(0x1AFFFFFF),
         color: context.colorTheme.glassOverlay,
         borderRadius: const BorderRadius.all(
           Radius.circular(6),
         ),
         border: Border.all(
+          // color: const Color(0x0DFFFFFF),
           color: context.colorTheme.outline,
         ),
       ),
@@ -107,7 +129,9 @@ class TagChip extends StatelessWidget {
         child: Text(
           tag,
           style: context.textTheme.labelMedium.copyWith(
+            // color: Colors.grey[200],
             color: context.colorTheme.textSub,
+            height: 1.5,
           ),
         ),
       ),

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class BorderIcon extends StatelessWidget {
-  const BorderIcon({
+import '../extension/let_extension.dart';
+
+class BadgeIcon extends StatelessWidget {
+  const BadgeIcon({
     super.key,
     required this.icon,
     this.padding = const EdgeInsets.all(8),
@@ -23,8 +25,10 @@ class BorderIcon extends StatelessWidget {
         borderRadius: const BorderRadius.all(
           Radius.circular(12),
         ),
-        border: Border.all(
-          color: color?.withValues(alpha: 0.3) ?? Colors.transparent,
+        border: color?.let(
+          (color) => Border.all(
+            color: color.withValues(alpha: 0.3),
+          ),
         ),
       ),
       child: Padding(

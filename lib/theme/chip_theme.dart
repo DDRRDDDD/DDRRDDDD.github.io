@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../extension/brightness_extension.dart';
 import 'color_theme.dart';
+import 'text_theme.dart';
 
 const lightColorTheme = ChipColorThemeExtension._(
   heroPrimary: ChipColor(
@@ -13,6 +14,16 @@ const lightColorTheme = ChipColorThemeExtension._(
     foreground: Color(0xFF374151),
     background: Color(0xFFF3F4F6),
     border: Color(0xFFE5E7EB),
+  ),
+  textMain: ChipColor(
+    foreground: Color(0xFF616161),
+    background: Color(0xFFF5F5F5),
+    border: Color(0xFFE0E0E0),
+  ),
+  blueAccent: ChipColor(
+    foreground: Color(0xFF448AFF),
+    background: Color(0x1A2196F3),
+    border: Color(0x332196F3),
   ),
 );
 
@@ -27,6 +38,16 @@ const darkColorTheme = ChipColorThemeExtension._(
     background: Color(0xFF1F2937),
     border: Color(0xFF374151),
   ),
+  textMain: ChipColor(
+    foreground: Color(0xFFE0E0E0),
+    background: Color(0x0DFFFFFF),
+    border: Color(0x1AFFFFFF),
+  ),
+  blueAccent: ChipColor(
+    foreground: Color(0xFF448AFF),
+    background: Color(0x1A2196F3),
+    border: Color(0x332196F3),
+  ),
 );
 
 class ChipColorThemeExtension extends ThemeExtension<ChipColorThemeExtension> {
@@ -34,6 +55,8 @@ class ChipColorThemeExtension extends ThemeExtension<ChipColorThemeExtension> {
 
   final ChipColor heroPrimary;
   final ChipColor neutral;
+  final ChipColor textMain;
+  final ChipColor blueAccent;
 
   factory ChipColorThemeExtension.from(Brightness brightness) {
     return brightness.isLight ? lightColorTheme : darkColorTheme;
@@ -42,16 +65,22 @@ class ChipColorThemeExtension extends ThemeExtension<ChipColorThemeExtension> {
   const ChipColorThemeExtension._({
     required this.heroPrimary,
     required this.neutral,
+    required this.textMain,
+    required this.blueAccent,
   });
 
   @override
   ChipColorThemeExtension copyWith({
     ChipColor? heroPrimary,
     ChipColor? neutral,
+    ChipColor? textMain,
+    ChipColor? blueAccent,
   }) {
     return ChipColorThemeExtension._(
       heroPrimary: heroPrimary ?? this.heroPrimary,
       neutral: neutral ?? this.neutral,
+      textMain: textMain ?? this.textMain,
+      blueAccent: blueAccent ?? this.blueAccent,
     );
   }
 
@@ -64,6 +93,8 @@ class ChipColorThemeExtension extends ThemeExtension<ChipColorThemeExtension> {
     return ChipColorThemeExtension._(
       heroPrimary: heroPrimary.lerp(other.heroPrimary, t),
       neutral: neutral.lerp(other.neutral, t),
+      textMain: textMain.lerp(other.textMain, t),
+      blueAccent: blueAccent.lerp(other.blueAccent, t),
     );
   }
 }
