@@ -21,7 +21,7 @@ const lightColorTheme = ChipColorThemeExtension._(
     border: Color(0xFFE0E0E0),
   ),
   blueAccent: ChipColor(
-    foreground: Color(0xFF448AFF),
+    foreground: Color(0xFF42A5F5),
     background: Color(0x1A2196F3),
     border: Color(0x332196F3),
   ),
@@ -44,9 +44,9 @@ const darkColorTheme = ChipColorThemeExtension._(
     border: Color(0x1AFFFFFF),
   ),
   blueAccent: ChipColor(
-    foreground: Color(0xFF448AFF),
-    background: Color(0x1A2196F3),
-    border: Color(0x332196F3),
+    foreground: Color(0xFF42A5F5),
+    background: Color(0x332196F3),
+    border: Color(0x662196F3),
   ),
 );
 
