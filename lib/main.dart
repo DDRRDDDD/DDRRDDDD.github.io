@@ -7,6 +7,7 @@ import 'extension/brightness_extension.dart';
 import 'route/route.dart';
 import 'theme/chip_theme.dart';
 import 'theme/color_theme.dart';
+import 'theme/gradient_theme.dart';
 import 'theme/text_theme.dart';
 import 'view/skill_section.dart';
 import 'widget/grid_dot_background.dart';
@@ -42,6 +43,7 @@ class MyPortfolioApp extends StatelessWidget {
           extensions: [
             ColorThemeExtension.from(brightness),
             ChipColorThemeExtension.from(brightness),
+            GradientThemeExtension.from(brightness),
             TextThemeExtension.defaultTheme(),
           ],
         ),
