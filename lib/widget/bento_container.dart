@@ -26,6 +26,14 @@ class BentoContainer extends StatelessWidget {
     required this.child,
   });
 
+  static double spanWidth(double span) {
+    return bentoWidth * span + bentoGap * (span - 1);
+  }
+
+  static double spanHeight(double span) {
+    return bentoHeight * span + bentoGap * (span - 1);
+  }
+
   final double width;
   final double height;
   final Color color;
@@ -58,13 +66,11 @@ class ProjectContainer extends StatefulWidget {
     super.key,
     this.isHovered = false,
     this.beamDuration,
-    this.borderColor,
     required this.child,
   });
 
   final bool isHovered;
   final Duration? beamDuration;
-  final Color? borderColor;
   final Widget child;
 
   @override
@@ -104,24 +110,6 @@ class _ProjectContainerState extends State<ProjectContainer>
     super.dispose();
   }
 
-  ShapeBorder get _computeBorder {
-    final BorderSide side = BorderSide(
-      color: widget.borderColor ?? context.colorTheme.outline,
-      width: 1.5,
-    );
-
-    return widget.isHovered
-        ? BeamBorder(
-            borderRadius: BentoContainer.borderRadius,
-            progress: _controller.value,
-            side: side,
-          )
-        : RoundedRectangleBorder(
-            borderRadius: BentoContainer.borderRadius,
-            side: side,
-          );
-  }
-
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
@@ -129,7 +117,22 @@ class _ProjectContainerState extends State<ProjectContainer>
       builder: (context, child) => DecoratedBox(
         position: .foreground,
         decoration: ShapeDecoration(
-          shape: _computeBorder,
+          shape: widget.isHovered
+              ? BeamBorder(
+                  borderRadius: BentoContainer.borderRadius,
+                  progress: _controller.value,
+                  side: BorderSide(
+                    color: context.colorTheme.outline,
+                    width: 3.0,
+                  ),
+                )
+              : RoundedRectangleBorder(
+                  borderRadius: BentoContainer.borderRadius,
+                  side: BorderSide(
+                    color: context.colorTheme.surfaceAlt,
+                    width: 1.5,
+                  ),
+                ),
         ),
         child: child,
       ),
