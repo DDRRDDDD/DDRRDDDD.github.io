@@ -6,9 +6,9 @@ const lightGradientTheme = GradientThemeExtension._(
   overlay: LinearGradient(
     begin: .topCenter,
     end: .bottomCenter,
-    stops: [0.0, 0.5, 0.7, 1.0],
+    stops: [0.0, 0.2, 0.7, 1.0],
     colors: [
-      Colors.black45,
+      Colors.black38,
       Colors.transparent,
       Colors.white54,
       Colors.white70,
