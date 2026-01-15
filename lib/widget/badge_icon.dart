@@ -7,28 +7,26 @@ class BadgeIcon extends StatelessWidget {
   const BadgeIcon({
     super.key,
     required this.icon,
+    required this.color,
     this.padding = const EdgeInsets.all(8),
     this.size,
-    this.color,
   });
 
   final IconData icon;
+  final Color color;
   final EdgeInsets padding;
   final double? size;
-  final Color? color;
 
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: color?.withValues(alpha: 0.1),
+        color: color.withValues(alpha: 0.35),
         borderRadius: const BorderRadius.all(
           Radius.circular(12),
         ),
-        border: color?.let(
-          (color) => Border.all(
-            color: color.withValues(alpha: 0.3),
-          ),
+        border: Border.all(
+          color: color.withValues(alpha: 0.7),
         ),
       ),
       child: Padding(
