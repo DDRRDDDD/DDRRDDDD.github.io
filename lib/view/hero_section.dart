@@ -23,14 +23,14 @@ class HeroSection extends StatelessWidget {
             ScaleDetector(
               hoverScale: 0.035,
               child: LabelChip(
-                chipColor: context.chipStyleTheme.heroPrimary,
+                chipColor: context.chipColorTheme.heroPrimary,
                 label: '집요한 문제 해결',
               ),
             ),
             ScaleDetector(
               hoverScale: 0.035,
               child: LabelChip(
-                chipColor: context.chipStyleTheme.neutral,
+                chipColor: context.chipColorTheme.neutral,
                 label: '소통을 설계하는 아키텍처',
               ),
             ),
