@@ -16,9 +16,9 @@ const lightColorTheme = ChipColorThemeExtension._(
     border: Color(0xFFE5E7EB),
   ),
   textMain: ChipColor(
-    foreground: Color(0xFF616161),
-    background: Color(0xFFF5F5F5),
-    border: Color(0xFFE0E0E0),
+    foreground: Color(0xFFE0E0E0),
+    background: Color(0x0DFFFFFF),
+    border: Color(0x1AFFFFFF),
   ),
   blueAccent: ChipColor(
     foreground: Color(0xFF42A5F5),
