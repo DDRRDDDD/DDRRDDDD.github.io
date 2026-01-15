@@ -21,9 +21,9 @@ class ProjectGrid extends StatelessWidget {
       child: Center(
         child: LayoutGrid(
           areas: '''
-              main    main   sub_main  sub_main  
+              item    item   sub_main  sub_main  
               main    main   sub_main  sub_main
-              item    item   sub_main  sub_main   
+              main    main   sub_main  sub_main   
               ''',
           columnSizes: BentoContainer.bentoWidth.px * 4,
           rowSizes: BentoContainer.bentoHeight.px * 3,
