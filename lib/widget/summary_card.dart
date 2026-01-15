@@ -40,7 +40,7 @@ class SummaryCard extends StatelessWidget {
             spacing: 8,
             children: [
               BadgeIcon(
-                color: context.colorTheme.textSub,
+                color: Colors.grey,
                 icon: icon,
               ),
               const Spacer(),
@@ -72,7 +72,7 @@ class SummaryCard extends StatelessWidget {
                 shadows: [
                   Shadow(
                     offset: Offset(0, 1),
-                    blurRadius: 4.0,
+                    blurRadius: 15.0,
                     color: lightColorTheme.secondary.withValues(alpha: 0.4),
                   ),
                 ],
