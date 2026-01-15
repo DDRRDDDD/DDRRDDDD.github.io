@@ -33,7 +33,7 @@ class ProjectMyTurnSection extends StatelessWidget {
                 ),
               ),
               const SummaryCard(
-                icon: Icons.science,
+                icon: Icons.flag,
                 personnel: 2,
                 contribution: 0.9,
                 titleLabel: 'Main Project',

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../extension/theme_extension.dart';
 import '../extension/widget_states_extension.dart';
 import '../widget/bento_container.dart';
 import '../widget/my_avatar.dart';
@@ -18,11 +19,6 @@ class ProjectMyPortfolioSection extends StatelessWidget {
           isHovered: ScaleDetector.of(context).value.isHovered,
           child: Stack(
             children: [
-              // Positioned(
-              //   bottom: 0,
-              //   right: 0,
-              //   child: MyAvatar(),
-              // ),
               const SummaryCard(
                 icon: Icons.code,
                 titleLabel: 'Sub Project',
