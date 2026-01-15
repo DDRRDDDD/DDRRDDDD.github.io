@@ -79,8 +79,8 @@ class _SocialBox extends StatelessWidget {
       onTap: onTap,
       child: Builder(
         builder: (context) => BentoContainer(
-          width:  (BentoContainer.bentoWidth - BentoContainer.bentoGap) / 2,
-          height: (BentoContainer.bentoHeight - BentoContainer.bentoGap) / 2,
+          width: BentoContainer.spanWidth(1/2),
+          height: BentoContainer.spanHeight(1/2),
           border: _resolveBorder(context),
           color: context.colorTheme.surface,
           child: child,
@@ -175,7 +175,7 @@ class _AwesomeContainer extends StatelessWidget {
 
     return SizedBox(
       width: BentoContainer.bentoWidth,
-      height: (BentoContainer.bentoHeight - BentoContainer.bentoGap) / 2,
+      height: BentoContainer.spanHeight(1/2),
       child: ClipRRect(
         borderRadius: BentoContainer.borderRadius,
         child: ColoredBox(

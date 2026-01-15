@@ -154,12 +154,10 @@ class _NavigationItem extends StatelessWidget {
 
 class NavigationBarLocation extends StandardFabLocation {
   static const double _padding = BentoGridScaffold.verticalPadding;
-  static const double _contentHeight =
-      BentoContainer.bentoHeight * 3 + BentoContainer.bentoGap * 2;
-  static const double _contentWidth =
-      BentoContainer.bentoWidth * 4 + BentoContainer.bentoGap * 3;
 
-  static const double heightThreshold = _contentHeight + 120.0;
+  static final double _contentHeight = BentoContainer.spanHeight(3);
+  static final double _contentWidth = BentoContainer.spanWidth(4);
+  static final double heightThreshold = _contentHeight + 120.0;
 
   const NavigationBarLocation();
 
@@ -180,6 +178,7 @@ class NavigationBarLocation extends StandardFabLocation {
 
   @override
   double getOffsetY(ScaffoldPrelayoutGeometry geometry, _) {
+
     final Size screenSize = geometry.scaffoldSize;
     final double fabHeight = geometry.floatingActionButtonSize.height;
 

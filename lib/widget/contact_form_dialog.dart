@@ -11,8 +11,8 @@ class ContactFormDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return _InputFieldContainer(
       child: SizedBox(
-        height: BentoContainer.bentoHeight * 3,
-        width: BentoContainer.bentoWidth * 2 + BentoContainer.bentoGap,
+        height: BentoContainer.spanHeight(3),
+        width: BentoContainer.spanWidth(2),
         child: Padding(
           padding: const EdgeInsets.symmetric(
             vertical: 24,

@@ -46,14 +46,14 @@ class SummaryCard extends StatelessWidget {
               const Spacer(),
               if (personnel != null)
                 IconLabelChip(
-                  chipColor: context.chipStyleTheme.textMain,
+                  chipColor: context.chipColorTheme.textMain,
                   style: context.textTheme.labelMedium,
                   icon: Icons.people,
                   label: '개발 $personnel명',
                 ),
               if (contribution != null)
                 IconLabelChip(
-                  chipColor: context.chipStyleTheme.blueAccent,
+                  chipColor: context.chipColorTheme.blueAccent,
                   style: context.textTheme.labelMedium,
                   icon: Icons.emoji_events,
                   label: '기여도 ${(contribution! * 100).round()}%',
