@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../extension/widget_states_extension.dart';
 import '../widget/bento_container.dart';
+import '../widget/my_avatar.dart';
 import '../widget/scale_detector.dart';
 import '../widget/summary_card.dart';
 
@@ -17,18 +18,16 @@ class ProjectMyPortfolioSection extends StatelessWidget {
           isHovered: ScaleDetector.of(context).value.isHovered,
           child: Stack(
             children: [
-              // Positioned.fill(
-              //   child: Image.network(
-              //     "https://images.unsplash.com/"
-              //         "photo-1543269865-cbf427effbad?q=80&w=2070&auto=format&fit=crop",
-              //     fit: BoxFit.cover,
-              //   ),
+              // Positioned(
+              //   bottom: 0,
+              //   right: 0,
+              //   child: MyAvatar(),
               // ),
               const SummaryCard(
                 icon: Icons.code,
                 titleLabel: 'Sub Project',
-                subTitle: '이웃과 소소한 모임부터 대화까지',
-                skills: ['Flutter', 'Firebase', 'Riverpod'],
+                subTitle: '플러터 포트폴리오 웹사이트',
+                skills: ['Flutter', 'GoRouter', 'Forge2D', 'Rive'],
               ),
             ],
           ),
