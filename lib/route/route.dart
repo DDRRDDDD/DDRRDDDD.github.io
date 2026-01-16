@@ -6,7 +6,7 @@ import '../view/bento_grid_scaffold.dart';
 import '../view/main_grid.dart';
 import '../view/project_grid.dart';
 import '../widget/contact_form_dialog.dart';
-import 'dialog_route.dart';
+import 'page.dart';
 
 typedef NavigationKey = GlobalKey<NavigatorState>;
 final NavigationKey rootNavigatorKey = NavigationKey(debugLabel: 'root');
@@ -28,7 +28,8 @@ final GoRouter router = GoRouter(
                 GoRoute(
                   path: 'input',
                   parentNavigatorKey: rootNavigatorKey,
-                  pageBuilder: (_, _) => DialogPage(
+                  pageBuilder: (_, state) => DialogPage(
+                    key: state.pageKey,
                     child: ContactFormDialog(),
                   ),
                 ),
@@ -41,6 +42,16 @@ final GoRouter router = GoRouter(
             GoRoute(
               path: '/project',
               builder: (_, _) => const ProjectGrid(),
+              routes: [
+                GoRoute(
+                  path: 'one-hour',
+                  parentNavigatorKey: rootNavigatorKey,
+                  pageBuilder: (_, state) => SideSheetPage(
+                    key: state.pageKey,
+                    child: ContactFormDialog(),
+                  ),
+                ),
+              ],
             ),
           ],
         ),
