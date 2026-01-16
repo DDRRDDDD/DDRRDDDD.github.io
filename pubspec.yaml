@@ -28,8 +28,8 @@ dependencies:
   forge2d: ^0.14.2+1
   url_launcher: ^6.3.2
   animations: ^2.1.1
-  markdown: ^7.3.0
   wolt_modal_sheet: ^0.11.0
+  flutter_markdown_plus: ^1.0.7
 
 # rive 버전 강제
 # (dev.14 버전 rive_native 호환성 문제가 존재함)
