@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../constraint/project.dart';
 import '../extension/image_extension.dart';
 import '../extension/theme_extension.dart';
 import '../extension/widget_states_extension.dart';
@@ -13,6 +14,8 @@ class ProjectOneHourSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const Project project = Project.oneHour;
+
     return ScaleDetector(
       onPressDown: () => context.go('/project/one-hour'),
       child: Builder(
@@ -22,7 +25,7 @@ class ProjectOneHourSection extends StatelessWidget {
             children: [
               Positioned.fill(
                 child: Image.asset(
-                  'assets/image/one-hour.jpg',
+                  project.bannerAssetPath!,
                   cacheHeight: BentoContainer.spanHeight(2).cacheSize(context),
                   fit: .cover,
                 ),
@@ -34,16 +37,15 @@ class ProjectOneHourSection extends StatelessWidget {
                   ),
                 ),
               ),
-              const SummaryCard(
-                icon: Icons.smartphone,
+              SummaryCard(
+                icon: project.primaryIcon,
                 personnel: 2,
                 contribution: 0.3,
-                titleLabel: 'Main Project',
-                title: '원아워',
-                subTitle: '이웃과 소소한 모임부터 대화까지',
-                description:
-                    '시간 남을 때 근처 사람과 가볍게 만날 수 있는 번개 모임 및 이웃 연결 대화 서비스입니다.',
-                skills: ['Flutter', 'Firebase', 'Riverpod'],
+                titleLabel: project.type.label,
+                title: project.title,
+                subTitle: project.subTitle,
+                description: project.description,
+                skills: project.labels,
               ),
             ],
           ),

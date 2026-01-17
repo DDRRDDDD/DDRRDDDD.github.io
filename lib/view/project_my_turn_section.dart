@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../constraint/project.dart';
 import '../extension/image_extension.dart';
 import '../extension/theme_extension.dart';
 import '../extension/widget_states_extension.dart';
@@ -12,6 +13,8 @@ class ProjectMyTurnSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const Project project = Project.myTurn;
+
     return ScaleDetector(
       onPressUp: () {},
       child: Builder(
@@ -33,15 +36,15 @@ class ProjectMyTurnSection extends StatelessWidget {
                   ),
                 ),
               ),
-              const SummaryCard(
-                icon: Icons.flag,
+              SummaryCard(
+                icon: project.primaryIcon,
                 personnel: 2,
                 contribution: 0.9,
-                titleLabel: 'Main Project',
-                title: '마이턴',
-                subTitle: '보드게임 모임 플랫폼',
-                description: '\'원아워\'의 피벗 프로젝트,\n모임의 규모를 보드게임으로 집중한 애플리케이션',
-                skills: ['Flutter', 'Supabase', 'Riverpod', 'GoRouter'],
+                titleLabel: project.type.label,
+                title: project.title,
+                subTitle: project.subTitle,
+                description: project.description,
+                skills: project.labels,
               ),
             ],
           ),

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../extension/theme_extension.dart';
+import '../constraint/project.dart';
 import '../extension/widget_states_extension.dart';
 import '../widget/bento_container.dart';
-import '../widget/my_avatar.dart';
 import '../widget/scale_detector.dart';
 import '../widget/summary_card.dart';
 
@@ -13,17 +11,19 @@ class ProjectMyPortfolioSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const Project project = Project.myPortfolio;
+
     return ScaleDetector(
       child: Builder(
         builder: (context) => ProjectContainer(
           isHovered: ScaleDetector.of(context).value.isHovered,
           child: Stack(
             children: [
-              const SummaryCard(
-                icon: Icons.code,
-                titleLabel: 'Sub Project',
-                subTitle: '플러터 포트폴리오 웹사이트',
-                skills: ['Flutter', 'GoRouter', 'Forge2D', 'Rive'],
+              SummaryCard(
+                icon: project.primaryIcon,
+                titleLabel: project.type.label,
+                subTitle: project.subTitle,
+                skills: project.labels,
               ),
             ],
           ),
