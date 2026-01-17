@@ -57,7 +57,7 @@ class _FloatingNavigationBarState extends State<FloatingNavigationBar> {
   @override
   Widget build(BuildContext context) {
     final Axis direction =
-        MediaQuery.sizeOf(context).height <
+        MediaQuery.heightOf(context) <
             NavigationBarLocation.heightThreshold
         ? .vertical
         : .horizontal;
@@ -128,7 +128,7 @@ class _NavigationItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScaleDetector(
       hoverScale: isSelected ? 0.08 : 0.16,
-      onTap: onNavigate,
+      onPressUp: onNavigate,
       child: Builder(
         builder: (context) => AnimatedContainer(
           height: 40,
