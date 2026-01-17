@@ -50,7 +50,7 @@ enum DisplaySize {
   ;
 
   factory DisplaySize.from(BuildContext context) {
-    final double width = MediaQuery.sizeOf(context).width;
+    final double width = MediaQuery.widthOf(context);
 
     return switch (width) {
       < 600 => DisplaySize.small,
