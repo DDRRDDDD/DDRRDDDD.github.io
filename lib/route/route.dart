@@ -6,9 +6,13 @@ import '../view/bento_grid_scaffold.dart';
 import '../view/main_grid.dart';
 import '../view/project_grid.dart';
 import '../widget/contact_form_dialog.dart';
-import 'page.dart';
+import '../widget/markdown_viewer.dart';
+import '../widget/vertical_stepper.dart';
+import 'dialog_page.dart';
+import 'side_sheet_page.dart';
 
 typedef NavigationKey = GlobalKey<NavigatorState>;
+
 final NavigationKey rootNavigatorKey = NavigationKey(debugLabel: 'root');
 
 final GoRouter router = GoRouter(
@@ -46,9 +50,9 @@ final GoRouter router = GoRouter(
                 GoRoute(
                   path: 'one-hour',
                   parentNavigatorKey: rootNavigatorKey,
-                  pageBuilder: (_, state) => SideSheetPage(
+                  pageBuilder: (_, state) => SlideSheetPage(
                     key: state.pageKey,
-                    child: ContactFormDialog(),
+                    child: const MarkdownStepper(),
                   ),
                 ),
               ],
@@ -59,3 +63,42 @@ final GoRouter router = GoRouter(
     ),
   ],
 );
+
+class MarkdownStepper extends StatefulWidget {
+  const MarkdownStepper({super.key});
+
+  @override
+  State<MarkdownStepper> createState() => _MarkdownStepperState();
+}
+
+class _MarkdownStepperState extends State<MarkdownStepper> {
+  int? _index;
+
+  @override
+  Widget build(BuildContext context) {
+    return ColoredBox(
+      color: Colors.white,
+      child: VerticalStepper(
+        currentIndex: _index,
+        onStepTapped: (index) {
+          setState(() => _index = index == _index ? null : index);
+        },
+        steps: [
+          Step(
+            title: const Text('Step 1 title'),
+            content: MarkdownViewer(),
+          ),
+          Step(
+            title: const Text('Step 2 title'),
+            content: Container(
+              height: 500,
+              color: Colors.orange,
+              alignment: Alignment.centerLeft,
+              child: const Text('Content for Step 2'),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
