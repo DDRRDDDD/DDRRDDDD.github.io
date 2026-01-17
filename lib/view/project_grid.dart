@@ -41,7 +41,7 @@ class ProjectGrid extends StatelessWidget {
               child: ProjectMyTurnSection(),
             ),
             const AnimateNamedGridPlacement(
-              order: 3,
+              order: 4,
               areaName: 'item',
               child: ProjectMyPortfolioSection(),
             ),
