@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../extension/image_extension.dart';
 import '../extension/theme_extension.dart';
@@ -13,7 +14,7 @@ class ProjectOneHourSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScaleDetector(
-      onTap: () {},
+      onPressDown: () => context.go('/project/one-hour'),
       child: Builder(
         builder: (context) => ProjectContainer(
           isHovered: ScaleDetector.of(context).value.isHovered,

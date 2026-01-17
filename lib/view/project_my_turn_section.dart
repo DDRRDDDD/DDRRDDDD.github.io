@@ -13,6 +13,7 @@ class ProjectMyTurnSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScaleDetector(
+      onPressUp: () {},
       child: Builder(
         builder: (context) => ProjectContainer(
           isHovered: ScaleDetector.of(context).value.isHovered,
