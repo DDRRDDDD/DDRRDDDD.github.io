@@ -6,14 +6,16 @@ import 'provider.dart';
 class ScaleDetector extends StatefulWidget {
   const ScaleDetector({
     super.key,
-    this.onTap,
+    this.onPressUp,
+    this.onPressDown,
     this.onHover,
     this.enabled = true,
     this.hoverScale = 0.03,
     required this.child,
   });
 
-  final VoidCallback? onTap;
+  final VoidCallback? onPressUp;
+  final VoidCallback? onPressDown;
   final VoidCallback? onHover;
   final bool enabled;
   final double hoverScale;
@@ -49,7 +51,7 @@ class _ScaleDetectorState extends State<ScaleDetector> {
       return SystemMouseCursors.forbidden;
     }
 
-    if (widget.onTap != null) {
+    if (widget.onPressUp != null || widget.onPressDown != null) {
       return SystemMouseCursors.click;
     }
 
@@ -57,7 +59,7 @@ class _ScaleDetectorState extends State<ScaleDetector> {
   }
 
   double _resolveScale(WidgetStates states) {
-    final bool isClickable = widget.onTap != null && widget.enabled;
+    final bool isClickable = widget.onPressUp != null && widget.enabled;
 
     if (isClickable && states.isPressed) {
       return states.isHovered ? 1.0 : 1.0 - widget.hoverScale;
@@ -70,9 +72,15 @@ class _ScaleDetectorState extends State<ScaleDetector> {
     return 1.0;
   }
 
-  void _handleTap() {
+  void _handlePressUp() {
     if (widget.enabled) {
-      widget.onTap?.call();
+      widget.onPressUp?.call();
+    }
+  }
+
+  void _handlePressDown() {
+    if (widget.enabled) {
+      widget.onPressDown?.call();
     }
   }
 
@@ -92,13 +100,14 @@ class _ScaleDetectorState extends State<ScaleDetector> {
         child: GestureDetector(
           onTapUp: (_) {
             _controller.pressOff();
-            _handleTap();
+            _handlePressUp();
           },
           onTapCancel: () {
             _controller.pressOff();
           },
           onTapDown: (_) {
             _controller.pressOn();
+            _handlePressDown();
           },
           child: ValueListenableBuilder(
             valueListenable: _controller,
