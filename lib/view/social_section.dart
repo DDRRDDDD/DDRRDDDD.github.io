@@ -76,7 +76,7 @@ class _SocialBox extends StatelessWidget {
     return ScaleDetector(
       hoverScale: 0.06,
       enabled: onTap != null,
-      onTap: onTap,
+      onPressUp: onTap,
       child: Builder(
         builder: (context) => BentoContainer(
           width: BentoContainer.spanWidth(1/2),
@@ -96,7 +96,7 @@ class _ContactMeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScaleDetector(
-      onTap: () => context.go('/input'),
+      onPressUp: () => context.go('/input'),
       child: _AwesomeContainer(
         child: Padding(
           padding: BentoContainer.contentPadding,
