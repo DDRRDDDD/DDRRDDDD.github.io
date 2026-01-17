@@ -3,7 +3,7 @@ import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 
 import '../extension/transition_extension.dart';
-import '../widget/markdown_sheet.dart';
+import '../widget/markdown_viewer.dart';
 import '../widget/property_item.dart';
 
 class SlideSheetPage<T> extends CustomTransitionPage<T> {
@@ -112,7 +112,7 @@ List<Widget> buildSlivers(BuildContext context) {
     SliverPadding(
       padding: contentPadding,
       sliver: SliverToBoxAdapter(
-        child: MarkdownContent(),
+        child: MarkdownViewer(),
       ),
     ),
     const SliverGap(20),
