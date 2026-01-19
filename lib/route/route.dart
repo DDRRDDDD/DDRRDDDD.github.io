@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../constraint/project.dart';
 import '../view/bento_grid_container.dart';
 import '../view/bento_grid_scaffold.dart';
 import '../view/main_grid.dart';
 import '../view/project_grid.dart';
 import '../widget/contact_form_dialog.dart';
-import '../widget/markdown_viewer.dart';
 import '../widget/project_sheet.dart';
-import '../widget/vertical_stepper.dart';
 import 'dialog_page.dart';
 import 'side_sheet_page.dart';
 
@@ -53,7 +52,29 @@ final GoRouter router = GoRouter(
                   parentNavigatorKey: rootNavigatorKey,
                   pageBuilder: (_, state) => SlideSheetPage(
                     key: state.pageKey,
-                    child: const ProjectSheet(),
+                    child: ProjectSheet(
+                      project: Project.oneHour,
+                    ),
+                  ),
+                ),
+                GoRoute(
+                  path: 'my-turn',
+                  parentNavigatorKey: rootNavigatorKey,
+                  pageBuilder: (_, state) => SlideSheetPage(
+                    key: state.pageKey,
+                    child: ProjectSheet(
+                      project: Project.myTurn,
+                    ),
+                  ),
+                ),
+                GoRoute(
+                  path: 'my-portfolio',
+                  parentNavigatorKey: rootNavigatorKey,
+                  pageBuilder: (_, state) => SlideSheetPage(
+                    key: state.pageKey,
+                    child: ProjectSheet(
+                      project: Project.myPortfolio,
+                    ),
                   ),
                 ),
               ],
@@ -64,4 +85,3 @@ final GoRouter router = GoRouter(
     ),
   ],
 );
-
