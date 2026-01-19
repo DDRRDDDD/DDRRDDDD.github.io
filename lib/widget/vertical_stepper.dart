@@ -5,15 +5,15 @@ import '../extension/theme_extension.dart';
 class VerticalStepper extends StatefulWidget {
   const VerticalStepper({
     super.key,
-    this.controller,
     this.onStepTapped,
     this.currentIndex,
+    this.stepColor = Colors.black38,
     required this.steps,
   });
 
-  final ScrollController? controller;
   final ValueChanged<int>? onStepTapped;
   final int? currentIndex;
+  final Color stepColor;
   final List<Step> steps;
 
   @override
@@ -21,12 +21,8 @@ class VerticalStepper extends StatefulWidget {
 }
 
 class _VerticalStepperState extends State<VerticalStepper> {
-  static const double _numberWidth = 34;
+  static const double _numberWidth = 10;
   static const double _contentMargin = 24;
-
-  StepStyle? _stepStyle(int index) {
-    return widget.steps[index].stepStyle;
-  }
 
   bool _isFirst(int index) {
     return index == 0;
@@ -42,8 +38,7 @@ class _VerticalStepperState extends State<VerticalStepper> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      controller: widget.controller,
+    return SliverList.builder(
       itemCount: widget.steps.length * 2,
       itemBuilder: (_, index) {
         final int itemIndex = index ~/ 2;
@@ -63,20 +58,25 @@ class _VerticalStepperState extends State<VerticalStepper> {
         ),
         child: Row(
           spacing: 12,
+          mainAxisSize: .min,
           children: [
             Column(
+              spacing: 8,
               children: [
                 _buildLine(!_isFirst(index)),
-                _buildIcon(index),
+                SizedBox.square(
+                  dimension: _numberWidth,
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: widget.stepColor,
+                    ),
+                  ),
+                ),
                 _buildLine(!_isLast(index)),
               ],
             ),
-            Expanded(
-              child: Align(
-                alignment: .centerLeft,
-                child: widget.steps.elementAt(index).title,
-              ),
-            ),
+            widget.steps.elementAt(index).title,
           ],
         ),
       ),
@@ -85,34 +85,10 @@ class _VerticalStepperState extends State<VerticalStepper> {
 
   Widget _buildLine(bool visible) {
     return ColoredBox(
-      color: Colors.black38,
+      color: widget.stepColor,
       child: SizedBox(
-        width: visible ? 2.0 : 0.0,
-        height: _contentMargin * 2/3,
-      ),
-    );
-  }
-
-  Widget _buildIcon(int index) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: _contentMargin * 1/3,
-      ),
-      child: SizedBox.square(
-        dimension: _numberWidth,
-        child: DecoratedBox(
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: Colors.black38,
-            border: _stepStyle(index)?.border,
-          ),
-          child: Center(
-            child: Text(
-              '${index + 1}',
-              style: context.textTheme.heroBadge,
-            ),
-          ),
-        ),
+        width: visible ? 1.0 : 0.0,
+        height: _contentMargin * 2 / 3,
       ),
     );
   }
@@ -127,7 +103,7 @@ class _VerticalStepperState extends State<VerticalStepper> {
           width: _numberWidth,
           child: Center(
             child: SizedBox(
-              width: !_isLast(index) ? 2.0 : 0.0,
+              width: !_isLast(index) ? 1.0 : 0.0,
               height: double.infinity,
               child: ColoredBox(
                 color: Colors.black38,
@@ -138,9 +114,7 @@ class _VerticalStepperState extends State<VerticalStepper> {
         AnimatedCrossFade(
           duration: kThemeAnimationDuration,
           sizeCurve: Curves.fastOutSlowIn,
-          crossFadeState: _isCurrent(index)
-              ? CrossFadeState.showSecond
-              : CrossFadeState.showFirst,
+          crossFadeState: _isCurrent(index) ? .showSecond : .showFirst,
           firstCurve: const Interval(0.0, 0.6, curve: Curves.fastOutSlowIn),
           secondCurve: const Interval(0.4, 1.0, curve: Curves.fastOutSlowIn),
           firstChild: const SizedBox(width: double.infinity),
