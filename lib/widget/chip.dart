@@ -111,13 +111,11 @@ class TagChip extends StatelessWidget {
   Widget build(BuildContext context) {
     return DecoratedBox(
       decoration: BoxDecoration(
-        // color: const Color(0x1AFFFFFF),
         color: context.colorTheme.glassOverlay,
         borderRadius: const BorderRadius.all(
           Radius.circular(6),
         ),
         border: Border.all(
-          // color: const Color(0x0DFFFFFF),
           color: context.colorTheme.outline,
         ),
       ),
