@@ -127,7 +127,6 @@ class TagChip extends StatelessWidget {
         child: Text(
           tag,
           style: context.textTheme.labelMedium.copyWith(
-            // color: Colors.grey[200],
             color: context.colorTheme.textSub,
             height: 1.5,
           ),
