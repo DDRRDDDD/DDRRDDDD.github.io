@@ -8,11 +8,19 @@ class PropertyTitle extends StatelessWidget {
   const PropertyTitle({
     super.key,
     required this.icon,
-    required this.title,
+    required this.subTitle,
+    this.title,
   });
 
   final IconData icon;
-  final String title;
+  final String? title;
+  final String subTitle;
+
+  String get combinedTitle {
+    return (title != null && title!.isNotEmpty)
+        ? '$title - $subTitle'
+        : subTitle;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +35,7 @@ class PropertyTitle extends StatelessWidget {
           color: Colors.grey,
         ),
         Text(
-          title,
+          combinedTitle,
           style: context.textTheme.cardTitle.copyWith(
             color: Colors.black87,
           ),
@@ -42,6 +50,48 @@ class PropertyListTile extends StatelessWidget {
     super.key,
     required this.icon,
     required this.label,
+    required this.child,
+  });
+
+  final IconData icon;
+  final String label;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 36,
+      child: Row(
+        children: [
+          FaIcon(
+            icon,
+            size: 18,
+            color: context.colorTheme.textSub,
+          ),
+          const Gap(10),
+          SizedBox(
+            width: 80,
+            child: Text(
+              label,
+              style: context.textTheme.heroBadge.copyWith(
+                color: context.colorTheme.textMain,
+              ),
+            ),
+          ),
+          Expanded(
+            child: child,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class PropertyTextTile extends StatelessWidget {
+  const PropertyTextTile({
+    super.key,
+    required this.icon,
+    required this.label,
     required this.value,
   });
 
@@ -51,31 +101,14 @@ class PropertyListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6),
-      child: Row(
-        children: [
-          FaIcon(
-            icon,
-            size: 18,
-            color: Colors.grey[600],
-          ),
-          const Gap(10),
-          SizedBox(
-            width: 80,
-            child: Text(
-              label,
-              style: TextStyle(color: Colors.grey[600]),
-            ),
-          ),
-          Expanded(
-            child: Text(
-              value,
-              style: const TextStyle(color: Colors.black87),
-            ),
-          ),
-        ],
+    return PropertyListTile(
+      icon: icon,
+      label: label,
+      child: Text(
+        value,
+        style: const TextStyle(color: Colors.black87),
       ),
     );
   }
 }
+
