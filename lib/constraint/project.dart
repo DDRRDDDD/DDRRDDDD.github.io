@@ -10,8 +10,10 @@ enum Project {
     labels: ['Flutter', 'Firebase', 'Riverpod'],
     bannerAssetPath: 'assets/image/one-hour.jpg',
     role: '클라이언트 개발',
-    startAt: '2024-12',
-    endAt: '2025-02',
+    startAt: '2024.12',
+    endAt: '2025.02',
+    myContribution: 0.3,
+    teamSummaries: ['기획/Flutter', 'Flutter'],
   ),
   myTurn(
     primaryIcon: Icons.flag,
@@ -21,9 +23,11 @@ enum Project {
     description: '\'원아워\'의 피벗 프로젝트,\n모임의 규모를 보드게임으로 집중한 애플리케이션',
     labels: ['Flutter', 'Supabase', 'Riverpod', 'GoRouter'],
     bannerAssetPath: 'assets/image/my-turn.jpg',
-    role: '앱 개발 리드 및 UI/UX 디자인',
-    startAt: '2025-07',
-    endAt: '2025-12',
+    role: '앱 개발 리드',
+    startAt: '2025.07',
+    endAt: '2025.12',
+    myContribution: 0.9,
+    teamSummaries: ['디자이너', '기획', '개발'],
   ),
   myPortfolio(
     primaryIcon: Icons.code,
@@ -31,12 +35,9 @@ enum Project {
     subTitle: '플러터 포트폴리오 웹사이트',
     labels: ['Flutter', 'GoRouter', 'Forge2D', 'Rive'],
     role: '1인 전담 개발 (기획·디자인·구현)',
-    startAt: '2025-12',
-  );
-
-  /// 슬라이드 시트 테마/스타일 정리 -> 제미나이 참고
-  /// 프로젝트 아이콘 -> 이모지로 변경
-  /// **마크다운 작성**
+    startAt: '2025.12',
+  )
+  ;
 
   final IconData primaryIcon;
   final ProjectType type;
@@ -48,6 +49,8 @@ enum Project {
   final String role;
   final String startAt;
   final String? endAt;
+  final double? myContribution;
+  final List<String>? teamSummaries;
 
   const Project({
     required this.primaryIcon,
@@ -60,10 +63,42 @@ enum Project {
     required this.role,
     required this.startAt,
     this.endAt,
+    this.myContribution,
+    this.teamSummaries,
   });
 
-  bool get isCompleted {
-    return endAt != null;
+  bool get hasTeamSummary {
+    return myContribution != null ||
+        teamSummaries != null && teamSummaries!.isNotEmpty;
+  }
+
+  bool get hasLink {
+    return true;
+  }
+
+  String get period {
+    return '$startAt ~ ${endAt ?? '진행 중'}';
+  }
+
+  String? get teamDetail {
+    final StringBuffer buffer = StringBuffer();
+
+    if (teamSummaries != null && teamSummaries!.isNotEmpty) {
+      final int count = teamSummaries!.length;
+      final String team = teamSummaries!.join(', ');
+      buffer.write('총 $count명 ($team)');
+    }
+
+    if (buffer.isNotEmpty) {
+      buffer.write(' - ');
+    }
+
+    if (myContribution != null) {
+      final int percent = (myContribution! * 100).toInt();
+      buffer.write('기여도 $percent%');
+    }
+
+    return buffer.isNotEmpty ? buffer.toString() : null;
   }
 }
 
