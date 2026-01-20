@@ -39,8 +39,8 @@ class ProjectOneHourSection extends StatelessWidget {
               ),
               SummaryCard(
                 icon: project.primaryIcon,
-                personnel: 2,
-                contribution: 0.3,
+                personnel: project.teamSummaries?.length,
+                contribution: project.myContribution,
                 titleLabel: project.type.label,
                 title: project.title,
                 subTitle: project.subTitle,

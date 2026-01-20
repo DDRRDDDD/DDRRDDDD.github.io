@@ -38,8 +38,8 @@ class ProjectMyTurnSection extends StatelessWidget {
               ),
               SummaryCard(
                 icon: project.primaryIcon,
-                personnel: 2,
-                contribution: 0.9,
+                personnel: project.teamSummaries?.length,
+                contribution: project.myContribution,
                 titleLabel: project.type.label,
                 title: project.title,
                 subTitle: project.subTitle,
