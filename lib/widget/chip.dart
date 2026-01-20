@@ -97,14 +97,16 @@ class IconLabelChip extends StatelessWidget {
 class TagChip extends StatelessWidget {
   const TagChip({
     super.key,
+    this.icon,
     required this.tag,
   });
 
-  const TagChip.mapped(
+  const TagChip.text(
     this.tag, {
     super.key,
-  });
+  }) : icon = null;
 
+  final IconData? icon;
   final String tag;
 
   @override
@@ -124,12 +126,24 @@ class TagChip extends StatelessWidget {
           horizontal: 10,
           vertical: 5,
         ),
-        child: Text(
-          tag,
-          style: context.textTheme.labelMedium.copyWith(
-            color: context.colorTheme.textSub,
-            height: 1.5,
-          ),
+        child: Row(
+          spacing: 2,
+          mainAxisSize: .min,
+          children: [
+            if (icon != null)
+              FaIcon(
+                icon,
+                size: context.textTheme.labelMedium.fontSize,
+                color: context.colorTheme.textSub,
+              ),
+            Text(
+              tag,
+              style: context.textTheme.labelMedium.copyWith(
+                color: context.colorTheme.textSub,
+                height: 1.5,
+              ),
+            ),
+          ],
         ),
       ),
     );
