@@ -49,7 +49,7 @@ class SummaryCard extends StatelessWidget {
                   chipColor: context.chipColorTheme.textMain,
                   style: context.textTheme.labelMedium,
                   icon: Icons.people,
-                  label: '개발 $personnel명',
+                  label: '팀원 $personnel명',
                 ),
               if (contribution != null)
                 IconLabelChip(
@@ -132,7 +132,7 @@ class SummaryCard extends StatelessWidget {
           const Gap(16),
           Wrap(
             spacing: 8,
-            children: skills.map(TagChip.mapped).toList(),
+            children: skills.map(TagChip.text).toList(),
           ),
         ],
       ),

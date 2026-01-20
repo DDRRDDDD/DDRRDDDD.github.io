@@ -25,19 +25,19 @@ class PropertyTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      spacing: 8,
+      spacing: 10,
       mainAxisSize: .min,
       crossAxisAlignment: .end,
       children: [
         FaIcon(
           icon,
-          size: 25,
-          color: Colors.grey,
+          size: context.textTheme.cardTitle.fontSize! * 1.25,
+          color: context.colorTheme.textMain.withValues(alpha: 0.6),
         ),
         Text(
           combinedTitle,
           style: context.textTheme.cardTitle.copyWith(
-            color: Colors.black87,
+            color: context.colorTheme.textMain,
           ),
         ),
       ],
@@ -60,21 +60,27 @@ class PropertyListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 36,
+      height: 40,
       child: Row(
         children: [
           FaIcon(
             icon,
             size: 18,
-            color: context.colorTheme.textSub,
+            color: context.colorTheme.textSub.withValues(
+              alpha: 0.6,
+            ),
           ),
           const Gap(10),
-          SizedBox(
-            width: 80,
+          ConstrainedBox(
+            constraints: BoxConstraints(
+              minWidth: 100,
+            ),
             child: Text(
               label,
               style: context.textTheme.heroBadge.copyWith(
-                color: context.colorTheme.textMain,
+                color: context.colorTheme.textMain.withValues(
+                  alpha: 0.8,
+                ),
               ),
             ),
           ),
@@ -106,9 +112,11 @@ class PropertyTextTile extends StatelessWidget {
       label: label,
       child: Text(
         value,
-        style: const TextStyle(color: Colors.black87),
+        style: context.textTheme.bodyRegular.copyWith(
+          fontWeight: FontWeight.w600,
+          color: context.colorTheme.textMain,
+        ),
       ),
     );
   }
 }
-
