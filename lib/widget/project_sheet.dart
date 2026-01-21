@@ -42,7 +42,7 @@ class _ProjectSheetState extends State<ProjectSheet> {
   }
 
   void _handleStepIndex(int? index) {
-    setState(() => _stepIndex = index);
+    setState(() => _stepIndex = _stepIndex != index ? index : null);
   }
 
   @override
@@ -57,56 +57,18 @@ class _ProjectSheetState extends State<ProjectSheet> {
             subTitle: widget.project.subTitle,
           ),
           const SliverGap(12),
-          SliverPadding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: ProjectSheet.contentSpacing,
-            ),
-            sliver: SliverList.list(
-              children: [
-                PropertyListTile(
-                  icon: Icons.folder_open_outlined,
-                  label: "분류",
-                  child: Wrap(
-                    spacing: 6,
-                    children: widget.project.labels.map(TagChip.text).toList(),
-                  ),
-                ),
-                PropertyTextTile(
-                  icon: Icons.person_outline,
-                  label: '역할',
-                  value: widget.project.role,
-                ),
-                PropertyTextTile(
-                  icon: Icons.calendar_month_outlined,
-                  label: '기간',
-                  value: widget.project.period,
-                ),
-                if (widget.project.hasTeamSummary)
-                  PropertyTextTile(
-                    icon: Icons.group_outlined,
-                    label: '팀 / 기여도',
-                    value: widget.project.teamDetail!,
-                  ),
-                if (widget.project.hasReferences)
-                  PropertyListTile(
-                    icon: Icons.link_outlined,
-                    label: '링크',
-                    child: Wrap(
-                      spacing: 6,
-                      children: widget.project.references!
-                          .map(LinkedTagChip.item)
-                          .toList(),
-                    ),
-                  ),
-              ],
-            ),
+          _ProjectProperties(
+            project: widget.project,
           ),
           SliverPadding(
             padding: const EdgeInsets.symmetric(
               horizontal: ProjectSheet.contentSpacing,
               vertical: 12,
             ),
-            sliver: SliverGap(1, color: context.colorTheme.outline),
+            sliver: SliverGap(
+              1,
+              color: context.colorTheme.outline,
+            ),
           ),
           VerticalStepper(
             currentIndex: _stepIndex,
@@ -139,6 +101,65 @@ class _ProjectSheetState extends State<ProjectSheet> {
             ],
           ),
           const SliverGap(20),
+        ],
+      ),
+    );
+  }
+}
+
+class _ProjectProperties extends StatelessWidget {
+  const _ProjectProperties({
+    super.key,
+    required this.project,
+  });
+
+  final Project project;
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverPadding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: ProjectSheet.contentSpacing,
+      ),
+      sliver: SliverList.list(
+        children: [
+          PropertyListTile(
+            icon: Icons.folder_open_outlined,
+            label: "분류",
+            child: Wrap(
+              spacing: 6,
+              children: [
+                ...project.labels.map(TagChip.text),
+              ],
+            ),
+          ),
+          PropertyTextTile(
+            icon: Icons.person_outline,
+            label: '역할',
+            value: project.role,
+          ),
+          PropertyTextTile(
+            icon: Icons.calendar_month_outlined,
+            label: '기간',
+            value: project.period,
+          ),
+          if (project.hasTeamSummary)
+            PropertyTextTile(
+              icon: Icons.group_outlined,
+              label: '팀 / 기여도',
+              value: project.teamDetail!,
+            ),
+          if (project.hasReferences)
+            PropertyListTile(
+              icon: Icons.link_outlined,
+              label: '링크',
+              child: Wrap(
+                spacing: 6,
+                children: [
+                  ...project.references!.map(LinkedTagChip.item),
+                ],
+              ),
+            ),
         ],
       ),
     );
