@@ -32,8 +32,8 @@ class ProjectGrid extends StatelessWidget {
           children: [
             const AnimateNamedGridPlacement(
               order: 1,
-              areaName: 'main',
-              child: ProjectOneHourSection(),
+              areaName: 'item',
+              child: ProjectMyPortfolioSection(),
             ),
             const AnimateNamedGridPlacement(
               order: 2,
@@ -42,8 +42,8 @@ class ProjectGrid extends StatelessWidget {
             ),
             const AnimateNamedGridPlacement(
               order: 4,
-              areaName: 'item',
-              child: ProjectMyPortfolioSection(),
+              areaName: 'main',
+              child: ProjectOneHourSection(),
             ),
           ],
         ),
