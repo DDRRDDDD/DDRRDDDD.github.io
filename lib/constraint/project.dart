@@ -20,7 +20,7 @@ enum Project {
     startAt: '2024.12',
     endAt: '2025.02',
     myContribution: 0.3,
-    teamSummaries: ['기획/Flutter', 'Flutter'],
+    teamSummaries: ['기획·Flutter', 'Flutter'],
     references: [
       (
         icon: Icons.apple_outlined,
