@@ -1,6 +1,6 @@
 import 'package:vector_graphics/vector_graphics.dart';
 
-import '../extension/let_extension.dart';
+import '../extension/common_extension.dart';
 
 typedef SvgEntry = MapEntry<String, PictureInfo>;
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../extension/let_extension.dart';
+import '../extension/common_extension.dart';
 import 'provider.dart';
 
 typedef BrightnessBuilder =

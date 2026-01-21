@@ -1,7 +1,7 @@
 import 'package:envied/envied.dart';
 import 'package:http/http.dart' as http;
 
-import '../extension/let_extension.dart';
+import '../extension/common_extension.dart';
 
 part 'email_manager.g.dart';
 

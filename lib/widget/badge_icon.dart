@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../extension/let_extension.dart';
+import '../extension/common_extension.dart';
 
 class BadgeIcon extends StatelessWidget {
   const BadgeIcon({

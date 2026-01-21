@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:gap/gap.dart';
 
-import '../extension/let_extension.dart';
+import '../extension/common_extension.dart';
 import '../extension/number_extension.dart';
 import '../extension/theme_extension.dart';
 import '../extension/widget_states_extension.dart';
