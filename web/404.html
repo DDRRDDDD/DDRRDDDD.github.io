@@ -3,11 +3,8 @@
     <meta charset="utf-8">
     <title>Single Page Apps for GitHub Pages</title>
     <script type="text/javascript">
-        // 현재 URL의 경로(path)와 쿼리(query)를 저장하고 index.html로 리다이렉트합니다.
-        // GitHub Pages는 폴더 단위 프로젝트일 경우 /레포지토리명/ 이 붙습니다.
-
-        var pathSegmentsToKeep = 1; // https://user.github.io/repo-name/ 라면 1로 설정
-        // 만약 커스텀 도메인(www.example.com)을 쓴다면 0으로 설정하세요.
+        // 유지할 path segment의 depth
+        var pathSegmentsToKeep = 0;
 
         var l = window.location;
         l.replace(
