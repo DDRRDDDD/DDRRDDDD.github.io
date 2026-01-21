@@ -187,7 +187,7 @@ class LinkedTagChip extends StatelessWidget {
               children: [
                 FaIcon(
                   icon,
-                  size: 18,
+                  size: 14,
                   color: context.colorTheme.textSub,
                 ),
                 Text(
