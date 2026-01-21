@@ -315,7 +315,7 @@ class BlastQueryCallback extends QueryCallback {
       final double forceMagnitude = (1 - (distance / blastRadius)) * blastForce;
 
       // 벡터 정규화 및 충격량 계산
-      // (direction / distance)는 정규화된 방향 벡터입니다.
+      // (direction / distance)는 정규화된 방향 벡터
       final Vector2 impulse = direction..scale(forceMagnitude / distance);
 
       // 잠든 바디를 깨우고 물리적인 힘 적용
