@@ -1,9 +1,8 @@
-import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:gap/gap.dart';
 
 import '../extension/common_extension.dart';
 import '../extension/number_extension.dart';

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../constraint/project.dart';
-import '../extension/common_extension.dart';
 import '../extension/route_extension.dart';
 import '../view/bento_grid_container.dart';
 import '../view/bento_grid_scaffold.dart';

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../extension/brightness_extension.dart';
 import 'color_theme.dart';
-import 'text_theme.dart';
 
 const lightColorTheme = ChipColorThemeExtension._(
   heroPrimary: ChipColor(

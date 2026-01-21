@@ -50,11 +50,4 @@ class ProjectGrid extends StatelessWidget {
       ),
     );
   }
-
-  Widget _buildColoredBox(Color color) {
-    return BentoContainer(
-      color: color,
-      child: const SizedBox.shrink(),
-    );
-  }
 }
