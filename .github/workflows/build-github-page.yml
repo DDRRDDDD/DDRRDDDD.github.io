@@ -46,12 +46,6 @@ jobs:
       - name: 종속성 설치
         run: flutter pub get
 
-      - name: Base Path 값 출력 확인
-        run: |
-          echo "----------------------------------------------"
-          echo "Generated Base Path: ${{ steps.pages.outputs.base_path }}/"
-          echo "----------------------------------------------"
-
       - name: 웹 빌드
         run: flutter build web --release --base-href "${{ steps.pages.outputs.base_path }}/"
 
