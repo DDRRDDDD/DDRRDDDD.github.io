@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../constraint/project.dart';
 import '../extension/image_extension.dart';
@@ -16,7 +17,7 @@ class ProjectMyTurnSection extends StatelessWidget {
     const Project project = Project.myTurn;
 
     return ScaleDetector(
-      onPressUp: () {},
+      onPressDown: () => context.go('/project/my-turn'),
       child: Builder(
         builder: (context) => ProjectContainer(
           isHovered: ScaleDetector.of(context).value.isHovered,

@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../extension/theme_extension.dart';
-
 class VerticalStepper extends StatefulWidget {
   const VerticalStepper({
     super.key,
     this.onStepTapped,
     this.currentIndex,
-    this.stepColor = Colors.black38,
+    this.stepColor = Colors.white,
     required this.steps,
   });
 
@@ -50,35 +48,35 @@ class _VerticalStepperState extends State<VerticalStepper> {
   }
 
   Widget _buildVerticalHeader(int index) {
-    return InkWell(
-      onTap: () => widget.onStepTapped?.call(index),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: _contentMargin,
-        ),
-        child: Row(
-          spacing: 12,
-          mainAxisSize: .min,
-          children: [
-            Column(
-              spacing: 8,
-              children: [
-                _buildLine(!_isFirst(index)),
-                SizedBox.square(
-                  dimension: _numberWidth,
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: widget.stepColor,
-                    ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: _contentMargin,
+      ),
+      child: Row(
+        spacing: 12,
+        mainAxisSize: .min,
+        children: [
+          Column(
+            spacing: 8,
+            children: [
+              _buildLine(!_isFirst(index)),
+              SizedBox.square(
+                dimension: _numberWidth,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: widget.stepColor,
                   ),
                 ),
-                _buildLine(!_isLast(index)),
-              ],
-            ),
-            widget.steps.elementAt(index).title,
-          ],
-        ),
+              ),
+              _buildLine(!_isLast(index)),
+            ],
+          ),
+          InkWell(
+            onTap: () => widget.onStepTapped?.call(index),
+            child: widget.steps.elementAt(index).title,
+          ),
+        ],
       ),
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../constraint/project.dart';
 import '../extension/widget_states_extension.dart';
@@ -14,6 +15,7 @@ class ProjectMyPortfolioSection extends StatelessWidget {
     const Project project = Project.myPortfolio;
 
     return ScaleDetector(
+      onPressDown: () => context.go('/project/my-portfolio'),
       child: Builder(
         builder: (context) => ProjectContainer(
           isHovered: ScaleDetector.of(context).value.isHovered,

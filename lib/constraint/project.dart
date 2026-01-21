@@ -1,4 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+typedef LinkItem = ({
+  IconData icon,
+  String label,
+  String url,
+});
 
 enum Project {
   oneHour(
@@ -14,6 +21,19 @@ enum Project {
     endAt: '2025.02',
     myContribution: 0.3,
     teamSummaries: ['기획/Flutter', 'Flutter'],
+    references: [
+      (
+        icon: Icons.apple_outlined,
+        label: 'App Store',
+        url:
+            'https://apps.apple.com/kr/app/'
+            '%EC%9B%90%EC%95%84%EC%9B%8C-'
+            '%EC%9D%B4%EC%9B%83%EA%B3%BC-'
+            '%EC%86%8C%EC%86%8C%ED%95%9C-'
+            '%EB%AA%A8%EC%9E%84%EB%B6%80%ED%84%B0-'
+            '%EB%8C%80%ED%99%94%EA%B9%8C%EC%A7%80/id6739973696',
+      ),
+    ],
   ),
   myTurn(
     primaryIcon: Icons.flag,
@@ -36,6 +56,13 @@ enum Project {
     labels: ['Flutter', 'GoRouter', 'Forge2D', 'Rive'],
     role: '1인 전담 개발 (기획·디자인·구현)',
     startAt: '2025.12',
+    references: [
+      (
+        icon: FontAwesomeIcons.github,
+        label: 'Github',
+        url: 'https://github.com/DDRRDDDD/DDRRDDDD.github.io',
+      ),
+    ],
   )
   ;
 
@@ -51,6 +78,7 @@ enum Project {
   final String? endAt;
   final double? myContribution;
   final List<String>? teamSummaries;
+  final List<LinkItem>? references;
 
   const Project({
     required this.primaryIcon,
@@ -65,6 +93,7 @@ enum Project {
     this.endAt,
     this.myContribution,
     this.teamSummaries,
+    this.references,
   });
 
   bool get hasTeamSummary {
@@ -72,8 +101,8 @@ enum Project {
         teamSummaries != null && teamSummaries!.isNotEmpty;
   }
 
-  bool get hasLink {
-    return true;
+  bool get hasReferences {
+    return references != null;
   }
 
   String get period {
