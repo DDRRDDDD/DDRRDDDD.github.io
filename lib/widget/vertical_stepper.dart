@@ -30,8 +30,8 @@ class _VerticalStepperState extends State<VerticalStepper> {
     return widget.steps.length - 1 == index;
   }
 
-  bool _isCurrent(int index) {
-    return widget.currentIndex == index;
+  bool _isCurrent(int stepIndex) {
+    return widget.currentIndex == stepIndex;
   }
 
   @override
@@ -104,7 +104,7 @@ class _VerticalStepperState extends State<VerticalStepper> {
               width: !_isLast(index) ? 1.0 : 0.0,
               height: double.infinity,
               child: ColoredBox(
-                color: Colors.black38,
+                color: widget.stepColor,
               ),
             ),
           ),
@@ -120,7 +120,6 @@ class _VerticalStepperState extends State<VerticalStepper> {
             padding: EdgeInsetsDirectional.only(
               start: 60.0, // stepper 마진,
               end: _contentMargin,
-              bottom: _contentMargin,
             ),
             child: Align(
               alignment: AlignmentDirectional.centerStart,
