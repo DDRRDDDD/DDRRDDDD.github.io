@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../constraint/project.dart';
+import '../extension/common_extension.dart';
 import '../extension/route_extension.dart';
 import '../view/bento_grid_container.dart';
 import '../view/bento_grid_scaffold.dart';
@@ -48,36 +49,18 @@ final GoRouter router = GoRouter(
               path: '/project',
               builder: (_, _) => const ProjectGrid(),
               routes: [
+                // stepper 아이템도 매핑
+                // 마크 다운 작성 **
                 GoRoute(
-                  path: 'one-hour',
+                  path: ':project-name',
                   parentNavigatorKey: rootNavigatorKey,
                   pageBuilder: (_, state) => SlideSheetPage(
                     key: state.pageKey,
                     child: ProjectSheet(
                       stepIndex: state.queryInt('step'),
-                      project: Project.oneHour,
-                    ),
-                  ),
-                ),
-                GoRoute(
-                  path: 'my-turn',
-                  parentNavigatorKey: rootNavigatorKey,
-                  pageBuilder: (_, state) => SlideSheetPage(
-                    key: state.pageKey,
-                    child: ProjectSheet(
-                      stepIndex: state.queryInt('step'),
-                      project: Project.myTurn,
-                    ),
-                  ),
-                ),
-                GoRoute(
-                  path: 'my-portfolio',
-                  parentNavigatorKey: rootNavigatorKey,
-                  pageBuilder: (_, state) => SlideSheetPage(
-                    key: state.pageKey,
-                    child: ProjectSheet(
-                      stepIndex: state.queryInt('step'),
-                      project: Project.myPortfolio,
+                      project: state
+                          .requirePathString('project-name')
+                          .let(Project.fromPath),
                     ),
                   ),
                 ),
