@@ -31,6 +31,7 @@ dependencies:
   wolt_modal_sheet: ^0.11.0
   flutter_markdown_plus: ^1.0.7
   scroll_to_index: ^3.0.1
+  recase: ^4.1.0
 
 # rive 버전 강제
 # (dev.14 버전 rive_native 호환성 문제가 존재함)
