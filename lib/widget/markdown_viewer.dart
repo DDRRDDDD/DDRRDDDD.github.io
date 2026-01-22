@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 
+import 'milestone_list.dart';
+
 const String markdownData = '''
 # ExpansionTile Demo
 
@@ -41,5 +43,23 @@ class MarkdownViewer extends StatelessWidget {
         blockquoteDecoration: BoxDecoration(color: Colors.grey),
       ),
     );
+  }
+}
+
+class MilestoneMarkdown extends Milestone {
+  final String assetPath;
+
+  const MilestoneMarkdown(this.assetPath);
+
+  @override
+  Widget get title {
+    return Builder(
+      builder: (context) => Text(assetPath),
+    );
+  }
+
+  @override
+  Widget get content {
+    return MarkdownViewer(assetPath: assetPath);
   }
 }

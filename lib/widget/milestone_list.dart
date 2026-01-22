@@ -1,26 +1,26 @@
 import 'package:flutter/material.dart';
 
-class VerticalStepper extends StatefulWidget {
-  const VerticalStepper({
+class MilestoneList extends StatefulWidget {
+  const MilestoneList({
     super.key,
     this.onStepTapped,
     this.currentIndex,
     this.stepColor = Colors.white,
     this.contentMargin = 24,
-    required this.steps,
+    required this.milestones,
   });
 
   final ValueChanged<int>? onStepTapped;
   final int? currentIndex;
   final Color stepColor;
   final double contentMargin;
-  final List<Step> steps;
+  final List<Milestone> milestones;
 
   @override
-  State<VerticalStepper> createState() => _VerticalStepperState();
+  State<MilestoneList> createState() => _MilestoneListState();
 }
 
-class _VerticalStepperState extends State<VerticalStepper> {
+class _MilestoneListState extends State<MilestoneList> {
   static const double _dotWidth = 10;
 
   bool _isFirst(int index) {
@@ -28,7 +28,7 @@ class _VerticalStepperState extends State<VerticalStepper> {
   }
 
   bool _isLast(int index) {
-    return widget.steps.length - 1 == index;
+    return widget.milestones.length - 1 == index;
   }
 
   CrossFadeState _currentFadeState(int stepIndex) {
@@ -38,7 +38,7 @@ class _VerticalStepperState extends State<VerticalStepper> {
   @override
   Widget build(BuildContext context) {
     return SliverList.builder(
-      itemCount: widget.steps.length * 2,
+      itemCount: widget.milestones.length * 2,
       itemBuilder: (_, index) {
         final int itemIndex = index ~/ 2;
         return index.isEven
@@ -76,7 +76,7 @@ class _VerticalStepperState extends State<VerticalStepper> {
           Expanded(
             child: InkWell(
               onTap: () => widget.onStepTapped?.call(index),
-              child: widget.steps.elementAt(index).title,
+              child: widget.milestones.elementAt(index).title,
             ),
           ),
         ],
@@ -126,11 +126,18 @@ class _VerticalStepperState extends State<VerticalStepper> {
             ),
             child: Align(
               alignment: AlignmentDirectional.centerStart,
-              child: widget.steps.elementAt(index).content,
+              child: widget.milestones.elementAt(index).content,
             ),
           ),
         ),
       ],
     );
   }
+}
+
+abstract class Milestone {
+  const Milestone();
+
+  Widget get title;
+  Widget get content;
 }
