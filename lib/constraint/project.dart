@@ -136,6 +136,15 @@ enum Project {
 
     return buffer.isNotEmpty ? buffer.toString() : null;
   }
+
+  String get markdownAsset {
+    return 'assets/md/${ReCase(name).paramCase}/';
+  }
+
+  bool matchesMarkdown(String assetPath) {
+    return assetPath.startsWith(markdownAsset) &&
+        assetPath.toLowerCase().endsWith('.md');
+  }
 }
 
 enum ProjectType {

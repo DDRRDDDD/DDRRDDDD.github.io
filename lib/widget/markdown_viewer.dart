@@ -1,47 +1,50 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
+import 'package:path/path.dart';
 
 import 'milestone_list.dart';
-
-const String markdownData = '''
-# ExpansionTile Demo
-
-일반적인 텍스트입니다. 아래 리스트를 눌러보세요.
-```javascript
-let sumNumbers = (firstNum, lastNum) => {
-  return firstNum + lastNum;
-};
-sumNumbers(100, 200);
-```　
-
-::: 두 번째 요약
-여기에는 간단한 내용만 들어갑니다.
-:::
-
-마지막 텍스트입니다.
-''';
 
 class MarkdownViewer extends StatelessWidget {
   const MarkdownViewer({
     super.key,
-    this.assetPath,
+    required this.assetPath,
   });
 
-  final String? assetPath;
+  final String assetPath;
 
   @override
   Widget build(BuildContext context) {
-    return MarkdownBody(
-      data: markdownData,
-      styleSheet: MarkdownStyleSheet(
-        h1: TextStyle(
-          fontSize: 24,
-          color: Colors.black,
-          fontWeight: FontWeight.w700,
-        ),
-        h2: TextStyle(color: Colors.blue, fontSize: 30),
-        blockquoteDecoration: BoxDecoration(color: Colors.grey),
-      ),
+    return FutureBuilder<String>(
+      future: rootBundle.loadString(assetPath),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(
+            child: CircularProgressIndicator(strokeWidth: 2),
+          );
+        }
+
+        if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        }
+
+        if (snapshot.hasData) {
+          return MarkdownBody(
+            data: snapshot.data!,
+            styleSheet: MarkdownStyleSheet(
+              h1: const TextStyle(
+                fontSize: 24,
+                color: Colors.black,
+                fontWeight: FontWeight.w700,
+              ),
+              h2: const TextStyle(color: Colors.blue, fontSize: 30),
+              blockquoteDecoration: const BoxDecoration(color: Colors.grey),
+            ),
+          );
+        }
+
+        return const SizedBox.shrink();
+      },
     );
   }
 }
@@ -55,7 +58,7 @@ class MilestoneMarkdown extends Milestone {
   Widget get title {
     return Builder(
       builder: (context) => Text(
-        'Step 1 title',
+        basenameWithoutExtension(assetPath),
         maxLines: 2,
         softWrap: true,
         style: TextStyle(

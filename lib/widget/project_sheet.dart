@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 import '../constraint/project.dart';
+import '../datasource/asset_finder.dart';
 import '../extension/theme_extension.dart';
 import 'chip.dart';
+import 'markdown_viewer.dart';
 import 'project_sheet_header.dart';
 import 'property_item.dart';
-import 'vertical_stepper.dart';
+import 'milestone_list.dart';
 
 class ProjectSheet extends StatefulWidget {
   static const double contentSpacing = 24;
@@ -67,42 +69,14 @@ class _ProjectSheetState extends State<ProjectSheet> {
             ),
             sliver: SliverGap(1, color: context.colorTheme.outline),
           ),
-          VerticalStepper(
+          MilestoneList(
             currentIndex: _stepIndex,
             onStepTapped: _handleStepIndex,
             contentMargin: ProjectSheet.contentSpacing,
-            steps: [
-              Step(
-                title: const Text(
-                  'Step 1 title Step 1 title Step 1 title Step 1 title Step 1 title Step',
-                  maxLines: 2,
-                  softWrap: true,
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
-                content: Container(
-                  height: 300,
-                  color: Colors.orange,
-                  alignment: Alignment.centerLeft,
-                  child: const Text('Content for Step 2'),
-                ),
-              ),
-              Step(
-                title: const Text(
-                  'Step 1 title Step 1 title Step 1 title Step 1 title Step 1 title Step',
-                  maxLines: 2,
-                  softWrap: true,
-                  style: TextStyle(color: Colors.white),
-                ),
-                content: Container(
-                  height: 300,
-                  color: Colors.orange,
-                  alignment: Alignment.centerLeft,
-                  child: const Text('Content for Step 2'),
-                ),
-              ),
-            ],
+            milestones: AssetFinder()
+                .selectAssets(widget.project.matchesMarkdown)
+                .map(MilestoneMarkdown.new)
+                .toList(),
           ),
           const SliverGap(20),
         ],
@@ -132,9 +106,9 @@ class _ProjectProperties extends StatelessWidget {
             label: "분류",
             child: Wrap(
               spacing: 6,
-              children: [
-                ...project.labels.map(TagChip.text),
-              ],
+              children: project.labels
+                  .map(TagChip.text)
+                  .toList(),
             ),
           ),
           PropertyTextTile(
@@ -159,9 +133,9 @@ class _ProjectProperties extends StatelessWidget {
               label: '링크',
               child: Wrap(
                 spacing: 6,
-                children: [
-                  ...project.references!.map(LinkedTagChip.item),
-                ],
+                children: project.references!
+                    .map(LinkedTagChip.item)
+                    .toList()
               ),
             ),
         ],
