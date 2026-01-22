@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:recase/recase.dart';
+
+import '../extension/common_extension.dart';
 
 typedef LinkItem = ({
   IconData icon,
@@ -95,6 +98,10 @@ enum Project {
     this.teamSummaries,
     this.references,
   });
+
+  factory Project.fromPath(String rawPath) {
+    return ReCase(rawPath).camelCase.let(Project.values.byName);
+  }
 
   bool get hasTeamSummary {
     return myContribution != null ||
