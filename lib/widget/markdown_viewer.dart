@@ -54,7 +54,14 @@ class MilestoneMarkdown extends Milestone {
   @override
   Widget get title {
     return Builder(
-      builder: (context) => Text(assetPath),
+      builder: (context) => Text(
+        'Step 1 title',
+        maxLines: 2,
+        softWrap: true,
+        style: TextStyle(
+          color: Colors.white,
+        ),
+      ),
     );
   }
 
