@@ -4,6 +4,7 @@ import 'package:gap/gap.dart';
 import '../constraint/project.dart';
 import '../datasource/asset_finder.dart';
 import '../extension/theme_extension.dart';
+import '../theme/color_theme.dart';
 import 'chip.dart';
 import 'markdown_viewer.dart';
 import 'project_sheet_header.dart';
@@ -73,6 +74,8 @@ class _ProjectSheetState extends State<ProjectSheet> {
             currentIndex: _stepIndex,
             onStepTapped: _handleStepIndex,
             contentMargin: ProjectSheet.contentSpacing,
+            selectedColor: ColorThemeExtension.indigoVivid,
+            color: context.colorTheme.textSub,
             milestones: AssetFinder()
                 .selectAssets(widget.project.matchesMarkdown)
                 .map(MilestoneMarkdown.new)

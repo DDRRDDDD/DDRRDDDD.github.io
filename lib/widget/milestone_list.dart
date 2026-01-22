@@ -5,14 +5,16 @@ class MilestoneList extends StatefulWidget {
     super.key,
     this.onStepTapped,
     this.currentIndex,
-    this.stepColor = Colors.white,
+    this.color = Colors.white,
+    this.selectedColor,
     this.contentMargin = 24,
     required this.milestones,
   });
 
   final ValueChanged<int>? onStepTapped;
   final int? currentIndex;
-  final Color stepColor;
+  final Color color;
+  final Color? selectedColor;
   final double contentMargin;
   final List<Milestone> milestones;
 
@@ -31,8 +33,8 @@ class _MilestoneListState extends State<MilestoneList> {
     return widget.milestones.length - 1 == index;
   }
 
-  CrossFadeState _currentFadeState(int stepIndex) {
-    return widget.currentIndex == stepIndex ? .showSecond : .showFirst;
+  bool _isCurrent(int stepIndex) {
+    return widget.currentIndex == stepIndex;
   }
 
   @override
@@ -61,15 +63,29 @@ class _MilestoneListState extends State<MilestoneList> {
             spacing: 8,
             children: [
               _buildLine(!_isFirst(index)),
-              SizedBox.square(
-                dimension: _dotWidth,
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: widget.stepColor,
-                  ),
+              /////////////////////////////////////////////////////////////////////
+              // SizedBox.square(
+              //   dimension: _dotWidth,
+              //   child: DecoratedBox(
+              //     decoration: BoxDecoration(
+              //       shape: BoxShape.circle,
+              //       color: widget.color,
+              //     ),
+              //   ),
+              // ),
+              AnimatedContainer(
+                duration: kThemeAnimationDuration,
+                curve: Curves.fastOutSlowIn,
+                width: _dotWidth,
+                height: _dotWidth,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: _isCurrent(index)
+                      ? widget.selectedColor ?? widget.color
+                      : widget.color,
                 ),
               ),
+              /////////////////////////////////////////////////////////////////////
               _buildLine(!_isLast(index)),
             ],
           ),
@@ -86,7 +102,7 @@ class _MilestoneListState extends State<MilestoneList> {
 
   Widget _buildLine(bool visible) {
     return ColoredBox(
-      color: widget.stepColor,
+      color: widget.color,
       child: SizedBox(
         width: visible ? 1.0 : 0.0,
         height: widget.contentMargin * 2 / 3,
@@ -107,7 +123,7 @@ class _MilestoneListState extends State<MilestoneList> {
               width: !_isLast(index) ? 1.0 : 0.0,
               height: double.infinity,
               child: ColoredBox(
-                color: widget.stepColor,
+                color: widget.color,
               ),
             ),
           ),
@@ -115,7 +131,7 @@ class _MilestoneListState extends State<MilestoneList> {
         AnimatedCrossFade(
           duration: kThemeAnimationDuration,
           sizeCurve: Curves.fastOutSlowIn,
-          crossFadeState: _currentFadeState(index),
+          crossFadeState: _isCurrent(index) ? .showSecond : .showFirst,
           firstCurve: const Interval(0.0, 0.6, curve: Curves.fastOutSlowIn),
           firstChild: const SizedBox(width: double.infinity),
           secondCurve: const Interval(0.4, 1.0, curve: Curves.fastOutSlowIn),
@@ -139,5 +155,6 @@ abstract class Milestone {
   const Milestone();
 
   Widget get title;
+
   Widget get content;
 }
