@@ -18,6 +18,7 @@ typedef NavigationKey = GlobalKey<NavigatorState>;
 final NavigationKey rootNavigatorKey = NavigationKey(debugLabel: 'root');
 
 final GoRouter router = GoRouter(
+  debugLogDiagnostics: true,
   initialLocation: '/',
   navigatorKey: rootNavigatorKey,
   routes: [
@@ -49,17 +50,15 @@ final GoRouter router = GoRouter(
               path: '/project',
               builder: (_, _) => const ProjectGrid(),
               routes: [
-                // stepper 아이템도 매핑
-                // 마크 다운 작성 **
                 GoRoute(
-                  path: ':project-name',
+                  path: ':projectName',
                   parentNavigatorKey: rootNavigatorKey,
                   pageBuilder: (_, state) => SlideSheetPage(
                     key: state.pageKey,
                     child: ProjectSheet(
                       stepIndex: state.queryInt('step'),
                       project: state
-                          .requirePathString('project-name')
+                          .requirePathString('projectName')
                           .let(Project.fromPath),
                     ),
                   ),
