@@ -12,7 +12,12 @@ extension GoRouterStateExtension on GoRouterState {
   }
 
   String requirePathString(String key) {
-    return pathString(key) ??
-        (throw ArgumentError('필수 경로 파라미터가 없습니다. : $key'));
+    final String? nullablePath = pathString(key);
+
+    if (nullablePath != null) {
+      return nullablePath;
+    }
+
+    throw ArgumentError('필수 경로 파라미터가 없습니다. : $key');
   }
 }
