@@ -18,7 +18,6 @@ typedef NavigationKey = GlobalKey<NavigatorState>;
 final NavigationKey rootNavigatorKey = NavigationKey(debugLabel: 'root');
 
 final GoRouter router = GoRouter(
-  debugLogDiagnostics: true,
   initialLocation: '/',
   navigatorKey: rootNavigatorKey,
   routes: [
