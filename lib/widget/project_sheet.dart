@@ -65,19 +65,21 @@ class _ProjectSheetState extends State<ProjectSheet> {
               horizontal: ProjectSheet.contentSpacing,
               vertical: 12,
             ),
-            sliver: SliverGap(
-              1,
-              color: context.colorTheme.outline,
-            ),
+            sliver: SliverGap(1, color: context.colorTheme.outline),
           ),
           VerticalStepper(
             currentIndex: _stepIndex,
             onStepTapped: _handleStepIndex,
+            contentMargin: ProjectSheet.contentSpacing,
             steps: [
               Step(
                 title: const Text(
-                  'Step 1 title',
-                  style: TextStyle(color: Colors.white),
+                  'Step 1 title Step 1 title Step 1 title Step 1 title Step 1 title Step',
+                  maxLines: 2,
+                  softWrap: true,
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
                 ),
                 content: Container(
                   height: 300,
@@ -88,7 +90,9 @@ class _ProjectSheetState extends State<ProjectSheet> {
               ),
               Step(
                 title: const Text(
-                  'Step 2 title',
+                  'Step 1 title Step 1 title Step 1 title Step 1 title Step 1 title Step',
+                  maxLines: 2,
+                  softWrap: true,
                   style: TextStyle(color: Colors.white),
                 ),
                 content: Container(

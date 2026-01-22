@@ -6,12 +6,14 @@ class VerticalStepper extends StatefulWidget {
     this.onStepTapped,
     this.currentIndex,
     this.stepColor = Colors.white,
+    this.contentMargin = 24,
     required this.steps,
   });
 
   final ValueChanged<int>? onStepTapped;
   final int? currentIndex;
   final Color stepColor;
+  final double contentMargin;
   final List<Step> steps;
 
   @override
@@ -19,8 +21,7 @@ class VerticalStepper extends StatefulWidget {
 }
 
 class _VerticalStepperState extends State<VerticalStepper> {
-  static const double _numberWidth = 10;
-  static const double _contentMargin = 24;
+  static const double _dotWidth = 10;
 
   bool _isFirst(int index) {
     return index == 0;
@@ -30,8 +31,8 @@ class _VerticalStepperState extends State<VerticalStepper> {
     return widget.steps.length - 1 == index;
   }
 
-  bool _isCurrent(int stepIndex) {
-    return widget.currentIndex == stepIndex;
+  CrossFadeState _currentFadeState(int stepIndex) {
+    return widget.currentIndex == stepIndex ? .showSecond : .showFirst;
   }
 
   @override
@@ -49,19 +50,19 @@ class _VerticalStepperState extends State<VerticalStepper> {
 
   Widget _buildVerticalHeader(int index) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: _contentMargin,
+      padding: EdgeInsets.symmetric(
+        horizontal: widget.contentMargin,
       ),
       child: Row(
-        spacing: 12,
         mainAxisSize: .min,
+        spacing: widget.contentMargin / 2,
         children: [
           Column(
             spacing: 8,
             children: [
               _buildLine(!_isFirst(index)),
               SizedBox.square(
-                dimension: _numberWidth,
+                dimension: _dotWidth,
                 child: DecoratedBox(
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
@@ -72,9 +73,11 @@ class _VerticalStepperState extends State<VerticalStepper> {
               _buildLine(!_isLast(index)),
             ],
           ),
-          InkWell(
-            onTap: () => widget.onStepTapped?.call(index),
-            child: widget.steps.elementAt(index).title,
+          Expanded(
+            child: InkWell(
+              onTap: () => widget.onStepTapped?.call(index),
+              child: widget.steps.elementAt(index).title,
+            ),
           ),
         ],
       ),
@@ -86,7 +89,7 @@ class _VerticalStepperState extends State<VerticalStepper> {
       color: widget.stepColor,
       child: SizedBox(
         width: visible ? 1.0 : 0.0,
-        height: _contentMargin * 2 / 3,
+        height: widget.contentMargin * 2 / 3,
       ),
     );
   }
@@ -97,8 +100,8 @@ class _VerticalStepperState extends State<VerticalStepper> {
         PositionedDirectional(
           top: 0.0,
           bottom: 0.0,
-          start: _contentMargin,
-          width: _numberWidth,
+          start: widget.contentMargin,
+          width: _dotWidth,
           child: Center(
             child: SizedBox(
               width: !_isLast(index) ? 1.0 : 0.0,
@@ -112,14 +115,14 @@ class _VerticalStepperState extends State<VerticalStepper> {
         AnimatedCrossFade(
           duration: kThemeAnimationDuration,
           sizeCurve: Curves.fastOutSlowIn,
-          crossFadeState: _isCurrent(index) ? .showSecond : .showFirst,
+          crossFadeState: _currentFadeState(index),
           firstCurve: const Interval(0.0, 0.6, curve: Curves.fastOutSlowIn),
-          secondCurve: const Interval(0.4, 1.0, curve: Curves.fastOutSlowIn),
           firstChild: const SizedBox(width: double.infinity),
+          secondCurve: const Interval(0.4, 1.0, curve: Curves.fastOutSlowIn),
           secondChild: Padding(
             padding: EdgeInsetsDirectional.only(
-              start: 60.0, // stepper 마진,
-              end: _contentMargin,
+              start: widget.contentMargin * 1.5 + _dotWidth,
+              end: widget.contentMargin,
             ),
             child: Align(
               alignment: AlignmentDirectional.centerStart,
