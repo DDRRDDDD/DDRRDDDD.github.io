@@ -9,7 +9,7 @@ class SvgManager {
 
   final Map<String, PictureInfo> _svgCache;
 
-  SvgManager._internal(this._svgCache);
+  SvgManager._(this._svgCache);
 
   factory SvgManager() {
     if (_instance != null) {
@@ -23,11 +23,15 @@ class SvgManager {
   }
 
   static Future<void> init(List<String> allowPaths) async {
+    if (_instance != null) {
+      return;
+    }
+
     _instance = await allowPaths
         .map(_loadPicture)
         .let(Future.wait)
         .then(Map.fromEntries)
-        .then(SvgManager._internal);
+        .then(SvgManager._);
   }
 
   static Future<SvgEntry> _loadPicture(String svgPath) async {

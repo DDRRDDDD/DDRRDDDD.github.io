@@ -7,7 +7,7 @@ part 'email_manager.g.dart';
 
 @Envied(path: 'config/.env')
 class EmailManager {
-  static final EmailManager _instance = EmailManager._internal();
+  static final EmailManager _instance = EmailManager._();
   static final Uri _baseUri = Uri.https('api.emailjs.com');
 
   @EnviedField(varName: 'SERVICE_ID', obfuscate: true)
@@ -19,7 +19,7 @@ class EmailManager {
   @EnviedField(varName: 'PUBLIC_KEY', obfuscate: true)
   static final String _userId = _EmailManager._userId;
 
-  const EmailManager._internal();
+  const EmailManager._();
 
   factory EmailManager() {
     return _instance;
