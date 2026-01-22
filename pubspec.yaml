@@ -76,4 +76,7 @@ flutter:
 
     - assets/rive/
     - assets/image/
-    - assets/md/
+
+    - assets/md/one-hour/
+    - assets/md/my-turn/
+    - assets/md/my-portfolio/
