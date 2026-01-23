@@ -66,6 +66,12 @@ flutter:
         - asset: assets/fonts/NotoSansKR-Regular.ttf
           weight: 400
 
+    - family: JetBrainsMono
+      fonts:
+        - asset: assets/fonts/JetBrainsMono-Regular.ttf
+        - asset: assets/fonts/JetBrainsMono-Bold.ttf
+          weight: 700
+
 
   assets:
     - path: assets/icon/
