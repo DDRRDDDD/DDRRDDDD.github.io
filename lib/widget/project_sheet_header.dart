@@ -28,6 +28,7 @@ class ProjectSheetHeader extends StatelessWidget {
       pinned: true,
       automaticallyImplyLeading: false,
       backgroundColor: context.colorTheme.surfaceAlt,
+      surfaceTintColor: context.colorTheme.surfaceAlt,
       titleSpacing: ProjectSheet.contentSpacing,
       title: Align(
         alignment: .centerLeft,

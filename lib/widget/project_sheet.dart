@@ -40,49 +40,58 @@ class _ProjectSheetState extends State<ProjectSheet> {
   void didUpdateWidget(ProjectSheet oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.stepIndex != widget.stepIndex) {
-      _handleStepIndex(widget.stepIndex);
+      _toggleMilestone(widget.stepIndex);
     }
   }
 
-  void _handleStepIndex(int? index) {
-    setState(() => _stepIndex = _stepIndex != index ? index : null);
+  void _toggleMilestone([int? index]) {
+    final int? nextIndex = _stepIndex != index ? index : null;
+
+    setState(() => _stepIndex = nextIndex);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: context.colorTheme.surfaceAlt,
-      body: CustomScrollView(
-        slivers: [
-          ProjectSheetHeader(
-            icon: Icons.smartphone,
-            title: widget.project.title,
-            subTitle: widget.project.subTitle,
-          ),
-          const SliverGap(12),
-          _ProjectProperties(
-            project: widget.project,
-          ),
-          SliverPadding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: ProjectSheet.contentSpacing,
-              vertical: 12,
+      body: GestureDetector(
+        onTap: _toggleMilestone,
+        child: CustomScrollView(
+          physics: const ClampingScrollPhysics(),
+          slivers: [
+            ProjectSheetHeader(
+              icon: Icons.smartphone,
+              title: widget.project.title,
+              subTitle: widget.project.subTitle,
             ),
-            sliver: SliverGap(1, color: context.colorTheme.outline),
-          ),
-          MilestoneList(
-            currentIndex: _stepIndex,
-            onStepTapped: _handleStepIndex,
-            contentMargin: ProjectSheet.contentSpacing,
-            selectedColor: ColorThemeExtension.indigoVivid,
-            color: context.colorTheme.textSub,
-            milestones: AssetFinder()
-                .selectAssets(widget.project.matchesMarkdown)
-                .map(MilestoneMarkdown.new)
-                .toList(),
-          ),
-          const SliverGap(20),
-        ],
+            const SliverGap(12),
+            _ProjectProperties(
+              project: widget.project,
+            ),
+            SliverPadding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: ProjectSheet.contentSpacing,
+                vertical: 12,
+              ),
+              sliver: SliverGap(
+                1,
+                color: context.colorTheme.outline,
+              ),
+            ),
+            MilestoneList(
+              currentIndex: _stepIndex,
+              onToggle: _toggleMilestone,
+              contentMargin: ProjectSheet.contentSpacing,
+              color: context.colorTheme.textSub,
+              selectedColor: ColorThemeExtension.indigoVivid,
+              milestones: AssetFinder()
+                  .selectAssets(widget.project.matchesMarkdown)
+                  .map(MilestoneMarkdown.new)
+                  .toList(),
+            ),
+            const SliverGap(20),
+          ],
+        ),
       ),
     );
   }
@@ -138,7 +147,7 @@ class _ProjectProperties extends StatelessWidget {
                 spacing: 6,
                 children: project.references!
                     .map(LinkedTagChip.item)
-                    .toList()
+                    .toList(),
               ),
             ),
         ],

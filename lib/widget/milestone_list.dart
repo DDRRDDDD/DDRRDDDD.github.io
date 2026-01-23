@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class MilestoneList extends StatefulWidget {
   const MilestoneList({
     super.key,
-    this.onStepTapped,
+    this.onToggle,
     this.currentIndex,
     this.color = Colors.white,
     this.selectedColor,
@@ -11,7 +11,7 @@ class MilestoneList extends StatefulWidget {
     required this.milestones,
   });
 
-  final ValueChanged<int>? onStepTapped;
+  final ValueChanged<int>? onToggle;
   final int? currentIndex;
   final Color color;
   final Color? selectedColor;
@@ -23,7 +23,17 @@ class MilestoneList extends StatefulWidget {
 }
 
 class _MilestoneListState extends State<MilestoneList> {
+  late List<GlobalKey> _keys;
   static const double _dotWidth = 10;
+
+  @override
+  void initState() {
+    super.initState();
+    _keys = List<GlobalKey>.generate(
+      widget.milestones.length,
+      (_) => GlobalKey(),
+    );
+  }
 
   bool _isFirst(int index) {
     return index == 0;
@@ -41,7 +51,7 @@ class _MilestoneListState extends State<MilestoneList> {
   Widget build(BuildContext context) {
     return SliverList.builder(
       itemCount: widget.milestones.length * 2,
-      itemBuilder: (_, index) {
+      itemBuilder: (context, index) {
         final int itemIndex = index ~/ 2;
         return index.isEven
             ? _buildVerticalHeader(itemIndex)
@@ -51,51 +61,49 @@ class _MilestoneListState extends State<MilestoneList> {
   }
 
   Widget _buildVerticalHeader(int index) {
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: widget.contentMargin,
-      ),
-      child: Row(
-        mainAxisSize: .min,
-        spacing: widget.contentMargin / 2,
-        children: [
-          Column(
-            spacing: 8,
-            children: [
-              _buildLine(!_isFirst(index)),
-              /////////////////////////////////////////////////////////////////////
-              // SizedBox.square(
-              //   dimension: _dotWidth,
-              //   child: DecoratedBox(
-              //     decoration: BoxDecoration(
-              //       shape: BoxShape.circle,
-              //       color: widget.color,
-              //     ),
-              //   ),
-              // ),
-              AnimatedContainer(
-                duration: kThemeAnimationDuration,
-                curve: Curves.fastOutSlowIn,
-                width: _dotWidth,
-                height: _dotWidth,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: _isCurrent(index)
-                      ? widget.selectedColor ?? widget.color
-                      : widget.color,
+    return InkWell(
+      onTap: () {
+        Scrollable.ensureVisible(
+          _keys.elementAt(index).currentContext!,
+          curve: Curves.fastOutSlowIn,
+          duration: kThemeAnimationDuration,
+        );
+        widget.onToggle?.call(index);
+      },
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: widget.contentMargin,
+        ),
+        child: Row(
+          key: _keys.elementAt(index),
+          mainAxisSize: .min,
+          spacing: widget.contentMargin / 2,
+          children: [
+            Column(
+              spacing: 8,
+              children: [
+                _buildLine(!_isFirst(index)),
+                AnimatedContainer(
+                  duration: kThemeAnimationDuration,
+                  curve: Curves.fastOutSlowIn,
+                  width: _dotWidth,
+                  height: _dotWidth,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: _isCurrent(index)
+                        ? widget.selectedColor ?? widget.color
+                        : widget.color,
+                  ),
                 ),
-              ),
-              /////////////////////////////////////////////////////////////////////
-              _buildLine(!_isLast(index)),
-            ],
-          ),
-          Expanded(
-            child: InkWell(
-              onTap: () => widget.onStepTapped?.call(index),
+                _buildLine(!_isLast(index)),
+              ],
+            ),
+            Padding(
+              padding: EdgeInsets.only(bottom: 1.5),
               child: widget.milestones.elementAt(index).title,
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -139,6 +147,7 @@ class _MilestoneListState extends State<MilestoneList> {
             padding: EdgeInsetsDirectional.only(
               start: widget.contentMargin * 1.5 + _dotWidth,
               end: widget.contentMargin,
+              bottom: widget.contentMargin,
             ),
             child: Align(
               alignment: AlignmentDirectional.centerStart,

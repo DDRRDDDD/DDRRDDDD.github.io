@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:path/path.dart';
 
+import '../extension/theme_extension.dart';
+import '../theme/markdown_theme.dart';
 import 'milestone_list.dart';
 
 class MarkdownViewer extends StatelessWidget {
@@ -17,33 +19,12 @@ class MarkdownViewer extends StatelessWidget {
   Widget build(BuildContext context) {
     return FutureBuilder<String>(
       future: rootBundle.loadString(assetPath),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(
-            child: CircularProgressIndicator(strokeWidth: 2),
-          );
-        }
-
-        if (snapshot.hasError) {
-          return Text('Error: ${snapshot.error}');
-        }
-
-        if (snapshot.hasData) {
-          return MarkdownBody(
-            data: snapshot.data!,
-            styleSheet: MarkdownStyleSheet(
-              h1: const TextStyle(
-                fontSize: 24,
-                color: Colors.black,
-                fontWeight: FontWeight.w700,
-              ),
-              h2: const TextStyle(color: Colors.blue, fontSize: 30),
-              blockquoteDecoration: const BoxDecoration(color: Colors.grey),
-            ),
-          );
-        }
-
-        return const SizedBox.shrink();
+      builder: (context, snapshot) => switch (snapshot) {
+        AsyncSnapshot(hasData: false) => const SizedBox.shrink(),
+        _ => MarkdownBody(
+          data: snapshot.requireData,
+          styleSheet: MarkdownTheme.create(context),
+        ),
       },
     );
   }
@@ -61,8 +42,9 @@ class MilestoneMarkdown extends Milestone {
         basenameWithoutExtension(assetPath),
         maxLines: 2,
         softWrap: true,
-        style: TextStyle(
-          color: Colors.white,
+        style: context.textTheme.heroBadge.copyWith(
+          fontWeight: FontWeight.w700,
+          color: context.colorTheme.textMain,
         ),
       ),
     );
