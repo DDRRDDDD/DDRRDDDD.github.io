@@ -46,6 +46,15 @@ class MilestoneMarkdown extends Milestone {
         style: context.textTheme.heroBadge.copyWith(
           fontWeight: FontWeight.w700,
           color: context.colorTheme.textMain,
+          shadows: [
+            Shadow(
+              offset: Offset(0, 1),
+              blurRadius: 2.0,
+              color: context.colorTheme.textSub.withValues(
+                alpha: 0.2,
+              ),
+            ),
+          ],
         ),
       ),
     );

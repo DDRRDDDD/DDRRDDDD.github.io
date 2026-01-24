@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 
 import '../constraint/project.dart';
 import '../datasource/asset_finder.dart';
@@ -7,9 +8,8 @@ import '../extension/theme_extension.dart';
 import '../theme/color_theme.dart';
 import 'chip.dart';
 import 'markdown_viewer.dart';
-import 'project_sheet_header.dart';
-import 'property_item.dart';
 import 'milestone_list.dart';
+import 'property_item.dart';
 
 class ProjectSheet extends StatefulWidget {
   static const double contentSpacing = 24;
@@ -59,8 +59,8 @@ class _ProjectSheetState extends State<ProjectSheet> {
         child: CustomScrollView(
           physics: const ClampingScrollPhysics(),
           slivers: [
-            ProjectSheetHeader(
-              icon: Icons.smartphone,
+            _ProjectSheetHeader(
+              icon: widget.project.primaryIcon,
               title: widget.project.title,
               subTitle: widget.project.subTitle,
             ),
@@ -97,6 +97,69 @@ class _ProjectSheetState extends State<ProjectSheet> {
   }
 }
 
+class _ProjectSheetHeader extends StatelessWidget {
+  const _ProjectSheetHeader({
+    super.key,
+    required this.icon,
+    required this.subTitle,
+    this.title,
+  });
+
+  final IconData icon;
+  final String? title;
+  final String subTitle;
+
+  String get combinedTitle {
+    return title?.isNotEmpty == true ? '$title - $subTitle' : subTitle;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverAppBar(
+      pinned: true,
+      automaticallyImplyLeading: false,
+      backgroundColor: context.colorTheme.surfaceAlt,
+      surfaceTintColor: context.colorTheme.surfaceAlt,
+      titleSpacing: ProjectSheet.contentSpacing,
+      title: Row(
+        spacing: 8,
+        children: [
+          Icon(
+            icon,
+            color: ColorThemeExtension.indigoVivid,
+            size: 30,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 2.5),
+            child: Text(
+              combinedTitle,
+              maxLines: 1,
+              overflow: .ellipsis,
+              style: context.textTheme.cardTitle.copyWith(
+                color: context.colorTheme.textMain,
+              ),
+            ),
+          ),
+        ],
+      ),
+      actionsPadding: const EdgeInsetsDirectional.only(
+        end: ProjectSheet.contentSpacing,
+      ),
+      actions: [
+        InkWell(
+          onTap: context.pop,
+          customBorder: const CircleBorder(),
+          child: Icon(
+            Icons.keyboard_double_arrow_right_sharp,
+            size: 30,
+            color: context.colorTheme.textMain.withValues(alpha: 0.7),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
 class _ProjectProperties extends StatelessWidget {
   const _ProjectProperties({
     super.key,
@@ -118,9 +181,7 @@ class _ProjectProperties extends StatelessWidget {
             label: "분류",
             child: Wrap(
               spacing: 6,
-              children: project.labels
-                  .map(TagChip.text)
-                  .toList(),
+              children: project.labels.map(TagChip.text).toList(),
             ),
           ),
           PropertyTextTile(
@@ -145,9 +206,7 @@ class _ProjectProperties extends StatelessWidget {
               label: '링크',
               child: Wrap(
                 spacing: 6,
-                children: project.references!
-                    .map(LinkedTagChip.item)
-                    .toList(),
+                children: project.references!.map(LinkedTagChip.item).toList(),
               ),
             ),
         ],

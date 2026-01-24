@@ -8,7 +8,6 @@ class MarkdownTheme {
 
   static MarkdownStyleSheet create(BuildContext context) {
     return MarkdownStyleSheet(
-      blockSpacing: 16.0,
       img: context.textTheme.sectionDescription.copyWith(
         color: context.colorTheme.textMain,
       ),
