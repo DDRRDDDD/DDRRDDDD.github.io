@@ -57,7 +57,6 @@ class MyPortfolioApp extends StatelessWidget {
 
 // https://ddrrdddd.github.io/
 /// TODO
-/// 0. rive_file_manager 리펙토링
 
 /// 1. font 서브셋 빌드러너 생성
 /// -> font 파일이 너무 커서 경령화하여 웹 초기 로딩을 빠르게 가져가기 위함
