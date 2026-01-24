@@ -1,16 +1,11 @@
 import 'package:rive/rive.dart';
 
-///TODO TODO TODO TODO TODO TODO TODO
 class RiveFileManager {
   static RiveFileManager? _instance;
 
-  // final File myAvatarFile;
-  // final File developBragging;
   final File themeToggle;
 
   const RiveFileManager._({
-    // required this.myAvatarFile,
-    // required this.developBragging,
     required this.themeToggle,
   });
 
@@ -35,14 +30,10 @@ class RiveFileManager {
     }
 
     final List<File?> files = await Future.wait([
-      // File.asset('assets/rive/my_avatar.riv', riveFactory: Factory.rive),
-      // File.asset('assets/rive/developer_bragging.riv', riveFactory: Factory.rive),
       File.asset('assets/rive/theme_toggle.riv', riveFactory: Factory.rive),
     ]);
 
     _instance = RiveFileManager._(
-      // myAvatarFile: files.elementAt(0)!,
-      // developBragging: files.elementAt(1)!,
       themeToggle: files.elementAt(0)!,
     );
   }
