@@ -7,15 +7,15 @@ class MarkdownTheme {
   const MarkdownTheme._();
 
   static MarkdownStyleSheet create(BuildContext context) {
-    final baseTextStyle = context.textTheme.sectionDescription.copyWith(
-      color: context.colorTheme.textMain,
-    );
-
     return MarkdownStyleSheet(
       blockSpacing: 16.0,
-      img: baseTextStyle,
-      p: baseTextStyle,
-      a: baseTextStyle.copyWith(
+      img: context.textTheme.sectionDescription.copyWith(
+        color: context.colorTheme.textMain,
+      ),
+      p: context.textTheme.sectionDescription.copyWith(
+        color: context.colorTheme.textMain,
+      ),
+      a: context.textTheme.sectionDescription.copyWith(
         color: context.colorTheme.primary,
         decoration: TextDecoration.underline,
         fontWeight: FontWeight.bold,
@@ -36,7 +36,7 @@ class MarkdownTheme {
       h4: context.textTheme.timelineTitle.copyWith(
         color: context.colorTheme.textMain,
       ),
-      blockquote: baseTextStyle.copyWith(
+      blockquote: context.textTheme.sectionDescription.copyWith(
         color: context.colorTheme.textSub,
         fontStyle: FontStyle.italic,
       ),
@@ -76,10 +76,12 @@ class MarkdownTheme {
         color: context.colorTheme.primary,
         fontSize: 16.0,
       ),
-      strong: baseTextStyle.copyWith(
+      strong: context.textTheme.sectionDescription.copyWith(
+        color: context.colorTheme.textMain,
         fontWeight: FontWeight.w700,
       ),
-      em: baseTextStyle.copyWith(
+      em: context.textTheme.sectionDescription.copyWith(
+        color: context.colorTheme.textMain,
         fontStyle: FontStyle.italic,
       ),
       horizontalRuleDecoration: BoxDecoration(

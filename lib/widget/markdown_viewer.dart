@@ -22,6 +22,7 @@ class MarkdownViewer extends StatelessWidget {
       builder: (context, snapshot) => switch (snapshot) {
         AsyncSnapshot(hasData: false) => const SizedBox.shrink(),
         _ => MarkdownBody(
+          fitContent: false,
           data: snapshot.requireData,
           styleSheet: MarkdownTheme.create(context),
         ),
