@@ -2,58 +2,58 @@ import 'package:flutter/material.dart';
 
 const defaultTextTheme = TextThemeExtension._(
   heroTitle: TextStyle(
-    fontWeight: FontWeight.w900,
+    fontVariations: [FontVariation.weight(900)],
     fontSize: 60.0,
     height: 1.1,
     letterSpacing: -0.5,
   ),
   heroBadge: TextStyle(
-    fontWeight: FontWeight.w700,
+    fontVariations: [FontVariation.weight(700)],
     fontSize: 14.0,
   ),
   sectionTitle: TextStyle(
-    fontWeight: FontWeight.w700,
+    fontVariations: [FontVariation.weight(700)],
     fontSize: 30.0,
   ),
   sectionDescription: TextStyle(
-    fontWeight: FontWeight.w500,
+    fontVariations: [FontVariation.weight(500)],
     fontSize: 16.0,
     letterSpacing: -0.2,
     height: 1.5,
   ),
   cardTitle: TextStyle(
-    fontWeight: FontWeight.w700,
+    fontVariations: [FontVariation.weight(700)],
     fontSize: 20.0,
     letterSpacing: -0.3,
   ),
   timelineTitle: TextStyle(
-    fontWeight: FontWeight.w700,
+    fontVariations: [FontVariation.weight(700)],
     fontSize: 18.0,
     letterSpacing: -0.3,
   ),
   bodyLead: TextStyle(
-    fontWeight: FontWeight.w400,
+    fontVariations: [FontVariation.weight(400)],
     fontSize: 18.0,
     letterSpacing: -0.3,
     height: 1.6,
   ),
   bodyRegular: TextStyle(
-    fontWeight: FontWeight.w400,
+    fontVariations: [FontVariation.weight(400)],
     fontSize: 14.0,
     letterSpacing: -0.2,
     height: 1.5,
   ),
   buttonText: TextStyle(
-    fontWeight: FontWeight.w700,
+    fontVariations: [FontVariation.weight(700)],
     fontSize: 16.0,
   ),
   labelMedium: TextStyle(
-    fontWeight: FontWeight.w500,
+    fontVariations: [FontVariation.weight(500)],
     fontSize: 12.0,
     letterSpacing: -0.1,
   ),
   labelSmall: TextStyle(
-    fontWeight: FontWeight.w500,
+    fontVariations: [FontVariation.weight(500)],
     fontSize: 9.0,
     letterSpacing: 0.2,
   ),
@@ -115,7 +115,7 @@ class TextThemeExtension extends ThemeExtension<TextThemeExtension> {
       bodyRegular: bodyRegular ?? this.bodyRegular,
       buttonText: buttonText ?? this.buttonText,
       labelMedium: labelSmall ?? this.labelMedium,
-      labelSmall: labelSmall ?? this.labelSmall
+      labelSmall: labelSmall ?? this.labelSmall,
     );
   }
 
@@ -129,7 +129,11 @@ class TextThemeExtension extends ThemeExtension<TextThemeExtension> {
       heroTitle: TextStyle.lerp(heroTitle, other.heroTitle, t)!,
       heroBadge: TextStyle.lerp(heroBadge, other.heroBadge, t)!,
       sectionTitle: TextStyle.lerp(sectionTitle, other.sectionTitle, t)!,
-      sectionDescription: TextStyle.lerp(sectionDescription, other.sectionDescription, t)!,
+      sectionDescription: TextStyle.lerp(
+        sectionDescription,
+        other.sectionDescription,
+        t,
+      )!,
       cardTitle: TextStyle.lerp(cardTitle, other.cardTitle, t)!,
       timelineTitle: TextStyle.lerp(timelineTitle, other.timelineTitle, t)!,
       bodyLead: TextStyle.lerp(bodyLead, other.bodyLead, t)!,

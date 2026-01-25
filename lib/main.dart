@@ -40,7 +40,7 @@ class MyPortfolioApp extends StatelessWidget {
         builder: GridDotContainer.background,
         themeMode: brightness.themeMode,
         theme: ThemeData(
-          fontFamily: 'Noto_Sans',
+          fontFamily: 'NotoSans',
           splashFactory: NoSplash.splashFactory,
           scaffoldBackgroundColor: Colors.transparent,
           extensions: [

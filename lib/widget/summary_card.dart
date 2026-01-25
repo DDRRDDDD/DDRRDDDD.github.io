@@ -67,7 +67,7 @@ class SummaryCard extends StatelessWidget {
               titleLabel,
               style: TextStyle(
                 color: lightColorTheme.secondary,
-                fontWeight: FontWeight.bold,
+                fontVariations: [FontVariation.weight(700)],
                 fontSize: 12,
                 shadows: [
                   Shadow(
@@ -117,7 +117,7 @@ class SummaryCard extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: context.textTheme.sectionDescription.copyWith(
                 color: context.colorTheme.textSub,
-                fontWeight: FontWeight.w600,
+                fontVariations: [FontVariation.weight(600)],
                 height: 0,
                 shadows: [
                   Shadow(

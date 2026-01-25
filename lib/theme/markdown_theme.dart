@@ -29,12 +29,12 @@ class MarkdownTheme {
       a: const TextStyle(
         color: _accentFg,
         decoration: TextDecoration.none,
-        fontWeight: FontWeight.w600,
+        fontVariations: [FontVariation.weight(600)],
       ),
 
       h1: const TextStyle(
         fontSize: 32.0,
-        fontWeight: FontWeight.w600,
+        fontVariations: [FontVariation.weight(600)],
         color: _fgDefault,
         height: 1.25,
         letterSpacing: -0.5,
@@ -45,7 +45,7 @@ class MarkdownTheme {
 
       h2: const TextStyle(
         fontSize: 24.0,
-        fontWeight: FontWeight.w600,
+        fontVariations: [FontVariation.weight(600)],
         color: _fgDefault,
         height: 1.25,
         letterSpacing: -0.3,
@@ -56,34 +56,34 @@ class MarkdownTheme {
 
       h3: const TextStyle(
         fontSize: 20.0,
-        fontWeight: FontWeight.w600,
+        fontVariations: [FontVariation.weight(600)],
         color: _fgDefault,
         height: 1.25,
       ),
 
       h4: const TextStyle(
         fontSize: 16.0,
-        fontWeight: FontWeight.w600,
+        fontVariations: [FontVariation.weight(600)],
         color: _fgDefault,
         height: 1.25,
       ),
 
       h5: const TextStyle(
         fontSize: 14.0,
-        fontWeight: FontWeight.w600,
+        fontVariations: [FontVariation.weight(600)],
         color: _fgDefault,
         height: 1.25,
       ),
 
       h6: const TextStyle(
         fontSize: 13.6,
-        fontWeight: FontWeight.w600,
+        fontVariations: [FontVariation.weight(600)],
         color: _fgMuted,
         height: 1.25,
       ),
 
       strong: const TextStyle(
-        fontWeight: FontWeight.w600,
+        fontVariations: [FontVariation.weight(600)],
         color: _fgDefault,
       ),
       em: const TextStyle(
@@ -128,7 +128,7 @@ class MarkdownTheme {
       listIndent: 14.0,
 
       tableHead: const TextStyle(
-        fontWeight: FontWeight.w600,
+        fontVariations: [FontVariation.weight(600)],
         color: _fgDefault,
       ),
       tableBody: const TextStyle(
@@ -162,7 +162,7 @@ class MarkdownTheme {
       a: context.textTheme.sectionDescription.copyWith(
         color: context.colorTheme.primary,
         decoration: TextDecoration.underline,
-        fontWeight: FontWeight.bold,
+        fontVariations: [FontVariation.weight(700)],
       ),
       h1: context.textTheme.sectionTitle.copyWith(
         color: context.colorTheme.textMain,
@@ -205,7 +205,7 @@ class MarkdownTheme {
         fontFamily: 'JetBrainsMono',
         fontSize: 14.0,
         color: context.colorTheme.textMain,
-        fontWeight: FontWeight.w400,
+        fontVariations: [FontVariation.weight(400)],
         height: 1.5,
       ),
       codeblockPadding: const EdgeInsets.all(16),
@@ -222,7 +222,7 @@ class MarkdownTheme {
       ),
       strong: context.textTheme.sectionDescription.copyWith(
         color: context.colorTheme.textMain,
-        fontWeight: FontWeight.w700,
+        fontVariations: [FontVariation.weight(700)],
       ),
       em: context.textTheme.sectionDescription.copyWith(
         color: context.colorTheme.textMain,
