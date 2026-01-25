@@ -309,7 +309,7 @@ class BlastQueryCallback extends QueryCallback {
     final Vector2 direction = body.position - blastPoint;
     final double distance = direction.length;
 
-    // 실제 원형 범위 내에 있는지 확인 (AABB는 사각형이므로 원형 필터링 필요)
+    // 실제 원형 범위 내에 있는지 확인
     if (distance < blastRadius && distance > 0) {
       // 거리에 따른 힘의 감쇄 (가까울수록 강함)
       final double forceMagnitude = (1 - (distance / blastRadius)) * blastForce;
