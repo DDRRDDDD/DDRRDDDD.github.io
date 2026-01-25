@@ -23,7 +23,7 @@ class BeamBorder extends RoundedRectangleBorder {
       return;
     }
 
-    // 원본 로직 그대로 좌표 계산 (정확도 100%)
+    // RoundedRectangleBorder.paint 메서드에서 발췌
     final RRect borderRect = borderRadius.resolve(textDirection).toRRect(rect);
     final RRect inner = borderRect.deflate(side.strokeInset);
     final RRect outer = borderRect.inflate(side.strokeOutset);
