@@ -24,7 +24,7 @@ class MarkdownViewer extends StatelessWidget {
         _ => MarkdownBody(
           fitContent: false,
           data: snapshot.requireData,
-          styleSheet: MarkdownTheme.create(context),
+          styleSheet: MarkdownTheme.styleSheet,
         ),
       },
     );

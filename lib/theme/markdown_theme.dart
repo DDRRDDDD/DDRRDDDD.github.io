@@ -3,8 +3,153 @@ import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 
 import '../extension/theme_extension.dart';
 
+/// 가변 폰트로 전환 (noto sans, jetbrain)
+/// 테마 모듈화 전략 구상
+/// 마크다운 스타일 시트 확정
 class MarkdownTheme {
   const MarkdownTheme._();
+
+  static const Color _fgDefault = Color(0xFF24292f);
+  static const Color _fgMuted = Color(0xFF57606a);
+  static const Color _accentFg = Color(0xFF0969da);
+  static const Color _canvasSubtle = Color(0xFFf6f8fa);
+  static const Color _borderDefault = Color(0xFFd0d7de);
+
+  static MarkdownStyleSheet get styleSheet {
+    const double baseFontSize = 16.0;
+    const double codeFontSize = 13.6;
+
+    return MarkdownStyleSheet(
+      blockSpacing: baseFontSize,
+      p: const TextStyle(
+        fontSize: baseFontSize,
+        color: _fgDefault,
+        height: 1.5,
+      ),
+      a: const TextStyle(
+        color: _accentFg,
+        decoration: TextDecoration.none,
+        fontWeight: FontWeight.w600,
+      ),
+
+      h1: const TextStyle(
+        fontSize: 32.0,
+        fontWeight: FontWeight.w600,
+        color: _fgDefault,
+        height: 1.25,
+        letterSpacing: -0.5,
+      ),
+      h1Padding: const EdgeInsets.only(
+        bottom: baseFontSize / 2,
+      ),
+
+      h2: const TextStyle(
+        fontSize: 24.0,
+        fontWeight: FontWeight.w600,
+        color: _fgDefault,
+        height: 1.25,
+        letterSpacing: -0.3,
+      ),
+      h2Padding: const EdgeInsets.only(
+        bottom: baseFontSize / 2,
+      ),
+
+      h3: const TextStyle(
+        fontSize: 20.0,
+        fontWeight: FontWeight.w600,
+        color: _fgDefault,
+        height: 1.25,
+      ),
+
+      h4: const TextStyle(
+        fontSize: 16.0,
+        fontWeight: FontWeight.w600,
+        color: _fgDefault,
+        height: 1.25,
+      ),
+
+      h5: const TextStyle(
+        fontSize: 14.0,
+        fontWeight: FontWeight.w600,
+        color: _fgDefault,
+        height: 1.25,
+      ),
+
+      h6: const TextStyle(
+        fontSize: 13.6,
+        fontWeight: FontWeight.w600,
+        color: _fgMuted,
+        height: 1.25,
+      ),
+
+      strong: const TextStyle(
+        fontWeight: FontWeight.w600,
+        color: _fgDefault,
+      ),
+      em: const TextStyle(
+        fontStyle: FontStyle.italic,
+        color: _fgDefault,
+      ),
+
+      blockquote: const TextStyle(
+        fontSize: baseFontSize,
+        color: _fgMuted,
+      ),
+      blockquoteDecoration: const BoxDecoration(
+        border: Border(
+          left: BorderSide(
+            color: _borderDefault,
+            width: 4.0,
+          ),
+        ),
+      ),
+      blockquotePadding: const EdgeInsets.symmetric(
+        horizontal: 16.0,
+        vertical: 8.0,
+      ),
+
+      code: const TextStyle(
+        fontFamily: 'JetBrainsMono',
+        fontSize: codeFontSize,
+        color: _fgDefault,
+        height: 1.4,
+      ),
+
+      codeblockPadding: const EdgeInsets.all(16.0),
+      codeblockDecoration: BoxDecoration(
+        color: _canvasSubtle,
+        borderRadius: BorderRadius.circular(6.0),
+      ),
+
+      listBullet: const TextStyle(
+        color: _fgDefault,
+        fontSize: baseFontSize,
+      ),
+      listIndent: 14.0,
+
+      tableHead: const TextStyle(
+        fontWeight: FontWeight.w600,
+        color: _fgDefault,
+      ),
+      tableBody: const TextStyle(
+        color: _fgDefault,
+      ),
+      tableBorder: TableBorder.all(
+        color: _borderDefault,
+        width: 1.0,
+      ),
+      tablePadding: const EdgeInsets.all(8.0),
+
+      horizontalRuleDecoration: const BoxDecoration(
+        border: Border(
+          top: BorderSide(
+            color: _borderDefault,
+            width: 1.5,
+          ),
+        ),
+      ),
+    );
+  }
 
   static MarkdownStyleSheet create(BuildContext context) {
     return MarkdownStyleSheet(
