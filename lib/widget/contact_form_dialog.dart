@@ -55,9 +55,11 @@ class ContactFormDialog extends StatelessWidget {
                         borderRadius: BorderRadius.all(Radius.circular(8)),
                       ),
                       foregroundColor: context.colorTheme.textMain,
-                      textStyle: context.textTheme.heroBadge,
                     ),
-                    child: const Text('취소'),
+                    child: Text(
+                      '취소',
+                      style: context.textTheme.heroBadge,
+                    ),
                   ),
                   ElevatedButton(
                     onPressed: context.pop,
@@ -69,11 +71,13 @@ class ContactFormDialog extends StatelessWidget {
                       ),
                       backgroundColor: context.colorTheme.secondary,
                       foregroundColor: Colors.white,
-                      textStyle: context.textTheme.buttonText.copyWith(
+                    ),
+                    child: Text(
+                      "보내기",
+                      style: context.textTheme.buttonText.copyWith(
                         letterSpacing: 1.0,
                       ),
                     ),
-                    child: const Text("보내기"),
                   ),
                 ],
               ),
