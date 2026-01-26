@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../theme/chip_theme.dart';
+import '../theme/code_syntax_theme.dart';
 import '../theme/color_theme.dart';
 import '../theme/gradient_theme.dart';
 import '../theme/text_theme.dart';
@@ -20,5 +21,9 @@ extension ThemeShortcuts on BuildContext {
 
   GradientThemeExtension get gradientTheme {
     return Theme.of(this).extension<GradientThemeExtension>()!;
+  }
+
+  CodeSyntaxThemeExtension get codeSyntaxTheme {
+    return Theme.of(this).extension<CodeSyntaxThemeExtension>()!;
   }
 }
