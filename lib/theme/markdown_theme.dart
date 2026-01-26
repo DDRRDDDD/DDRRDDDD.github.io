@@ -2,239 +2,121 @@ import 'package:flutter/material.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 
 import '../extension/theme_extension.dart';
+import 'color_theme.dart';
+import 'text_theme.dart';
 
-/// 가변 폰트로 전환 (noto sans, jetbrain)
-/// 테마 모듈화 전략 구상
-/// 마크다운 스타일 시트 확정
 class MarkdownTheme {
   const MarkdownTheme._();
 
-  static const Color _fgDefault = Color(0xFF24292f);
-  static const Color _fgMuted = Color(0xFF57606a);
-  static const Color _accentFg = Color(0xFF0969da);
-  static const Color _canvasSubtle = Color(0xFFf6f8fa);
-  static const Color _borderDefault = Color(0xFFd0d7de);
+  static MarkdownStyleSheet styleSheet(BuildContext context) {
+    final ColorThemeExtension colorTheme = context.colorTheme;
+    final TextThemeExtension textTheme = context.textTheme;
 
-  static MarkdownStyleSheet get styleSheet {
-    const double baseFontSize = 16.0;
-    const double codeFontSize = 13.6;
+    final TextStyle baseTextStyle = textTheme.bodyRegular.copyWith(
+      color: colorTheme.textMain,
+    );
 
     return MarkdownStyleSheet(
-      blockSpacing: baseFontSize,
-      p: const TextStyle(
-        fontSize: baseFontSize,
-        color: _fgDefault,
-        height: 1.5,
+      h1: textTheme.sectionTitle.copyWith(
+        fontSize: 28.0,
+        color: colorTheme.textMain,
+        height: 1.3,
       ),
-      a: const TextStyle(
-        color: _accentFg,
-        decoration: TextDecoration.none,
-        fontVariations: [FontVariation.weight(600)],
+      h1Padding: const EdgeInsets.symmetric(
+        vertical: 14.0,
       ),
-
-      h1: const TextStyle(
-        fontSize: 32.0,
-        fontVariations: [FontVariation.weight(600)],
-        color: _fgDefault,
-        height: 1.25,
-        letterSpacing: -0.5,
-      ),
-      h1Padding: const EdgeInsets.only(
-        bottom: baseFontSize / 2,
-      ),
-
-      h2: const TextStyle(
+      h2: textTheme.sectionTitle.copyWith(
         fontSize: 24.0,
-        fontVariations: [FontVariation.weight(600)],
-        color: _fgDefault,
-        height: 1.25,
-        letterSpacing: -0.3,
+        color: colorTheme.textMain,
+        height: 1.35,
       ),
-      h2Padding: const EdgeInsets.only(
-        bottom: baseFontSize / 2,
+      h2Padding: const EdgeInsets.symmetric(
+        vertical: 12.0,
       ),
-
-      h3: const TextStyle(
-        fontSize: 20.0,
-        fontVariations: [FontVariation.weight(600)],
-        color: _fgDefault,
-        height: 1.25,
+      h3: textTheme.cardTitle.copyWith(
+        fontSize: 21.0,
+        color: colorTheme.textMain,
+        height: 1.4,
       ),
-
-      h4: const TextStyle(
+      h3Padding: const EdgeInsets.symmetric(
+        vertical: 10.0,
+      ),
+      h4: textTheme.timelineTitle.copyWith(
+        fontSize: 18.0,
+        color: colorTheme.textMain,
+        height: 1.4,
+      ),
+      h5: textTheme.buttonText.copyWith(
         fontSize: 16.0,
-        fontVariations: [FontVariation.weight(600)],
-        color: _fgDefault,
-        height: 1.25,
+        color: colorTheme.textMain,
       ),
-
-      h5: const TextStyle(
+      h6: textTheme.labelMedium.copyWith(
         fontSize: 14.0,
-        fontVariations: [FontVariation.weight(600)],
-        color: _fgDefault,
-        height: 1.25,
+        color: colorTheme.textSub,
+        fontVariations: [FontVariation.weight(700)],
       ),
 
-      h6: const TextStyle(
-        fontSize: 13.6,
-        fontVariations: [FontVariation.weight(600)],
-        color: _fgMuted,
-        height: 1.25,
+      p: baseTextStyle,
+      strong: baseTextStyle.copyWith(
+        fontVariations: [FontVariation.weight(700)],
       ),
-
-      strong: const TextStyle(
-        fontVariations: [FontVariation.weight(600)],
-        color: _fgDefault,
-      ),
-      em: const TextStyle(
+      em: baseTextStyle.copyWith(
+        color: colorTheme.primary,
         fontStyle: FontStyle.italic,
-        color: _fgDefault,
+        fontVariations: [FontVariation.weight(500)],
       ),
 
-      blockquote: const TextStyle(
-        fontSize: baseFontSize,
-        color: _fgMuted,
+      blockquote: baseTextStyle.copyWith(
+        color: colorTheme.textSub,
+        height: 1.6,
       ),
-      blockquoteDecoration: const BoxDecoration(
+      blockquoteDecoration: BoxDecoration(
+        color: colorTheme.surfaceAlt.withValues(alpha: 0.5),
+        borderRadius: BorderRadius.circular(8.0),
         border: Border(
           left: BorderSide(
-            color: _borderDefault,
+            color: colorTheme.primary,
             width: 4.0,
           ),
         ),
       ),
       blockquotePadding: const EdgeInsets.symmetric(
         horizontal: 16.0,
-        vertical: 8.0,
+        vertical: 12.0,
       ),
 
-      code: const TextStyle(
-        fontFamily: 'JetBrainsMono',
-        fontSize: codeFontSize,
-        color: _fgDefault,
-        height: 1.4,
-      ),
-
-      codeblockPadding: const EdgeInsets.all(16.0),
-      codeblockDecoration: BoxDecoration(
-        color: _canvasSubtle,
-        borderRadius: BorderRadius.circular(6.0),
-      ),
-
-      listBullet: const TextStyle(
-        color: _fgDefault,
-        fontSize: baseFontSize,
-      ),
-      listIndent: 14.0,
-
-      tableHead: const TextStyle(
-        fontVariations: [FontVariation.weight(600)],
-        color: _fgDefault,
-      ),
-      tableBody: const TextStyle(
-        color: _fgDefault,
-      ),
-      tableBorder: TableBorder.all(
-        color: _borderDefault,
-        width: 1.0,
-      ),
-      tablePadding: const EdgeInsets.all(8.0),
-
-      horizontalRuleDecoration: const BoxDecoration(
-        border: Border(
-          top: BorderSide(
-            color: _borderDefault,
-            width: 1.5,
-          ),
-        ),
-      ),
-    );
-  }
-
-  static MarkdownStyleSheet create(BuildContext context) {
-    return MarkdownStyleSheet(
-      img: context.textTheme.sectionDescription.copyWith(
-        color: context.colorTheme.textMain,
-      ),
-      p: context.textTheme.sectionDescription.copyWith(
-        color: context.colorTheme.textMain,
-      ),
-      a: context.textTheme.sectionDescription.copyWith(
-        color: context.colorTheme.primary,
-        decoration: TextDecoration.underline,
-        fontVariations: [FontVariation.weight(700)],
-      ),
-      h1: context.textTheme.sectionTitle.copyWith(
-        color: context.colorTheme.textMain,
-        height: 1.5,
-      ),
-      h2: context.textTheme.cardTitle.copyWith(
-        fontSize: 24.0,
-        color: context.colorTheme.textMain,
-        height: 1.4,
-      ),
-      h3: context.textTheme.cardTitle.copyWith(
-        color: context.colorTheme.textMain,
-        height: 1.4,
-      ),
-      h4: context.textTheme.timelineTitle.copyWith(
-        color: context.colorTheme.textMain,
-      ),
-      blockquote: context.textTheme.sectionDescription.copyWith(
-        color: context.colorTheme.textSub,
-        fontStyle: FontStyle.italic,
-      ),
-      blockquoteDecoration: BoxDecoration(
-        color: context.colorTheme.outline,
-        border: Border(
-          left: BorderSide(
-            width: 4,
-            color: context.colorTheme.primary,
-          ),
-        ),
-        borderRadius: const BorderRadius.only(
-          topRight: Radius.circular(4),
-          bottomRight: Radius.circular(4),
-        ),
-      ),
-      blockquotePadding: const EdgeInsets.symmetric(
-        horizontal: 16,
-        vertical: 12,
-      ),
       code: TextStyle(
         fontFamily: 'JetBrainsMono',
         fontSize: 14.0,
-        color: context.colorTheme.textMain,
-        fontVariations: [FontVariation.weight(400)],
-        height: 1.5,
+        color: colorTheme.textMain,
+        backgroundColor: colorTheme.surfaceAlt,
       ),
-      codeblockPadding: const EdgeInsets.all(16),
+      codeblockPadding: const EdgeInsets.all(16.0),
       codeblockDecoration: BoxDecoration(
-        color: context.colorTheme.outline,
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(
-          color: context.colorTheme.outline,
-        ),
+        color: colorTheme.surfaceAlt,
+        borderRadius: BorderRadius.circular(8.0),
+        border: Border.all(color: colorTheme.outline),
       ),
-      listBullet: TextStyle(
-        color: context.colorTheme.primary,
-        fontSize: 16.0,
-      ),
-      strong: context.textTheme.sectionDescription.copyWith(
-        color: context.colorTheme.textMain,
-        fontVariations: [FontVariation.weight(700)],
-      ),
-      em: context.textTheme.sectionDescription.copyWith(
-        color: context.colorTheme.textMain,
-        fontStyle: FontStyle.italic,
-      ),
+
       horizontalRuleDecoration: BoxDecoration(
-        border: Border(
-          top: BorderSide(
-            color: context.colorTheme.outline,
-          ),
+        border: Border.all(
+          color: colorTheme.outline,
+          width: 0.5,
         ),
       ),
+
+      listIndent: 16.0,
+      listBullet: baseTextStyle.copyWith(
+        color: colorTheme.textSub,
+      ),
+
+      a: baseTextStyle.copyWith(
+        color: colorTheme.primary,
+        decoration: TextDecoration.underline,
+        decorationColor: colorTheme.primary.withValues(alpha: 0.5),
+      ),
+
+      blockSpacing: 16.0,
     );
   }
 }
