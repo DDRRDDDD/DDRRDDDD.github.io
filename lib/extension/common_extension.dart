@@ -6,3 +6,9 @@ extension Let<T> on T {
     return transform(this);
   }
 }
+
+extension MapLookup<K, V> on Map<K, V> {
+  V? lookup(K key) {
+    return this[key];
+  }
+}

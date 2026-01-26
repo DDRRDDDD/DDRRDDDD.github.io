@@ -41,6 +41,6 @@ class SvgManager {
   }
 
   PictureInfo? lookup(String path) {
-    return _svgCache[path];
+    return _svgCache.lookup(path);
   }
 }
