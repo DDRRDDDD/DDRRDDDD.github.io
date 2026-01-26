@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../extension/brightness_extension.dart';
 import '../extension/common_extension.dart';
 
-final atomOneLightTheme = CodeSyntaxThemeExtension.fromMap(
+final atomOneLightTheme = CodeSyntaxThemeExtension(
   doctag: const TextStyle(color: Color(0xffa626a4)),
   keyword: const TextStyle(color: Color(0xffa626a4)),
   formula: const TextStyle(color: Color(0xffa626a4)),
@@ -38,7 +38,7 @@ final atomOneLightTheme = CodeSyntaxThemeExtension.fromMap(
   quote: const TextStyle(color: Color(0xffa0a1a7), fontStyle: FontStyle.italic),
 );
 
-final atomOneDarkTheme = CodeSyntaxThemeExtension.fromMap(
+final atomOneDarkTheme = CodeSyntaxThemeExtension(
   doctag: const TextStyle(color: Color(0xffc678dd)),
   keyword: const TextStyle(color: Color(0xffc678dd)),
   formula: const TextStyle(color: Color(0xffc678dd)),
@@ -75,7 +75,7 @@ final atomOneDarkTheme = CodeSyntaxThemeExtension.fromMap(
 class CodeSyntaxThemeExtension extends _MapThemeData<String, TextStyle> {
   const CodeSyntaxThemeExtension._(super.base);
 
-  factory CodeSyntaxThemeExtension.fromMap({
+  factory CodeSyntaxThemeExtension({
     required TextStyle comment,
     required TextStyle quote,
     required TextStyle doctag,
@@ -152,8 +152,10 @@ class CodeSyntaxThemeExtension extends _MapThemeData<String, TextStyle> {
   }
 
   @override
-  CodeSyntaxThemeExtension copyWith({Map<String, TextStyle>? values}) {
-    return CodeSyntaxThemeExtension._(this..addAll(values ?? const {}));
+  CodeSyntaxThemeExtension copyWith({CodeSyntaxThemeExtension? values}) {
+    return Map<String, TextStyle>
+        .from({...this, ...?values})
+        .let(CodeSyntaxThemeExtension._);
   }
 
   @override
@@ -162,15 +164,10 @@ class CodeSyntaxThemeExtension extends _MapThemeData<String, TextStyle> {
       return this;
     }
 
-
-
-    final Map<String, TextStyle> result = {};
-    for (final key in {...keys, ...other.keys}) {
-      final TextStyle? a = lookup(key);
-      final TextStyle? b = other.lookup(key);
-      result[key] = TextStyle.lerp(a, b, t) ?? a!;
-    }
-    return CodeSyntaxThemeExtension._(result);
+    return CodeSyntaxThemeExtension._({
+      for(final String key in keys)
+        key: TextStyle.lerp(lookup(key), other.lookup(key), t)!,
+    });
   }
 
   @override
