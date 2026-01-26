@@ -115,7 +115,7 @@ class SummaryCard extends StatelessWidget {
               description!,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
-              style: context.textTheme.sectionDescription.copyWith(
+              style: context.textTheme.sectionText.copyWith(
                 color: context.colorTheme.textSub,
                 fontVariations: [FontVariation.weight(600)],
                 height: 0,
