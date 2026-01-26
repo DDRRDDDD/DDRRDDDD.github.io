@@ -88,8 +88,7 @@ class MarkdownTheme {
       code: TextStyle(
         fontFamily: 'JetBrainsMono',
         fontSize: 14.0,
-        color: colorTheme.textMain,
-        backgroundColor: colorTheme.surfaceAlt,
+        color: colorTheme.textSub,
       ),
       codeblockPadding: const EdgeInsets.all(16.0),
       codeblockDecoration: BoxDecoration(
