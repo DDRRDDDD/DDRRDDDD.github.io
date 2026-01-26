@@ -15,7 +15,7 @@ const defaultTextTheme = TextThemeExtension._(
     fontVariations: [FontVariation.weight(700)],
     fontSize: 30.0,
   ),
-  sectionDescription: TextStyle(
+  sectionText: TextStyle(
     fontVariations: [FontVariation.weight(500)],
     fontSize: 16.0,
     letterSpacing: -0.2,
@@ -63,7 +63,7 @@ class TextThemeExtension extends ThemeExtension<TextThemeExtension> {
   final TextStyle heroTitle;
   final TextStyle heroBadge;
   final TextStyle sectionTitle;
-  final TextStyle sectionDescription;
+  final TextStyle sectionText;
   final TextStyle cardTitle;
   final TextStyle timelineTitle;
   final TextStyle bodyLead;
@@ -80,7 +80,7 @@ class TextThemeExtension extends ThemeExtension<TextThemeExtension> {
     required this.heroTitle,
     required this.heroBadge,
     required this.sectionTitle,
-    required this.sectionDescription,
+    required this.sectionText,
     required this.cardTitle,
     required this.timelineTitle,
     required this.bodyLead,
@@ -95,7 +95,7 @@ class TextThemeExtension extends ThemeExtension<TextThemeExtension> {
     TextStyle? heroTitle,
     TextStyle? heroBadge,
     TextStyle? sectionTitle,
-    TextStyle? sectionDescription,
+    TextStyle? sectionText,
     TextStyle? cardTitle,
     TextStyle? timelineTitle,
     TextStyle? bodyLead,
@@ -108,7 +108,7 @@ class TextThemeExtension extends ThemeExtension<TextThemeExtension> {
       heroTitle: heroTitle ?? this.heroTitle,
       heroBadge: heroBadge ?? this.heroBadge,
       sectionTitle: sectionTitle ?? this.sectionTitle,
-      sectionDescription: sectionDescription ?? this.sectionDescription,
+      sectionText: sectionText ?? this.sectionText,
       cardTitle: cardTitle ?? this.cardTitle,
       timelineTitle: timelineTitle ?? this.timelineTitle,
       bodyLead: bodyLead ?? this.bodyLead,
@@ -129,11 +129,7 @@ class TextThemeExtension extends ThemeExtension<TextThemeExtension> {
       heroTitle: TextStyle.lerp(heroTitle, other.heroTitle, t)!,
       heroBadge: TextStyle.lerp(heroBadge, other.heroBadge, t)!,
       sectionTitle: TextStyle.lerp(sectionTitle, other.sectionTitle, t)!,
-      sectionDescription: TextStyle.lerp(
-        sectionDescription,
-        other.sectionDescription,
-        t,
-      )!,
+      sectionText: TextStyle.lerp(sectionText, other.sectionText, t)!,
       cardTitle: TextStyle.lerp(cardTitle, other.cardTitle, t)!,
       timelineTitle: TextStyle.lerp(timelineTitle, other.timelineTitle, t)!,
       bodyLead: TextStyle.lerp(bodyLead, other.bodyLead, t)!,
