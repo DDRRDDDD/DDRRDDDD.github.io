@@ -46,7 +46,6 @@ class _ProjectSheetState extends State<ProjectSheet> {
 
   void _toggleMilestone([int? index]) {
     final int? nextIndex = _stepIndex != index ? index : null;
-
     setState(() => _stepIndex = nextIndex);
   }
 
