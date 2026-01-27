@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:highlight/highlight.dart';
 import 'package:path/path.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../extension/common_extension.dart';
 import '../extension/theme_extension.dart';
@@ -33,6 +34,9 @@ class MarkdownViewer extends StatelessWidget {
     final MarkdownStyleSheet styleSheet = MarkdownTheme.styleSheet(context);
 
     return MarkdownBody(
+      onTapLink: (_, href, _) {
+        href?.let(Uri.parse).let(launchUrl);
+      },
       fitContent: false,
       data: snapshot.requireData,
       styleSheet: styleSheet,
