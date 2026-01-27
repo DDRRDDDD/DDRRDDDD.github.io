@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
+import 'package:scroll_to_index/scroll_to_index.dart';
 
 import '../constraint/project.dart';
 import '../datasource/asset_finder.dart';
+import '../extension/common_extension.dart';
 import '../extension/theme_extension.dart';
 import '../theme/color_theme.dart';
 import 'chip.dart';
@@ -28,25 +30,31 @@ class ProjectSheet extends StatefulWidget {
 }
 
 class _ProjectSheetState extends State<ProjectSheet> {
-  late int? _stepIndex;
+  late final AutoScrollController _controller;
 
   @override
   void initState() {
     super.initState();
-    _stepIndex = widget.stepIndex;
+    _controller = AutoScrollController(
+      initialScrollOffset: (widget.stepIndex ?? 0) * 150.0,
+    );
   }
 
   @override
-  void didUpdateWidget(ProjectSheet oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (oldWidget.stepIndex != widget.stepIndex) {
-      _toggleMilestone(widget.stepIndex);
-    }
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   void _toggleMilestone([int? index]) {
-    final int? nextIndex = _stepIndex != index ? index : null;
-    setState(() => _stepIndex = nextIndex);
+    final GoRouter router = GoRouter.of(context);
+    final Uri newUri = router.state.uri.replace(
+      queryParameters: {
+        if (widget.stepIndex != index) 'step': ?index?.toString(),
+      },
+    );
+
+    newUri.toString().let(router.go);
   }
 
   @override
@@ -57,6 +65,7 @@ class _ProjectSheetState extends State<ProjectSheet> {
         onTap: _toggleMilestone,
         child: CustomScrollView(
           physics: const ClampingScrollPhysics(),
+          controller: _controller,
           slivers: [
             _ProjectSheetHeader(
               icon: widget.project.primaryIcon,
@@ -78,11 +87,11 @@ class _ProjectSheetState extends State<ProjectSheet> {
               ),
             ),
             MilestoneList(
-              currentIndex: _stepIndex,
+              currentIndex: widget.stepIndex,
               onToggle: _toggleMilestone,
+              controller: _controller,
               contentMargin: ProjectSheet.contentSpacing,
               color: context.colorTheme.textSub,
-              selectedColor: ColorThemeExtension.indigoVivid,
               milestones: AssetFinder()
                   .selectAssets(widget.project.matchesMarkdown)
                   .map(MilestoneMarkdown.new)

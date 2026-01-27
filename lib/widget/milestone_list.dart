@@ -1,21 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:scroll_to_index/scroll_to_index.dart';
+
+import '../extension/common_extension.dart';
+import '../extension/theme_extension.dart';
+import '../theme/color_theme.dart';
 
 class MilestoneList extends StatefulWidget {
   const MilestoneList({
     super.key,
     this.onToggle,
     this.currentIndex,
-    this.color = Colors.white,
-    this.selectedColor,
     this.contentMargin = 24,
+    this.color = Colors.white,
+    this.selectedColor = ColorThemeExtension.indigoVivid,
+    required this.controller,
     required this.milestones,
   });
 
   final ValueChanged<int>? onToggle;
   final int? currentIndex;
   final Color color;
-  final Color? selectedColor;
+  final Color selectedColor;
   final double contentMargin;
+  final AutoScrollController controller;
   final List<Milestone> milestones;
 
   @override
@@ -23,86 +30,114 @@ class MilestoneList extends StatefulWidget {
 }
 
 class _MilestoneListState extends State<MilestoneList> {
-  late List<GlobalKey> _keys;
   static const double _dotWidth = 10;
 
   @override
   void initState() {
     super.initState();
-    _keys = List<GlobalKey>.generate(
-      widget.milestones.length,
-      (_) => GlobalKey(),
-    );
+    if (widget.currentIndex != null) {
+      Future.delayed(const Duration(seconds: 1), () {
+        if (mounted) {
+          _scrollToItem(widget.currentIndex!);
+        }
+      });
+    }
   }
 
-  bool _isFirst(int index) {
-    return index == 0;
+  @override
+  void didUpdateWidget(MilestoneList oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.currentIndex != widget.currentIndex) {
+      widget.currentIndex?.let(_scrollToItem);
+    }
   }
 
-  bool _isLast(int index) {
-    return widget.milestones.length - 1 == index;
+  double get _headerHeight {
+    return widget.contentMargin * 2 + _dotWidth;
   }
 
-  bool _isCurrent(int stepIndex) {
-    return widget.currentIndex == stepIndex;
+  Future<void> _scrollToItem(int index) async {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await widget.controller.scrollToIndex(
+        index,
+        preferPosition: AutoScrollPosition.begin,
+        duration: kThemeAnimationDuration,
+      );
+    });
+  }
+
+  void _onItemTap(int index) {
+    widget.onToggle?.call(index);
+    _scrollToItem(index);
   }
 
   @override
   Widget build(BuildContext context) {
-    return SliverList.builder(
-      itemCount: widget.milestones.length * 2,
-      itemBuilder: (context, index) {
-        final int itemIndex = index ~/ 2;
-        return index.isEven
-            ? _buildVerticalHeader(itemIndex)
-            : _buildVerticalBody(itemIndex);
-      },
+    return SliverMainAxisGroup(
+      slivers: List.generate(
+        widget.milestones.length * 2,
+        (index) => index.isEven
+            ? SliverPersistentHeader(
+                pinned: widget.currentIndex == index ~/ 2,
+                delegate: _MilestoneHeaderDelegate(
+                  minHeight: _headerHeight,
+                  maxHeight: _headerHeight,
+                  child: _buildHeaderItem(index ~/ 2),
+                ),
+              )
+            : SliverToBoxAdapter(
+                child: _buildVerticalBody(index ~/ 2),
+              ),
+      ),
     );
   }
 
-  Widget _buildVerticalHeader(int index) {
-    return InkWell(
-      onTap: () {
-        Scrollable.ensureVisible(
-          _keys.elementAt(index).currentContext!,
-          curve: Curves.fastOutSlowIn,
-          duration: kThemeAnimationDuration,
-        );
-        widget.onToggle?.call(index);
-      },
-      child: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: widget.contentMargin,
-        ),
-        child: Row(
-          key: _keys.elementAt(index),
-          mainAxisSize: .min,
-          spacing: widget.contentMargin / 2,
-          children: [
-            Column(
-              spacing: 8,
-              children: [
-                _buildLine(!_isFirst(index)),
-                AnimatedContainer(
-                  duration: kThemeAnimationDuration,
-                  curve: Curves.fastOutSlowIn,
-                  width: _dotWidth,
-                  height: _dotWidth,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: _isCurrent(index)
-                        ? widget.selectedColor ?? widget.color
-                        : widget.color,
+  Widget _buildHeaderItem(int index) {
+    final bool isNotFirst = index != 0;
+    final bool isNotLast = index != widget.milestones.length - 1;
+    final bool isCurrent = widget.currentIndex == index;
+
+    return AutoScrollTag(
+      key: ValueKey(index),
+      index: index,
+      controller: widget.controller,
+      child: InkWell(
+        onTap: () => _onItemTap(index),
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: widget.contentMargin,
+          ),
+          child: Row(
+            mainAxisSize: .min,
+            spacing: widget.contentMargin / 2,
+            children: [
+              Column(
+                mainAxisAlignment: .center,
+                children: [
+                  _buildLine(isNotFirst),
+                  AnimatedContainer(
+                    duration: kThemeAnimationDuration,
+                    curve: Curves.fastOutSlowIn,
+                    width: _dotWidth,
+                    height: _dotWidth,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: isCurrent
+                          ? widget.selectedColor
+                          : widget.color,
+                    ),
                   ),
+                  _buildLine(isNotLast),
+                ],
+              ),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 1.5),
+                  child: widget.milestones.elementAt(index).title,
                 ),
-                _buildLine(!_isLast(index)),
-              ],
-            ),
-            Padding(
-              padding: EdgeInsets.only(bottom: 1.5),
-              child: widget.milestones.elementAt(index).title,
-            ),
-          ],
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -113,12 +148,15 @@ class _MilestoneListState extends State<MilestoneList> {
       color: widget.color,
       child: SizedBox(
         width: visible ? 1.0 : 0.0,
-        height: widget.contentMargin * 2 / 3,
+        height: widget.contentMargin,
       ),
     );
   }
 
   Widget _buildVerticalBody(int index) {
+    final bool isNotLast = index != widget.milestones.length - 1;
+    final bool isCurrent = widget.currentIndex == index;
+
     return Stack(
       children: [
         PositionedDirectional(
@@ -128,7 +166,7 @@ class _MilestoneListState extends State<MilestoneList> {
           width: _dotWidth,
           child: Center(
             child: SizedBox(
-              width: !_isLast(index) ? 1.0 : 0.0,
+              width: isNotLast ? 1.0 : 0.0,
               height: double.infinity,
               child: ColoredBox(
                 color: widget.color,
@@ -139,7 +177,9 @@ class _MilestoneListState extends State<MilestoneList> {
         AnimatedCrossFade(
           duration: kThemeAnimationDuration,
           sizeCurve: Curves.fastOutSlowIn,
-          crossFadeState: _isCurrent(index) ? .showSecond : .showFirst,
+          crossFadeState: isCurrent
+              ? CrossFadeState.showSecond
+              : CrossFadeState.showFirst,
           firstCurve: const Interval(0.0, 0.6, curve: Curves.fastOutSlowIn),
           firstChild: const SizedBox(width: double.infinity),
           secondCurve: const Interval(0.4, 1.0, curve: Curves.fastOutSlowIn),
@@ -157,6 +197,47 @@ class _MilestoneListState extends State<MilestoneList> {
         ),
       ],
     );
+  }
+}
+
+class _MilestoneHeaderDelegate extends SliverPersistentHeaderDelegate {
+  final double minHeight;
+  final double maxHeight;
+  final Widget child;
+
+  _MilestoneHeaderDelegate({
+    required this.minHeight,
+    required this.maxHeight,
+    required this.child,
+  });
+
+  @override
+  Widget build(
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) {
+    return Material(
+      color: context.colorTheme.surfaceAlt,
+      child: SizedBox.expand(child: child),
+    );
+  }
+
+  @override
+  double get maxExtent {
+    return maxHeight;
+  }
+
+  @override
+  double get minExtent {
+    return minHeight;
+  }
+
+  @override
+  bool shouldRebuild(_MilestoneHeaderDelegate oldDelegate) {
+    return maxHeight != oldDelegate.maxHeight ||
+        minHeight != oldDelegate.minHeight ||
+        child != oldDelegate.child;
   }
 }
 
