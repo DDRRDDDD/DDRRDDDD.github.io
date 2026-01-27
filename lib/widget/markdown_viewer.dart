@@ -99,7 +99,6 @@ class MilestoneMarkdown extends Milestone {
         maxLines: 2,
         softWrap: true,
         style: context.textTheme.heroBadge.copyWith(
-          fontVariations: [FontVariation.weight(700)],
           color: context.colorTheme.textMain,
           shadows: [
             Shadow(
