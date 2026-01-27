@@ -100,7 +100,7 @@ enum Project {
   });
 
   factory Project.fromPath(String rawPath) {
-    return ReCase(rawPath).camelCase.let(Project.values.byName);
+    return rawPath.camelCase.let(Project.values.byName);
   }
 
   bool get hasTeamSummary {
@@ -138,7 +138,7 @@ enum Project {
   }
 
   String get markdownAsset {
-    return 'assets/md/${ReCase(name).paramCase}/';
+    return 'assets/md/${name.paramCase}/';
   }
 
   bool matchesMarkdown(String assetPath) {
