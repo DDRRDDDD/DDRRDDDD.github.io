@@ -47,21 +47,26 @@ class MarkdownViewer extends StatelessWidget {
         syntaxTheme: context.codeSyntaxTheme,
       ),
       builders: {
-        'strong': BoldTextBuilder(),
+        'strong': StrongTextBuilder(),
       },
     );
   }
 }
 
-class BoldTextBuilder extends MarkdownElementBuilder {
-  BoldTextBuilder();
+class StrongTextBuilder extends MarkdownElementBuilder {
+  StrongTextBuilder();
 
   @override
-  Widget? visitElementAfter(md.Element element, TextStyle? preferredStyle) {
+  Widget? visitElementAfterWithContext(
+    BuildContext context,
+    md.Element element,
+    TextStyle? preferredStyle,
+    TextStyle? parentStyle,
+  ) {
     return Text.rich(
       TextSpan(
         text: element.textContent,
-        style: preferredStyle?.copyWith(
+        style: parentStyle?.copyWith(
           fontVariations: const [FontVariation.weight(700)],
         ),
       ),

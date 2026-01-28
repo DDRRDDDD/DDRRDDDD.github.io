@@ -35,6 +35,7 @@ dependencies:
   path: ^1.9.1
   highlight: ^0.7.0
   collection: ^1.19.1
+  markdown: ^7.3.0
 
 # rive 버전 강제
 # (dev.14 버전 rive_native 호환성 문제가 존재함)

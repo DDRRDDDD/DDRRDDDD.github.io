@@ -13,6 +13,7 @@ class MarkdownTheme {
     final TextThemeExtension textTheme = context.textTheme;
 
     final TextStyle baseTextStyle = textTheme.bodyRegular.copyWith(
+      inherit: true,
       color: colorTheme.textMain,
     );
 
@@ -54,9 +55,6 @@ class MarkdownTheme {
       h6: textTheme.labelMedium.copyWith(
         fontSize: 14.0,
         color: colorTheme.textSub,
-        fontVariations: const [FontVariation.weight(700)],
-      ),
-      strong: baseTextStyle.copyWith(
         fontVariations: const [FontVariation.weight(700)],
       ),
       em: baseTextStyle.copyWith(
