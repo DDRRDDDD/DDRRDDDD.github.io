@@ -105,7 +105,7 @@ class MarkdownTheme {
         ),
       ),
 
-      listIndent: 16.0,
+      listIndent: 12.0,
       listBullet: baseTextStyle.copyWith(
         color: colorTheme.textSub,
       ),
