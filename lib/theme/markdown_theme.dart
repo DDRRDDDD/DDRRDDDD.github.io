@@ -1,5 +1,7 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
+import 'package:markdown/markdown.dart' as md;
 
 import '../extension/theme_extension.dart';
 import 'color_theme.dart';
@@ -12,13 +14,10 @@ class MarkdownTheme {
     final ColorThemeExtension colorTheme = context.colorTheme;
     final TextThemeExtension textTheme = context.textTheme;
 
-    final TextStyle baseTextStyle = textTheme.bodyRegular.copyWith(
-      inherit: true,
-      color: colorTheme.textMain,
-    );
-
     return MarkdownStyleSheet(
-      p: baseTextStyle,
+      p: textTheme.bodyRegular.copyWith(
+        color: colorTheme.textMain,
+      ),
       h1: textTheme.sectionTitle.copyWith(
         fontSize: 28.0,
         color: colorTheme.textMain,
@@ -57,13 +56,15 @@ class MarkdownTheme {
         color: colorTheme.textSub,
         fontVariations: const [FontVariation.weight(700)],
       ),
-      em: baseTextStyle.copyWith(
+      em: textTheme.bodyRegular.copyWith(
         color: colorTheme.primary,
-        fontStyle: FontStyle.italic,
-        fontVariations: const [FontVariation.weight(500)],
+        fontVariations: const [
+          FontVariation.weight(500),
+          FontVariation.italic(0.3),
+        ],
       ),
 
-      blockquote: baseTextStyle.copyWith(
+      blockquote: textTheme.bodyRegular.copyWith(
         color: colorTheme.textSub,
         height: 1.6,
       ),
@@ -84,7 +85,7 @@ class MarkdownTheme {
 
       code: TextStyle(
         fontFamily: 'JetBrainsMono',
-        fontSize: baseTextStyle.fontSize,
+        fontSize: textTheme.bodyRegular.fontSize,
         color: colorTheme.textSub,
         fontWeight: FontWeight.w500,
       ),
@@ -103,11 +104,11 @@ class MarkdownTheme {
       ),
 
       listIndent: 12.0,
-      listBullet: baseTextStyle.copyWith(
+      listBullet: textTheme.bodyRegular.copyWith(
         color: colorTheme.textSub,
       ),
 
-      a: baseTextStyle.copyWith(
+      a: textTheme.bodyRegular.copyWith(
         color: colorTheme.primary,
         decoration: TextDecoration.underline,
         decorationColor: colorTheme.primary.withValues(alpha: 0.5),
@@ -115,5 +116,39 @@ class MarkdownTheme {
 
       blockSpacing: 16.0,
     );
+  }
+
+  static MarkdownBuilders markdownBuilders() {
+    return MarkdownBuilders(
+      strong: StrongTextBuilder(),
+    );
+  }
+}
+
+class StrongTextBuilder extends MarkdownElementBuilder {
+  @override
+  Widget? visitElementAfterWithContext(
+    BuildContext context,
+    md.Element element,
+    TextStyle? preferredStyle,
+    TextStyle? parentStyle,
+  ) {
+    return Text.rich(
+      TextSpan(
+        text: element.textContent,
+        style: parentStyle?.copyWith(
+          fontVariations: const [FontVariation.weight(700)],
+        ),
+      ),
+    );
+  }
+}
+
+class MarkdownBuilders extends DelegatingMap<String, MarkdownElementBuilder>
+    with UnmodifiableMapMixin<String, MarkdownElementBuilder> {
+  const MarkdownBuilders._(super.base);
+
+  factory MarkdownBuilders({MarkdownElementBuilder? strong}) {
+    return MarkdownBuilders._({'strong': ?strong});
   }
 }

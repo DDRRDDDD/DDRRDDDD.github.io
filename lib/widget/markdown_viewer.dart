@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
-import 'package:markdown/markdown.dart' as md;
 import 'package:highlight/highlight.dart';
 import 'package:path/path.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -33,6 +32,7 @@ class MarkdownViewer extends StatelessWidget {
     }
 
     final MarkdownStyleSheet styleSheet = MarkdownTheme.styleSheet(context);
+    final MarkdownBuilders builders = MarkdownTheme.markdownBuilders();
 
     return MarkdownBody(
       onTapLink: (_, href, _) {
@@ -42,33 +42,10 @@ class MarkdownViewer extends StatelessWidget {
       softLineBreak: true,
       data: snapshot.requireData,
       styleSheet: styleSheet,
+      builders: builders,
       syntaxHighlighter: CodeSyntaxHighlighter(
         textStyle: styleSheet.code!,
         syntaxTheme: context.codeSyntaxTheme,
-      ),
-      builders: {
-        'strong': StrongTextBuilder(),
-      },
-    );
-  }
-}
-
-class StrongTextBuilder extends MarkdownElementBuilder {
-  StrongTextBuilder();
-
-  @override
-  Widget? visitElementAfterWithContext(
-    BuildContext context,
-    md.Element element,
-    TextStyle? preferredStyle,
-    TextStyle? parentStyle,
-  ) {
-    return Text.rich(
-      TextSpan(
-        text: element.textContent,
-        style: parentStyle?.copyWith(
-          fontVariations: const [FontVariation.weight(700)],
-        ),
       ),
     );
   }
