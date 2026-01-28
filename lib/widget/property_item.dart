@@ -113,7 +113,7 @@ class PropertyTextTile extends StatelessWidget {
       child: Text(
         value,
         style: context.textTheme.bodyRegular.copyWith(
-          fontVariations: [FontVariation.weight(600)],
+          fontVariations: const [FontVariation.weight(600)],
           color: context.colorTheme.textMain,
         ),
       ),

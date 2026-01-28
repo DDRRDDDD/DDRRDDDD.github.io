@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
+import 'package:markdown/markdown.dart' as md;
 import 'package:highlight/highlight.dart';
 import 'package:path/path.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -38,11 +39,31 @@ class MarkdownViewer extends StatelessWidget {
         href?.let(Uri.parse).let(launchUrl);
       },
       fitContent: false,
+      softLineBreak: true,
       data: snapshot.requireData,
       styleSheet: styleSheet,
       syntaxHighlighter: CodeSyntaxHighlighter(
         textStyle: styleSheet.code!,
         syntaxTheme: context.codeSyntaxTheme,
+      ),
+      builders: {
+        'strong': BoldTextBuilder(),
+      },
+    );
+  }
+}
+
+class BoldTextBuilder extends MarkdownElementBuilder {
+  BoldTextBuilder();
+
+  @override
+  Widget? visitElementAfter(md.Element element, TextStyle? preferredStyle) {
+    return Text.rich(
+      TextSpan(
+        text: element.textContent,
+        style: preferredStyle?.copyWith(
+          fontVariations: const [FontVariation.weight(700)],
+        ),
       ),
     );
   }

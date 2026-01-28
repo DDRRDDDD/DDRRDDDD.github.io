@@ -37,7 +37,7 @@ class PersonalInfoBentoCard extends StatelessWidget {
                 '활동 및 자격 사항',
                 style: context.textTheme.timelineTitle.copyWith(
                   color: context.colorTheme.textMain,
-                  fontVariations: [FontVariation.weight(900)],
+                  fontVariations: const [FontVariation.weight(900)],
                 ),
               ),
               const Gap(9),
@@ -127,7 +127,7 @@ class _InfoRow extends StatelessWidget {
               style: TextStyle(
                 fontSize: 9,
                 letterSpacing: 1.0,
-                fontVariations: [FontVariation.weight(900)],
+                fontVariations: const [FontVariation.weight(900)],
                 color: context.colorTheme.textSub.withValues(alpha: 0.5),
               ),
             ),
@@ -144,7 +144,7 @@ class _InfoRow extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: context.textTheme.labelMedium.copyWith(
                     height: 1.2,
-                    fontVariations: [FontVariation.weight(600)],
+                    fontVariations: const [FontVariation.weight(600)],
                     decoration: isHighlighted
                         ? TextDecoration.underline
                         : null,

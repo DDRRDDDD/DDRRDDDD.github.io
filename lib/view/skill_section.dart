@@ -44,7 +44,7 @@ class SkillSection extends StatelessWidget {
                   '보유 기술',
                   style: context.textTheme.timelineTitle.copyWith(
                     color: context.colorTheme.textMain,
-                    fontVariations: [FontVariation.weight(900)],
+                    fontVariations: const [FontVariation.weight(900)],
                   ),
                 ),
                 ConstrainedBox(

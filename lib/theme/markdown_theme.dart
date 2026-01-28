@@ -17,6 +17,7 @@ class MarkdownTheme {
     );
 
     return MarkdownStyleSheet(
+      p: baseTextStyle,
       h1: textTheme.sectionTitle.copyWith(
         fontSize: 28.0,
         color: colorTheme.textMain,
@@ -53,17 +54,15 @@ class MarkdownTheme {
       h6: textTheme.labelMedium.copyWith(
         fontSize: 14.0,
         color: colorTheme.textSub,
-        fontVariations: [FontVariation.weight(700)],
+        fontVariations: const [FontVariation.weight(700)],
       ),
-
-      p: baseTextStyle,
       strong: baseTextStyle.copyWith(
-        fontVariations: [FontVariation.weight(700)],
+        fontVariations: const [FontVariation.weight(700)],
       ),
       em: baseTextStyle.copyWith(
         color: colorTheme.primary,
         fontStyle: FontStyle.italic,
-        fontVariations: [FontVariation.weight(500)],
+        fontVariations: const [FontVariation.weight(500)],
       ),
 
       blockquote: baseTextStyle.copyWith(
