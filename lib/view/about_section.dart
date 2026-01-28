@@ -26,7 +26,7 @@ class AboutSection extends StatelessWidget {
           color: Colors.green,
           icon: FontAwesomeIcons.cubes,
           title: '기술적인 소통',
-          description: '아키텍처와 방법론이 단순한 기술 표준을 넘어, 소통의 명확한 기준이 된다는 것을 경험으로 배웠습니다. '
+          description: '아키텍처와 방법론이 단순한 기술 표준을 넘어, 소통의 명확한 기준이 된다는 것을 배웠습니다. '
               '상황에 최적화된 설계로 지속 가능한 미래를 그리며, 코드뿐만 아니라 팀의 커뮤니케이션 흐름까지 설계합니다.',
         ),
         _CompetencyCard(
