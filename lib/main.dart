@@ -63,3 +63,10 @@ class MyPortfolioApp extends StatelessWidget {
 /// -> 포트폴리오의 수정이 필요할 시 파일의 추가/삭제만으로 포토폴리오를 핸들링 하기 위함
 /// -> 기존은 asset 파일을 추가하면 코드를 추가해야 함 (비효율)
 /// -> 마크다운, Skill Ball 추가를 유동적으로 가져갈 수 있음
+
+/// 2. BentoContainer 리펙토링
+/// 호버 시 border 색 구현 및 통일 (social, about, info)
+
+/// 3. ScaleDetector 리펙토링
+/// Widget child -> Widget Function(BuildContext, WidgetStates) builder
+/// 혹은 BentoContainer와 융합
