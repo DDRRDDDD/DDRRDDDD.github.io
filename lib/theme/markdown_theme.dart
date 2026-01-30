@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:markdown/markdown.dart' as md;
 
-import '../extension/common_extension.dart';
 import '../extension/markdown_extension.dart';
 import '../extension/theme_extension.dart';
 import 'color_theme.dart';
@@ -11,8 +10,6 @@ import 'text_theme.dart';
 
 class MarkdownTheme {
   const MarkdownTheme._();
-
-  static const double spacing = 16;
 
   static MarkdownStyleSheet styleSheet(BuildContext context) {
     final ColorThemeExtension colorTheme = context.colorTheme;
@@ -117,7 +114,7 @@ class MarkdownTheme {
         decorationColor: colorTheme.primary.withValues(alpha: 0.5),
       ),
 
-      blockSpacing: spacing,
+      blockSpacing: 16.0,
     );
   }
 
