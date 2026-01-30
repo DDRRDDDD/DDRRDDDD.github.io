@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../extension/theme_extension.dart';
+import '../extension/widget_states_extension.dart';
+import '../theme/color_theme.dart';
 import '../widget/bento_container.dart';
 import '../widget/badge_icon.dart';
 import '../widget/scale_detector.dart';
@@ -56,41 +58,56 @@ class _CompetencyCard extends StatelessWidget {
     required this.description,
   });
 
+  Color get _hoverBorderColor {
+    return ColorThemeExtension.indigoVivid.withValues(alpha: 0.4);
+  }
+
+  Border? _resolveBorder(BuildContext context) {
+    return ScaleDetector.of(context).value.isHovered
+        ? Border.all(color: _hoverBorderColor)
+        : Border.all(color: context.colorTheme.outline);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: ScaleDetector(
-        child: BentoContainer(
-          color: context.colorTheme.surface,
-          child: Column(
-            crossAxisAlignment: .start,
-            spacing: 12,
-            children: [
-              Row(
-                spacing: 16,
+        child: Builder(
+          builder: (context) {
+            return BentoContainer(
+              color: context.colorTheme.surface,
+              border: _resolveBorder(context),
+              child: Column(
+                crossAxisAlignment: .start,
+                spacing: 12,
                 children: [
-                  BadgeIcon(
-                    padding: const EdgeInsets.all(12),
-                    size: 24,
-                    color: color,
-                    icon: icon,
+                  Row(
+                    spacing: 16,
+                    children: [
+                      BadgeIcon(
+                        padding: const EdgeInsets.all(12),
+                        size: 24,
+                        color: color,
+                        icon: icon,
+                      ),
+                      Text(
+                        title,
+                        style: context.textTheme.cardTitle.copyWith(
+                          color: context.colorTheme.textMain,
+                        ),
+                      ),
+                    ],
                   ),
                   Text(
-                    title,
-                    style: context.textTheme.cardTitle.copyWith(
-                      color: context.colorTheme.textMain,
+                    description,
+                    style: context.textTheme.bodyRegular.copyWith(
+                      color: context.colorTheme.textSub,
                     ),
                   ),
                 ],
               ),
-              Text(
-                description,
-                style: context.textTheme.bodyRegular.copyWith(
-                  color: context.colorTheme.textSub,
-                ),
-              ),
-            ],
-          ),
+            );
+          }
         ),
       ),
     );
