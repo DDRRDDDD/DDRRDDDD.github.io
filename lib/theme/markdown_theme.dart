@@ -10,6 +10,8 @@ import 'text_theme.dart';
 class MarkdownTheme {
   const MarkdownTheme._();
 
+  static const double spacing = 16;
+
   static MarkdownStyleSheet styleSheet(BuildContext context) {
     final ColorThemeExtension colorTheme = context.colorTheme;
     final TextThemeExtension textTheme = context.textTheme;
@@ -114,7 +116,7 @@ class MarkdownTheme {
         decorationColor: colorTheme.primary.withValues(alpha: 0.5),
       ),
 
-      blockSpacing: 16.0,
+      blockSpacing: spacing,
     );
   }
 

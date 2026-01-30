@@ -6,6 +6,7 @@ import 'package:path/path.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../extension/common_extension.dart';
+import '../extension/image_extension.dart';
 import '../extension/theme_extension.dart';
 import '../theme/markdown_theme.dart';
 import 'milestone_list.dart';
@@ -17,6 +18,10 @@ class MarkdownViewer extends StatelessWidget {
   });
 
   final String assetPath;
+
+  void _onTapLink(_, String? href, _) {
+    href?.let(Uri.parse).let(launchUrl);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,9 +40,8 @@ class MarkdownViewer extends StatelessWidget {
     final MarkdownBuilders builders = MarkdownTheme.markdownBuilders();
 
     return MarkdownBody(
-      onTapLink: (_, href, _) {
-        href?.let(Uri.parse).let(launchUrl);
-      },
+      onTapLink: _onTapLink,
+      imageBuilder: _MarkdownAssetImage.builder,
       fitContent: false,
       softLineBreak: true,
       data: snapshot.requireData,
@@ -46,6 +50,35 @@ class MarkdownViewer extends StatelessWidget {
       syntaxHighlighter: CodeSyntaxHighlighter(
         textStyle: styleSheet.code!,
         syntaxTheme: context.codeSyntaxTheme,
+      ),
+    );
+  }
+}
+
+class _MarkdownAssetImage extends StatelessWidget {
+  const _MarkdownAssetImage({
+    super.key,
+    required this.uri,
+  });
+
+  factory _MarkdownAssetImage.builder(Uri uri, _, _) {
+    return _MarkdownAssetImage(uri: uri);
+  }
+
+  final Uri uri;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        vertical: MarkdownTheme.spacing,
+      ),
+      child: LayoutBuilder(
+        builder: (context, constraints) => Image.asset(
+          uri.toString(),
+          fit: BoxFit.contain,
+          cacheWidth: constraints.maxWidth.cacheSize(context),
+        ),
       ),
     );
   }
