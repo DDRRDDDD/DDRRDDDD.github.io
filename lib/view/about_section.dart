@@ -61,7 +61,7 @@ class _CompetencyCard extends StatelessWidget {
     return Expanded(
       child: ScaleDetector(
         child: BentoContainer(
-          color: context.colorTheme.surfaceAlt,
+          color: context.colorTheme.surface,
           child: Column(
             crossAxisAlignment: .start,
             spacing: 12,
