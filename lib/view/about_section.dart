@@ -102,6 +102,7 @@ class _CompetencyCard extends StatelessWidget {
                 Text(
                   description,
                   style: context.textTheme.bodyRegular.copyWith(
+                    fontVariations: const [FontVariation.weight(500)],
                     color: context.colorTheme.textSub,
                   ),
                 ),

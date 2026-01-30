@@ -77,6 +77,7 @@ class HeroSection extends StatelessWidget {
             '27만 명이 사용하는 오픈소스의 오류를 해결하여 기여한 경험이 저를 증명합니다. '
             '단순한 기능 구현을 넘어, 코드로 제품의 신뢰를 쌓는 개발자가 되고 싶습니다.',
             style: context.textTheme.bodyLead.copyWith(
+              fontVariations: const [FontVariation.weight(550)],
               color: context.colorTheme.textMain,
             ),
           ),
