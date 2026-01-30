@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:markdown/markdown.dart' as md;
 
+import '../extension/common_extension.dart';
+import '../extension/markdown_extension.dart';
 import '../extension/theme_extension.dart';
 import 'color_theme.dart';
 import 'text_theme.dart';
@@ -75,7 +77,7 @@ class MarkdownTheme {
         borderRadius: BorderRadius.circular(8.0),
         border: Border(
           left: BorderSide(
-            color: colorTheme.primary,
+            color: colorTheme.secondary,
             width: 4.0,
           ),
         ),
@@ -85,9 +87,8 @@ class MarkdownTheme {
         vertical: 12.0,
       ),
 
-      code: TextStyle(
+      code: textTheme.bodyRegular.copyWith(
         fontFamily: 'JetBrainsMono',
-        fontSize: textTheme.bodyRegular.fontSize,
         color: colorTheme.textSub,
         fontWeight: FontWeight.w500,
       ),
@@ -123,6 +124,7 @@ class MarkdownTheme {
   static MarkdownBuilders markdownBuilders() {
     return MarkdownBuilders(
       strong: StrongTextBuilder(),
+      code: CodeTextBuilder(),
     );
   }
 }
@@ -146,11 +148,49 @@ class StrongTextBuilder extends MarkdownElementBuilder {
   }
 }
 
+class CodeTextBuilder extends MarkdownElementBuilder {
+  CodeTextBuilder();
+
+  @override
+  Widget? visitElementAfterWithContext(
+    BuildContext context,
+    md.Element element,
+    TextStyle? preferredStyle,
+    TextStyle? parentStyle,
+  ) {
+    if (element.isCodeBlock) {
+      return null;
+    }
+
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: context.colorTheme.outline,
+        borderRadius: BorderRadius.circular(4),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 4,
+        ),
+        child: Text(
+          element.textContent,
+          style: preferredStyle,
+        ),
+      ),
+    );
+  }
+}
+
 class MarkdownBuilders extends DelegatingMap<String, MarkdownElementBuilder>
     with UnmodifiableMapMixin<String, MarkdownElementBuilder> {
   const MarkdownBuilders._(super.base);
 
-  factory MarkdownBuilders({MarkdownElementBuilder? strong}) {
-    return MarkdownBuilders._({'strong': ?strong});
+  factory MarkdownBuilders({
+    MarkdownElementBuilder? strong,
+    MarkdownElementBuilder? code,
+  }) {
+    return MarkdownBuilders._({
+      'strong': ?strong,
+      'code': ?code,
+    });
   }
 }
