@@ -67,6 +67,10 @@ flutter:
         - asset: assets/fonts/JetBrainsMono-MediumItalic.ttf
           style: italic
 
+#    - family: NotoColorEmoji
+#      fonts:
+#        - asset: assets/fonts/NotoColorEmoji-Regular.ttf
+
   assets:
     - path: assets/icon/
       transformers:

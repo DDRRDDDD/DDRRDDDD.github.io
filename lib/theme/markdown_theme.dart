@@ -146,8 +146,6 @@ class StrongTextBuilder extends MarkdownElementBuilder {
 }
 
 class CodeTextBuilder extends MarkdownElementBuilder {
-  CodeTextBuilder();
-
   @override
   Widget? visitElementAfterWithContext(
     BuildContext context,
@@ -159,18 +157,12 @@ class CodeTextBuilder extends MarkdownElementBuilder {
       return null;
     }
 
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: context.colorTheme.outline,
-        borderRadius: BorderRadius.circular(4),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 4,
-        ),
-        child: Text(
-          element.textContent,
-          style: preferredStyle,
+    return Text.rich(
+      TextSpan(
+        text: element.textContent,
+        style: preferredStyle?.copyWith(
+          color: context.colorTheme.textMain,
+          backgroundColor: context.colorTheme.background.withValues(alpha: 2/3),
         ),
       ),
     );
