@@ -162,7 +162,9 @@ class CodeTextBuilder extends MarkdownElementBuilder {
         text: element.textContent,
         style: preferredStyle?.copyWith(
           color: context.colorTheme.textMain,
-          backgroundColor: context.colorTheme.background.withValues(alpha: 2/3),
+          backgroundColor: context.colorTheme.background.withValues(
+            alpha: 2 / 3,
+          ),
         ),
       ),
     );
