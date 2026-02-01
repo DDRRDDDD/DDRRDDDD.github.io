@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../extension/brightness_extension.dart';
 import '../extension/common_extension.dart';
+import 'color_theme.dart';
 
 final atomOneLightTheme = CodeSyntaxThemeExtension(
   doctag: const TextStyle(color: Color(0xffa626a4)),
@@ -173,6 +174,40 @@ class CodeSyntaxThemeExtension extends _MapThemeData<String, TextStyle> {
   @override
   Object get type {
     return CodeSyntaxThemeExtension;
+  }
+}
+
+class PreCodeScrollBarTheme extends ScrollbarThemeData {
+  const PreCodeScrollBarTheme({this.color});
+
+  final Color? color;
+
+  @override
+  WidgetStateProperty<double> get thickness {
+    return WidgetStateProperty.fromMap({
+      WidgetState.dragged : 6.0,
+      WidgetState.hovered : 6.0,
+      WidgetState.any : 4.0,
+    });
+  }
+
+  @override
+  WidgetStateProperty<Color> get thumbColor {
+    return WidgetStateColor.fromMap({
+      WidgetState.dragged : ColorThemeExtension.indigoVivid,
+      WidgetState.hovered : ColorThemeExtension.indigoVivid,
+      WidgetState.any : color ?? ColorThemeExtension.defaultPrimary,
+    });
+  }
+
+  @override
+  WidgetStateProperty<Color> get trackColor {
+    return WidgetStateProperty.all(Colors.transparent);
+  }
+
+  @override
+  WidgetStateProperty<bool> get thumbVisibility {
+    return WidgetStateProperty.all(true);
   }
 }
 

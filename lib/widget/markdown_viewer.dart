@@ -8,6 +8,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../extension/common_extension.dart';
 import '../extension/image_extension.dart';
 import '../extension/theme_extension.dart';
+import '../theme/code_syntax_theme.dart';
 import '../theme/markdown_theme.dart';
 import 'milestone_list.dart';
 
@@ -39,17 +40,24 @@ class MarkdownViewer extends StatelessWidget {
     final MarkdownStyleSheet styleSheet = MarkdownTheme.styleSheet(context);
     final MarkdownBuilders builders = MarkdownTheme.markdownBuilders();
 
-    return MarkdownBody(
-      onTapLink: _onTapLink,
-      imageBuilder: _MarkdownAssetImage.builder,
-      fitContent: false,
-      softLineBreak: true,
-      data: snapshot.requireData,
-      styleSheet: styleSheet,
-      builders: builders,
-      syntaxHighlighter: CodeSyntaxHighlighter(
-        textStyle: styleSheet.code!,
-        syntaxTheme: context.codeSyntaxTheme,
+    return Theme(
+      data: Theme.of(context).copyWith(
+        scrollbarTheme: PreCodeScrollBarTheme(
+          color: context.colorTheme.secondary,
+        ),
+      ),
+      child: MarkdownBody(
+        onTapLink: _onTapLink,
+        imageBuilder: _MarkdownAssetImage.builder,
+        fitContent: false,
+        softLineBreak: true,
+        data: snapshot.requireData,
+        styleSheet: styleSheet,
+        builders: builders,
+        syntaxHighlighter: CodeSyntaxHighlighter(
+          textStyle: styleSheet.code!,
+          syntaxTheme: context.codeSyntaxTheme,
+        ),
       ),
     );
   }
