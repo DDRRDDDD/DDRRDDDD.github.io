@@ -70,3 +70,5 @@ class MyPortfolioApp extends StatelessWidget {
 /// 3. ScaleDetector 리펙토링
 /// Widget child -> Widget Function(BuildContext, WidgetStates) builder
 /// 혹은 BentoContainer와 융합
+
+/// 4. 마크다운 에셋 이미지 최적화
