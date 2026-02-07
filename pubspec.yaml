@@ -11,9 +11,8 @@ dependencies:
     sdk: flutter
   flutter_web_plugins:
     sdk: flutter
-
-  font_transformer:
-    path: ./font_transformer
+  font_kit:
+    path: ./font_kit
 
   # Rive 버전 강제를 위해 ^ 제거 (Overrides와 동일하게 맞춤)
   rive: 0.14.0-dev.13

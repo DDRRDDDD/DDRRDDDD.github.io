@@ -208,7 +208,7 @@ class _ProjectProperties extends StatelessWidget {
               label: '팀 / 기여도',
               value: project.teamDetail!,
             ),
-          if (project.hasReferences)
+          if (project.references != null)
             PropertyListTile(
               icon: Icons.link_outlined,
               label: '링크',
