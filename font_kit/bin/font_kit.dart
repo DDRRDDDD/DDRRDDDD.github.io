@@ -36,7 +36,7 @@ void main(List<String> arguments) async {
   final String inputPath = result['input'] as String;
   final String outputPath = result['output'] as String;
 
-  String textData = GlyphSource.combineTextGlyphs();
+  String textData = GlyphSource.joinedText([]); // TODO 글리프 채우기
 
   try {
     final ProcessResult process = await Process.run(
