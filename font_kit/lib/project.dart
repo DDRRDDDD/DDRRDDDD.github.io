@@ -127,7 +127,15 @@ enum Project implements GlyphSource {
 
   @override
   Set<String> get textForSubset {
-    return {};
+    return {
+      ?title,
+      subTitle,
+      ?description,
+      role,
+      ...labels,
+      ...?teamSummaries,
+      ...?references?.map((ref) => ref.label),
+    };
   }
 
   bool get hasTeamSummary {
@@ -136,7 +144,7 @@ enum Project implements GlyphSource {
   }
 
   String get period {
-    return '$startAt ~ ${endAt ?? '진행 중'}';
+    return PeriodText(startAt, endAt).generate();
   }
 
   String? get teamDetail {
@@ -145,7 +153,8 @@ enum Project implements GlyphSource {
     if (teamSummaries != null && teamSummaries!.isNotEmpty) {
       final int count = teamSummaries!.length;
       final String team = teamSummaries!.join(', ');
-      buffer.write('총 $count명 ($team)');
+
+      buffer.write(TeamSummaryText(count, team).generate());
     }
 
     if (buffer.isNotEmpty) {
@@ -154,7 +163,7 @@ enum Project implements GlyphSource {
 
     if (myContribution != null) {
       final int percent = (myContribution! * 100).toInt();
-      buffer.write('기여도 $percent%');
+      buffer.write(ContributionText(percent).generate());
     }
 
     return buffer.isNotEmpty ? buffer.toString() : null;
@@ -167,5 +176,40 @@ enum Project implements GlyphSource {
   bool matchesMarkdown(String assetPath) {
     return assetPath.startsWith(markdownAsset) &&
         assetPath.toLowerCase().endsWith('.md');
+  }
+}
+
+class PeriodText extends TextGenerator {
+  final String startAt;
+  final String? endAt;
+
+  const PeriodText([this.startAt = '', this.endAt]);
+
+  @override
+  String generate() {
+    return '$startAt ~ ${endAt ?? '진행 중'}';
+  }
+}
+
+class TeamSummaryText extends TextGenerator {
+  final int count;
+  final String team;
+
+  const TeamSummaryText([this.count = 0, this.team = '']);
+
+  @override
+  String generate() {
+    return '총 $count명 ($team)';
+  }
+}
+
+class ContributionText extends TextGenerator {
+  final int percent;
+
+  const ContributionText([this.percent = 0]);
+
+  @override
+  String generate() {
+    return '기여도 $percent%';
   }
 }
