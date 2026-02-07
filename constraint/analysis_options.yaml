@@ -1,0 +1,9 @@
+include: package:lints/recommended.yaml
+
+linter:
+  rules:
+    use_null_aware_elements: true
+    prefer_relative_imports: true
+
+formatter:
+  trailing_commas: preserve

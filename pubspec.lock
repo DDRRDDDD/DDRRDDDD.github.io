@@ -280,6 +280,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "10.12.0"
+  font_transformer:
+    dependency: "direct main"
+    description:
+      path: font_transformer
+      relative: true
+    source: path
+    version: "1.0.0"
   forge2d:
     dependency: "direct main"
     description:
