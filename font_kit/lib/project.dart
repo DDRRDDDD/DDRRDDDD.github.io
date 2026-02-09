@@ -118,6 +118,9 @@ enum Project implements GlyphSource {
   @override
   String get glyphs {
     final StringBuffer buffer = StringBuffer()
+      ..write(type.glyphs)
+      ..write(period)
+      ..write(teamDetail)
       ..write(title ?? '')
       ..write(subTitle)
       ..write(description ?? '')
@@ -130,7 +133,7 @@ enum Project implements GlyphSource {
   }
 
   String get period {
-    return PeriodText(startAt, endAt).generate();
+    return '$startAt ~ ${endAt ?? '진행 중'}';
   }
 
   String? get teamDetail {
@@ -140,7 +143,7 @@ enum Project implements GlyphSource {
       final int count = teamSummaries!.length;
       final String team = teamSummaries!.join(', ');
 
-      buffer.write(TeamSummaryText(count, team));
+      buffer.write('총 $count명 ($team)');
     }
 
     if (buffer.isNotEmpty) {
@@ -149,45 +152,10 @@ enum Project implements GlyphSource {
 
     if (myContribution != null) {
       final int percent = (myContribution! * 100).toInt();
-      buffer.write(ContributionText(percent));
+      buffer.write('기여도 $percent%');
     }
 
     return buffer.isNotEmpty ? buffer.toString() : null;
-  }
-}
-
-class PeriodText extends TextGenerator {
-  final String startAt;
-  final String? endAt;
-
-  const PeriodText([this.startAt = '', this.endAt]);
-
-  @override
-  String generate() {
-    return '$startAt ~ ${endAt ?? '진행 중'}';
-  }
-}
-
-class TeamSummaryText extends TextGenerator {
-  final int count;
-  final String team;
-
-  const TeamSummaryText([this.count = 0, this.team = '']);
-
-  @override
-  String generate() {
-    return '총 $count명 ($team)';
-  }
-}
-
-class ContributionText extends TextGenerator {
-  final int percent;
-
-  const ContributionText([this.percent = 0]);
-
-  @override
-  String generate() {
-    return '기여도 $percent%';
   }
 }
 
