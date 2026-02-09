@@ -14,23 +14,6 @@ mixin GlyphLabelMixin implements GlyphSource {
   }
 }
 
-/// 함수형 정의를 위한 클래스
-abstract class TextGenerator implements GlyphSource {
-  const TextGenerator();
-  
-  String generate();
-
-  @override
-  String get glyphs {
-    return generate();
-  }
-
-  @override
-  String toString() {
-    return generate();
-  }
-}
-
 class GlyphBuffer<T> extends DelegatingList<T> implements GlyphSource {
   const GlyphBuffer(super.base);
 
