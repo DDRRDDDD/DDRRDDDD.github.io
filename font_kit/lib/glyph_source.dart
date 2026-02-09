@@ -7,7 +7,9 @@ mixin GlyphLabelMixin on Enum implements GlyphSource {
   String get label;
 
   @override
-  String get textForSubset => label;
+  String get textForSubset {
+    return label;
+  }
 }
 
 /// 함수형 정의를 위한 클래스
