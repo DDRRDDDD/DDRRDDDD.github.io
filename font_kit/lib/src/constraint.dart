@@ -1,4 +1,4 @@
-import '../source/glyph_source.dart';
+import 'source/glyph_source.dart';
 
 enum Constraints with GlyphLabelMixin {
   // About Section
