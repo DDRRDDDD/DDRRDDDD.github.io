@@ -1,9 +1,13 @@
 abstract interface class GlyphSource {
-  Set<String> get textForSubset;
+  String get textForSubset;
+}
 
-  static String joinedText(List<GlyphSource> sources) {
-    return sources.expand((e) => e.textForSubset).toSet().join();
-  }
+/// Enum에서 `label` getter만 사용하는 경우에 재사용할 수 있는 추상 믹스인
+mixin GlyphLabelMixin on Enum implements GlyphSource {
+  String get label;
+
+  @override
+  String get textForSubset => label;
 }
 
 /// 함수형 정의를 위한 클래스
@@ -13,7 +17,7 @@ abstract class TextGenerator implements GlyphSource {
   String generate();
 
   @override
-  Set<String> get textForSubset {
-    return generate().split('').toSet();
+  String get textForSubset {
+    return generate();
   }
 }
