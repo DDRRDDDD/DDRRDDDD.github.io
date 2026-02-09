@@ -3,10 +3,10 @@ import 'package:path/path.dart' as path;
 
 import 'glyph_source.dart';
 
-class MarkdownSet implements GlyphSource {
+class MarkdownTextGlyph implements GlyphSource {
   static const String _directoryPath = '../assets/md/';
 
-  const MarkdownSet();
+  const MarkdownTextGlyph();
 
   @override
   String get glyphs {
