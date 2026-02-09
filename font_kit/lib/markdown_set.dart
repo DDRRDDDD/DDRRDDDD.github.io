@@ -13,7 +13,7 @@ class MarkdownSet implements GlyphSource {
     final directory = Directory(_directoryPath);
 
     if (!directory.existsSync()) {
-      stderr.writeln('⚠️ 디렉토리를 찾을 수 없습니다: ${directory.absolute.path}');
+      stderr.writeln('디렉토리를 찾을 수 없습니다: ${directory.absolute.path}');
       return '';
     }
 
@@ -37,7 +37,7 @@ class MarkdownSet implements GlyphSource {
       buffer.write(fileName);
       buffer.write(content);
     } catch (e) {
-      stderr.writeln('❌ 읽기 실패: ${file.path}');
+      stderr.writeln('읽기 실패: ${file.path}');
       rethrow;
     }
 
