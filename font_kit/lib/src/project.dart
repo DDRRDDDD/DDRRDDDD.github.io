@@ -1,5 +1,3 @@
-import 'package:recase/recase.dart';
-
 import 'source/glyph_source.dart';
 
 enum ProjectIcon {
@@ -109,11 +107,6 @@ enum Project implements GlyphSource {
     this.teamSummaries,
     this.references,
   });
-
-  factory Project.fromPath(String rawPath) {
-    final String camelCasePath = rawPath.camelCase;
-    return Project.values.byName(camelCasePath);
-  }
 
   @override
   String get glyphs {
