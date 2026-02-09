@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_kit/font_kit.dart';
 import 'package:go_router/go_router.dart';
 
 import '../extension/theme_extension.dart';
@@ -22,24 +23,24 @@ class ContactFormDialog extends StatelessWidget {
             mainAxisAlignment: .center,
             spacing: 12,
             children: [
-              const TextField(
+              TextField(
                 decoration: InputDecoration(
-                  labelText: '제목',
+                  labelText: Constraints.title.label,
                 ),
               ),
-              const TextField(
+              TextField(
                 decoration: InputDecoration(
-                  labelText: '이메일',
+                  labelText: Constraints.email.label,
                 ),
               ),
-              const Expanded(
+              Expanded(
                 child: TextField(
                   expands: true,
                   maxLines: null,
                   textAlignVertical: .top,
                   decoration: InputDecoration(
                     alignLabelWithHint: true,
-                    labelText: '문의 내용',
+                    labelText: Constraints.inquiryContent.label,
                   ),
                 ),
               ),
@@ -57,7 +58,7 @@ class ContactFormDialog extends StatelessWidget {
                       foregroundColor: context.colorTheme.textMain,
                     ),
                     child: Text(
-                      '취소',
+                      Constraints.cancel.label,
                       style: context.textTheme.heroBadge,
                     ),
                   ),
@@ -73,7 +74,7 @@ class ContactFormDialog extends StatelessWidget {
                       foregroundColor: Colors.white,
                     ),
                     child: Text(
-                      "보내기",
+                      Constraints.send.label,
                       style: context.textTheme.buttonText.copyWith(
                         letterSpacing: 1.0,
                       ),

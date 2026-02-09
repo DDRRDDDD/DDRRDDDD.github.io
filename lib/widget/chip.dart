@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:font_kit/font_kit.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../constraint/project.dart';
 import '../extension/common_extension.dart';
+import '../extension/font_kit_extension.dart';
 import '../extension/theme_extension.dart';
 import '../extension/widget_states_extension.dart';
 import '../theme/chip_theme.dart';
@@ -145,7 +146,7 @@ class LinkedTagChip extends StatelessWidget {
 
   factory LinkedTagChip.item(LinkItem item) {
     return LinkedTagChip(
-      icon: item.icon,
+      icon: item.icon.data,
       tag: item.label,
       url: Uri.parse(item.url),
     );

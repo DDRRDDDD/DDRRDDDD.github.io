@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:font_kit/font_kit.dart';
 import 'package:go_router/go_router.dart';
+import 'package:recase/recase.dart';
 
-import '../constraint/project.dart';
 import '../extension/common_extension.dart';
 import '../extension/route_extension.dart';
 import '../view/bento_grid_container.dart';
@@ -58,7 +59,8 @@ final GoRouter router = GoRouter(
                       stepIndex: state.queryInt('step'),
                       project: state
                           .requirePathString('projectName')
-                          .let(Project.fromPath),
+                          .let(ReCase.new).camelCase
+                          .let(Project.values.byName),
                     ),
                   ),
                 ),

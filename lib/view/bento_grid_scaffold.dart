@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_kit/font_kit.dart';
 import 'package:go_router/go_router.dart';
 
 import '../widget/navigation_bar.dart';
@@ -25,16 +26,16 @@ class BentoGridScaffold extends StatelessWidget {
       floatingActionButton: FloatingNavigationBar(
         onNavigate: shell.goBranch,
         currentIndex: shell.currentIndex,
-        items: const [
+        items: [
           NavigationItem(
             size: 24,
             icon: Icons.person_outline,
-            label: 'ABOUT ME',
+            label: Constraints.aboutMe.label,
           ),
           NavigationItem(
             size: 20,
             icon: Icons.rocket_launch_outlined,
-            label: 'PROJECTS',
+            label: Constraints.projects.label,
           ),
         ],
       ),

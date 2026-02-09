@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:font_kit/font_kit.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -107,14 +108,14 @@ class _ContactMeCard extends StatelessWidget {
                 mainAxisAlignment: .center,
                 children: [
                   Text(
-                    '함께 일하고',
+                    Constraints.workTogether.label,
                     style: context.textTheme.heroTitle.copyWith(
                       color: Colors.white,
                       fontSize: 18,
                     ),
                   ),
                   Text(
-                    '싶습니다',
+                    Constraints.wantTo.label,
                     style: context.textTheme.heroTitle.copyWith(
                       color: Colors.white,
                       fontSize: 22,
@@ -122,7 +123,7 @@ class _ContactMeCard extends StatelessWidget {
                   ),
                   const Gap(8),
                   Text(
-                    '작은 제안도 소중히 받겠습니다',
+                    Constraints.acceptSmallProposals.label,
                     style: context.textTheme.labelSmall.copyWith(
                       color: darkColorTheme.textMain.withValues(alpha: 0.8),
                     ),

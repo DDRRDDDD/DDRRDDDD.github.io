@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_kit/font_kit.dart';
 
 import '../extension/theme_extension.dart';
 import '../theme/color_theme.dart';
@@ -24,14 +25,14 @@ class HeroSection extends StatelessWidget {
               hoverScale: 0.035,
               child: LabelChip(
                 chipColor: context.chipColorTheme.heroPrimary,
-                label: '집요한 문제 해결',
+                label: Constraints.persistentProblemSolving.label,
               ),
             ),
             ScaleDetector(
               hoverScale: 0.035,
               child: LabelChip(
                 chipColor: context.chipColorTheme.neutral,
-                label: '소통을 설계하는 아키텍처',
+                label: Constraints.architectureDesigningCommunication.label,
               ),
             ),
           ],
@@ -41,13 +42,13 @@ class HeroSection extends StatelessWidget {
           crossAxisAlignment: .start,
           children: [
             Text(
-              '안녕하세요,',
+              Constraints.hello.label,
               style: context.textTheme.heroTitle.copyWith(
                 color: context.colorTheme.textMain,
               ),
             ),
             GradientText(
-              '플러터 개발자',
+              Constraints.flutterDeveloper.label,
               style: context.textTheme.heroTitle.copyWith(
                 fontSize: context.textTheme.heroTitle.fontSize! * 1.15,
               ),
@@ -60,7 +61,7 @@ class HeroSection extends StatelessWidget {
               ),
             ),
             Text(
-              '김용민입니다.',
+              Constraints.myName.label,
               style: context.textTheme.heroTitle.copyWith(
                 color: context.colorTheme.textMain,
               ),
@@ -73,9 +74,7 @@ class HeroSection extends StatelessWidget {
             minWidth: 300,
           ),
           child: Text(
-            '임시방편은 없습니다. 집요하게 문제의 뿌리를 뽑습니다. \n'
-            '27만 명이 사용하는 오픈소스의 오류를 해결하여 기여한 경험이 저를 증명합니다. '
-            '단순한 기능 구현을 넘어, 코드로 제품의 신뢰를 쌓는 개발자가 되고 싶습니다.',
+            Constraints.heroDescription.label,
             style: context.textTheme.bodyLead.copyWith(
               fontVariations: const [FontVariation.weight(550)],
               color: context.colorTheme.textMain,

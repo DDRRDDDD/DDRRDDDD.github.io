@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_kit/font_kit.dart';
 
 import '../datasource/svg_manager.dart';
 import '../extension/theme_extension.dart';
@@ -41,7 +42,7 @@ class SkillSection extends StatelessWidget {
               spacing: 10,
               children: [
                 Text(
-                  '보유 기술',
+                  Constraints.skills.label,
                   style: context.textTheme.timelineTitle.copyWith(
                     color: context.colorTheme.textMain,
                     fontVariations: const [FontVariation.weight(900)],
@@ -52,7 +53,7 @@ class SkillSection extends StatelessWidget {
                     maxWidth: 170,
                   ),
                   child: Text(
-                    '부딪히며 습득하고,\n끊임없이 경험을 쌓아 올렸습니다.',
+                    Constraints.skillDescription.label,
                     style: context.textTheme.labelMedium.copyWith(
                       color: context.colorTheme.textSub,
                     ),

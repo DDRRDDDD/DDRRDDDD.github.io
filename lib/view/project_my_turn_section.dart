@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:font_kit/font_kit.dart';
 import 'package:go_router/go_router.dart';
 
-import '../constraint/project.dart';
+import '../extension/font_kit_extension.dart';
 import '../extension/image_extension.dart';
 import '../extension/theme_extension.dart';
 import '../extension/widget_states_extension.dart';
@@ -38,7 +39,7 @@ class ProjectMyTurnSection extends StatelessWidget {
                 ),
               ),
               SummaryCard(
-                icon: project.primaryIcon,
+                icon: project.primaryIcon.data,
                 personnel: project.teamSummaries?.length,
                 contribution: project.myContribution,
                 titleLabel: project.type.label,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:font_kit/font_kit.dart';
 import 'package:gap/gap.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -34,22 +35,22 @@ class PersonalInfoBentoCard extends StatelessWidget {
             crossAxisAlignment: .start,
             children: [
               Text(
-                '활동 및 자격 사항',
+                Constraints.activitiesAndQualifications.label,
                 style: context.textTheme.timelineTitle.copyWith(
                   color: context.colorTheme.textMain,
                   fontVariations: const [FontVariation.weight(900)],
                 ),
               ),
               const Gap(9),
-              const _LinkInfoRow(
-                label: '오픈소스 기여',
-                content: 'WebDriverManager PR',
+              _LinkInfoRow(
+                label: Constraints.openSourceContribution.label,
+                content: Constraints.webDriverManagerPR.label,
                 url: 'https://github.com/bonigarcia/webdrivermanager/pull/1259',
                 icon: FontAwesomeIcons.githubAlt,
               ),
-              const _InfoRow(
-                label: '자격증',
-                content: '정보처리산업기사',
+              _InfoRow(
+                label: Constraints.certification.label,
+                content: Constraints.infoProcessingIndustryEngineer.label,
                 icon: FontAwesomeIcons.stamp,
               ),
             ],

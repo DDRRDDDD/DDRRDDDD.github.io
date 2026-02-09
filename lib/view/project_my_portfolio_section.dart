@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:font_kit/font_kit.dart';
 import 'package:go_router/go_router.dart';
 
-import '../constraint/project.dart';
+import '../extension/font_kit_extension.dart';
 import '../extension/widget_states_extension.dart';
 import '../widget/bento_container.dart';
 import '../widget/scale_detector.dart';
@@ -22,7 +23,7 @@ class ProjectMyPortfolioSection extends StatelessWidget {
           child: Stack(
             children: [
               SummaryCard(
-                icon: project.primaryIcon,
+                icon: project.primaryIcon.data,
                 titleLabel: project.type.label,
                 subTitle: project.subTitle,
                 skills: project.labels,

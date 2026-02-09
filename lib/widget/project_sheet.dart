@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:font_kit/font_kit.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 
-import '../constraint/project.dart';
 import '../datasource/asset_finder.dart';
 import '../extension/common_extension.dart';
+import '../extension/font_kit_extension.dart';
 import '../extension/theme_extension.dart';
 import '../theme/color_theme.dart';
 import 'chip.dart';
@@ -68,7 +69,7 @@ class _ProjectSheetState extends State<ProjectSheet> {
           controller: _controller,
           slivers: [
             _ProjectSheetHeader(
-              icon: widget.project.primaryIcon,
+              icon: widget.project.primaryIcon.data,
               title: widget.project.title,
               subTitle: widget.project.subTitle,
             ),
@@ -186,7 +187,7 @@ class _ProjectProperties extends StatelessWidget {
         children: [
           PropertyListTile(
             icon: Icons.folder_open_outlined,
-            label: "분류",
+            label: Constraints.category.label,
             child: Wrap(
               spacing: 6,
               children: project.labels.map(TagChip.text).toList(),
@@ -194,24 +195,24 @@ class _ProjectProperties extends StatelessWidget {
           ),
           PropertyTextTile(
             icon: Icons.person_outline,
-            label: '역할',
+            label: Constraints.role.label,
             value: project.role,
           ),
           PropertyTextTile(
             icon: Icons.calendar_month_outlined,
-            label: '기간',
+            label: Constraints.period.label,
             value: project.period,
           ),
           if (project.hasTeamSummary)
             PropertyTextTile(
               icon: Icons.group_outlined,
-              label: '팀 / 기여도',
+              label: Constraints.teamAndContribution.label,
               value: project.teamDetail!,
             ),
           if (project.references != null)
             PropertyListTile(
               icon: Icons.link_outlined,
-              label: '링크',
+              label: Constraints.links.label,
               child: Wrap(
                 spacing: 6,
                 children: project.references!.map(LinkedTagChip.item).toList(),
