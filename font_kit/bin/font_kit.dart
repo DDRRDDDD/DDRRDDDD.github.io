@@ -1,7 +1,7 @@
 import 'package:args/args.dart';
-import 'package:font_kit/constraint.dart';
+import 'package:font_kit/src/constraint.dart';
 import 'package:font_kit/source/glyph_source.dart';
-import 'package:font_kit/project.dart';
+import 'package:font_kit/src/project.dart';
 import 'package:font_kit/source/markdown_text_glyph.dart';
 
 final ArgParser argParser = ArgParser()
