@@ -1,6 +1,6 @@
 import 'package:recase/recase.dart';
 
-import 'glyph_source.dart';
+import 'source/glyph_source.dart';
 
 enum ProjectIcon {
   smartphone,

@@ -1,4 +1,4 @@
-import '../glyph_source.dart';
+import '../source/glyph_source.dart';
 
 /// 함수형 정의를 위한 클래스
 abstract class TextGenerator implements GlyphSource {
