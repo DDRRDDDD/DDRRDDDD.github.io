@@ -10,7 +10,7 @@ class MarkdownTextGlyph implements GlyphSource {
 
   @override
   String get glyphs {
-    final directory = Directory(_directoryPath);
+    final Directory directory = Directory(_directoryPath);
 
     if (!directory.existsSync()) {
       stderr.writeln('디렉토리를 찾을 수 없습니다: ${directory.absolute.path}');
