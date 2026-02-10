@@ -87,6 +87,4 @@ flutter:
       fonts:
         - asset: assets/fonts/JetBrainsMono-Medium.ttf
           weight: 500
-        - asset: assets/fonts/JetBrainsMono-MediumItalic.ttf
-          style: italic
 

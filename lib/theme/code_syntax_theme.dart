@@ -35,8 +35,8 @@ final atomOneLightTheme = CodeSyntaxThemeExtension(
   meta: const TextStyle(color: Color(0xff4078f2)),
   selectorId: const TextStyle(color: Color(0xff4078f2)),
   title: const TextStyle(color: Color(0xff4078f2)),
-  comment: const TextStyle(color: Color(0xffa0a1a7), fontStyle: FontStyle.italic),
-  quote: const TextStyle(color: Color(0xffa0a1a7), fontStyle: FontStyle.italic),
+  comment: const TextStyle(color: Color(0xffa0a1a7)),
+  quote: const TextStyle(color: Color(0xffa0a1a7)),
 );
 
 final atomOneDarkTheme = CodeSyntaxThemeExtension(
@@ -69,8 +69,8 @@ final atomOneDarkTheme = CodeSyntaxThemeExtension(
   meta: const TextStyle(color: Color(0xff61afef)),
   selectorId: const TextStyle(color: Color(0xff61afef)),
   title: const TextStyle(color: Color(0xff61afef)),
-  comment: const TextStyle(color: Color(0xff5c6370), fontStyle: FontStyle.italic),
-  quote: const TextStyle(color: Color(0xff5c6370), fontStyle: FontStyle.italic),
+  comment: const TextStyle(color: Color(0xff5c6370)),
+  quote: const TextStyle(color: Color(0xff5c6370)),
 );
 
 class CodeSyntaxThemeExtension extends _MapThemeData<String, TextStyle> {
