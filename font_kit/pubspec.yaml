@@ -1,6 +1,10 @@
 name: font_kit
 description: 'font kit'
 version: 1.0.0
+resolution: workspace
+
+executables:
+  font_kit:
 
 environment:
   sdk: ^3.10.1

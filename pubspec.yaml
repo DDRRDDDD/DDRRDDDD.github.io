@@ -3,6 +3,9 @@ description: 'portfolio flutter web project'
 publish_to: 'none'
 version: 1.0.0+1
 
+workspace:
+  - font_kit
+
 environment:
   sdk: ">=3.10.1 <4.0.0"
 
@@ -11,8 +14,8 @@ dependencies:
     sdk: flutter
   flutter_web_plugins:
     sdk: flutter
-  font_kit:
-    path: ./font_kit
+
+  font_kit: any
 
   # Rive 버전 강제를 위해 ^ 제거 (Overrides와 동일하게 맞춤)
   rive: 0.14.0-dev.13
@@ -56,22 +59,6 @@ dev_dependencies:
 flutter:
   uses-material-design: true
 
-  fonts:
-    - family: NotoSans
-      fonts:
-        - asset: assets/fonts/NotoSansKR-VariableFont_wght.ttf
-
-    - family: JetBrainsMono
-      fonts:
-        - asset: assets/fonts/JetBrainsMono-Medium.ttf
-          weight: 500
-        - asset: assets/fonts/JetBrainsMono-MediumItalic.ttf
-          style: italic
-
-#    - family: NotoColorEmoji
-#      fonts:
-#        - asset: assets/fonts/NotoColorEmoji-Regular.ttf
-
   assets:
     - path: assets/icon/
       transformers:
@@ -80,9 +67,26 @@ flutter:
       transformers:
         - package: vector_graphics_compiler
 
+    - path: assets/fonts/NotoSansKR-VariableFont_wght.ttf
+      transformers:
+        - package: font_kit
+
     - assets/rive/
     - assets/image/
 
     - assets/md/one-hour/
     - assets/md/my-turn/
     - assets/md/my-portfolio/
+
+  fonts:
+#    - family: NotoSans
+#      fonts:
+#        - asset: assets/fonts/NotoSansKR-VariableFont_wght.ttf
+
+    - family: JetBrainsMono
+      fonts:
+        - asset: assets/fonts/JetBrainsMono-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/JetBrainsMono-MediumItalic.ttf
+          style: italic
+
