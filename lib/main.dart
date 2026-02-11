@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 
 import 'datasource/asset_finder.dart';
+import 'datasource/font_manager.dart';
 import 'datasource/rive_file_manager.dart';
 import 'datasource/svg_manager.dart';
 import 'extension/brightness_extension.dart';
@@ -19,7 +20,11 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   usePathUrlStrategy();
 
-  await AssetFinder.init();
+  await Future.wait([
+    FontManager.load(),
+    AssetFinder.init(),
+  ]);
+
   await Future.wait([
     RiveFileManager.init(),
     SvgManager.init(SkillOptions.allAssetPaths),
@@ -41,7 +46,7 @@ class MyPortfolioApp extends StatelessWidget {
         builder: GridDotContainer.background,
         themeMode: brightness.themeMode,
         theme: ThemeData(
-          fontFamily: 'NotoSans',
+          fontFamily: FontManager.notoSansFamily,
           splashFactory: NoSplash.splashFactory,
           scaffoldBackgroundColor: Colors.transparent,
           extensions: [

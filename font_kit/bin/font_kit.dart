@@ -1,85 +1,130 @@
+import 'dart:convert';
 import 'dart:io';
-import 'package:path/path.dart' as path;
 
 import 'package:args/args.dart';
+import 'package:collection/collection.dart';
 import 'package:font_kit/src/constraint.dart';
 import 'package:font_kit/src/project.dart';
 import 'package:font_kit/src/source/glyph_source.dart';
 import 'package:font_kit/src/source/markdown_text_glyph.dart';
+import 'package:path/path.dart' as path;
 
-final ArgParser argParser = ArgParser()
-  ..addOption(
-    'input',
-    mandatory: true,
-    abbr: 'i',
-    help: '원본 폰트 파일 경로 (예: assets/fonts/font.ttf)',
-  )
-  ..addOption(
-    'output',
-    mandatory: true,
-    abbr: 'o',
-    help: '저장할 경로 (확장자는 자동으로 flavor에 맞게 변경됨)',
-  );
-
-// @formatter:off
-/// --- 폰트 품질/호환성 유지 옵션 (안전 장치) ---
-final List<String> defaultFontToolsArgs = [
-  '--unicodes=U+0020-007E', // 숫자, 영문, 특수기호 전체 포함
-  '--layout-features=*',    // 커닝(자간), 합자 등 폰트의 디자인 기능 유지
-  '--glyph-names',          // 글리프 내부 이름 유지 (PDF 복사/붙여넣기 호환성)
-  '--symbol-cmap',          // 심볼 문자 매핑 유지 (특수문자 호환성)
-  '--legacy-cmap',          // 구형 시스템용 레거시 매핑 유지 (오래된 OS 호환)
-  '--notdef-glyph',         // .notdef(정의되지 않음) 글리프 데이터 유지
-  '--notdef-outline',       // .notdef의 네모 박스(□) 모양 유지 (깨짐 확인용)
-  '--recommended-glyphs',   // 폰트 표준상 필수인 글리프 4종(null, CR 등) 강제 유지
-  '--name-IDs=*',           // 폰트의 모든 메타데이터(저작권, 제작자, 버전 등) 유지
-  '--name-legacy',          // 구형 플랫폼용 폰트 이름 정보 유지
-  '--name-languages=*',     // 폰트 이름에 포함된 다국어 정보(한글명/영문명 등) 모두 유지
-  '--flavor=woff2',         // 브라우저 및 웹 배포 최적화를 위해 WOFF2 포맷을 강제한다.
+/// 폰트 서브셋 생성 시 적용할 fontTools 옵션들
+const List<String> _fontToolsOptions = [
+  '--unicodes=U+0020-007E', // 기본 ASCII 범위 (숫자, 영문, 특수기호)
+  '--layout-features=*',    // 커닝, 합자 등 디자인 기능 유지
+  '--glyph-names',          // 글리프 이름 유지
+  '--symbol-cmap',          // 심볼 매핑 유지
+  '--legacy-cmap',          // 구형 시스템 호환성
+  '--notdef-glyph',         // .notdef 글리프 유지
+  '--notdef-outline',       // .notdef 외곽선 유지
+  '--recommended-glyphs',   // 필수 글리프 유지
+  '--name-IDs=*',           // 메타데이터(저작권 등) 유지
+  '--name-legacy',          // 레거시 이름 유지
+  '--name-languages=*',     // 다국어 이름 정보 유지
+  // '--flavor=woff2',         // WOFF2 압축 (웹 최적화)
 ];
-// @formatter:on
 
-final GlyphTree<GlyphSource> glyphTree = GlyphTree([
-  MarkdownTextGlyph(),
-  ...Project.values,
-  ...Constraints.values,
-]);
+/// Python 프로세스 실행 시 환경 변수 (인코딩)
+const Map<String, String> _pythonEnvironment = {
+  'PYTHONUTF8': '1',          // Python 3.7+ UTF-8 모드 강제
+  'PYTHONIOENCODING': 'utf-8', // 입출력 인코딩 강제
+  'LANG': 'en_US.UTF-8',       // 로케일 설정
+};
 
 Future<void> main(List<String> arguments) async {
-  final ArgResults result = argParser.parse(arguments);
-  final String inputPath = result['input'] as String;
-  final String outputPath = result['output'] as String;
-
-  final String command = Platform.isWindows ? 'python' : 'python3';
-  final String convertedOutPath = path.setExtension(outputPath, '.woff2');
-  final String textData = glyphTree.glyphs.runes
-      .map(String.fromCharCode)
-      .toSet()
-      .join();
-
-  stderr.writeln('Result >>> $textData');
+  final ArgParser parser = _buildArgParser();
+  File? tempTextFile;
 
   try {
-    final ProcessResult process = await Process.run(
-      command,
-      [
-        '-m',
-        'fontTools.subset',
-        inputPath,
-        '--output-file=$convertedOutPath',
-        '--text=$textData',
-        ...defaultFontToolsArgs,
-      ],
-      runInShell: true,
+    final ArgResults results = parser.parse(arguments);
+    final String inputPath = results['input'] as String;
+    final String outputPath = results['output'] as String;
+
+    final String uniqueChars = _collectUniqueCharacters();
+    tempTextFile = await _createTempTextFile(uniqueChars);
+
+    await _runPyftsubset(
+      inputPath: inputPath,
+      outputPath: outputPath,
+      textFilePath: tempTextFile.path,
     );
 
-    if (process.exitCode != 0) {
-      stderr.writeln('Error: ${process.stderr}');
-      exit(process.exitCode);
-    }
-
   } catch (e) {
-    stderr.writeln('Execution Error: $e');
+    stderr.writeln('\n 에러 발생: $e');
     exit(1);
+  } finally {
+    if (tempTextFile != null && await tempTextFile.exists()) {
+      await tempTextFile.delete();
+    }
+  }
+}
+
+ArgParser _buildArgParser() {
+  return ArgParser()
+    ..addOption(
+      'input',
+      abbr: 'i',
+      mandatory: true,
+      help: '원본 폰트 파일 경로 (.ttf, .otf)',
+    )
+    ..addOption(
+      'output',
+      abbr: 'o',
+      mandatory: true,
+      help: '저장할 결과 파일 경로',
+    );
+}
+
+String _collectUniqueCharacters() {
+  final GlyphTree glyphTree = GlyphTree([
+    const MarkdownTextGlyph(),
+    ...Project.values,
+    ...Constraints.values,
+  ]);
+
+  return glyphTree.glyphs.runes
+      .map(String.fromCharCode)
+      .toSet()
+      .sorted()
+      .join();
+}
+
+/// 시스템 임시 디렉토리에 텍스트 파일 생성 (UTF-8 인코딩)
+Future<File> _createTempTextFile(String content) async {
+  final String tmpPath = 'font_kit_subset_';
+  final Directory tempDir = await Directory.systemTemp.createTemp(tmpPath);
+  final File file = File(path.join(tempDir.path, 'chars.txt'));
+
+  return await file.writeAsString(content, encoding: utf8);
+}
+
+/// Python fontTools 프로세스 실행
+Future<void> _runPyftsubset({
+  required String inputPath,
+  required String outputPath,
+  required String textFilePath,
+}) async {
+  final String pythonCommand = Platform.isWindows ? 'python' : 'python3';
+
+  final ProcessResult result = await Process.run(
+    pythonCommand,
+    [
+      '-m', 'fontTools.subset',
+      inputPath,
+      '--output-file=$outputPath',
+      '--text-file=$textFilePath', // --text 대신 파일 경로 전달
+      ..._fontToolsOptions,
+    ],
+    runInShell: true,
+    // [중요] Python 환경 변수 주입 (UTF-8 강제)
+    environment: {
+      ...Platform.environment, // 기존 환경 변수 유지
+      ..._pythonEnvironment,   // UTF-8 설정 덮어쓰기
+    },
+  );
+
+  if (result.exitCode != 0) {
+    throw Exception('fontTools 실행 실패 (Exit Code: ${result.exitCode})\n${result.stderr}');
   }
 }

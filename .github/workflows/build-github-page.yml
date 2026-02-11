@@ -29,6 +29,16 @@ jobs:
           token: ${{ secrets.SECRET_KEY }}
           submodules: true
 
+      - name: 파이썬 셋업
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: 파이썬 종속성 설치
+        run: |
+          python -m pip install --upgrade pip
+          pip install fonttools brotli
+
       - name: 플러터 환경 설정
         # 플러터 환경을 설정합니다.
         uses: subosito/flutter-action@v2
