@@ -34,7 +34,11 @@ class Arguments {
         abbr: 't',
         defaultsTo: ProcessType.text.name,
         allowed: ProcessType.values.map((e) => e.name).toList(),
-        help: '프로세스 타입',
+        allowedHelp: {
+          ProcessType.text.name: '텍스트(한글/영어/기호)만 남기고 이모지는 제거한 서브셋 생성',
+          ProcessType.emoji.name: '이모지만 남기고 일반 텍스트는 제거한 서브셋 생성',
+          ProcessType.compress.name: '글자 삭제 없이 단순 WOFF2 압축 변환 (주의: 파일 용량이 클수록 변환 시간이 매우 오래 걸릴 수 있음)',
+        },
       );
   }
 
