@@ -36,32 +36,27 @@ abstract class FontTool {
     return Platform.isWindows ? 'python' : 'python3';
   }
 
-  Future<int> _process(String inputPath, String outputPath);
+  Future<void> _process(String inputPath, String outputPath);
 
   void _dispose() {}
 
   Future<void> process(String inputPath, String outputPath) async {
     await _process(inputPath, outputPath)
-        .catchError((exception) {
-      print('에러 발생: $exception');
-      exit(1);
-    }).whenComplete(_dispose);
-    // try {
-    //   _process(inputPath, outputPath);
-    // } catch (exception) {
-    //   print('에러 발생: $exception');
-    //   exit(1);
-    // } finally {
-    //   _dispose();
-    // }
+        .catchError(_onProcessError)
+        .whenComplete(_dispose);
+  }
+
+  Never _onProcessError(Object exception) {
+    print('에러 발생: $exception');
+    exit(1);
   }
 }
 
 /// 파일을 그냥 .woff2로 변환
 class Woff2Compressor extends FontTool {
   @override
-  Future<int> _process(String inputPath, String outputPath) async {
-    return Process.run(
+  Future<void> _process(String inputPath, String outputPath) async {
+    Process.run(
       runInShell: true,
       command,
       [
@@ -72,9 +67,7 @@ class Woff2Compressor extends FontTool {
         outputPath,
         inputPath,
       ],
-    ).then((result) {
-      return result.exitCode;
-    });
+    );
   }
 }
 
@@ -85,14 +78,14 @@ class FontSubsetProcessor extends FontTool with TextFileMixin, GlyphTextMixin {
   FontSubsetProcessor(this.mode);
 
   @override
-  Future<int> _process(String inputPath, String outputPath) async {
+  Future<void> _process(String inputPath, String outputPath) async {
     final String content = switch(mode) {
       SubsetMode.textOnly => textGlyphs,
       SubsetMode.emojiOnly => emojiGlyphs,
     };
     final File textFile = await writeTempFile(content);
 
-    final int result = await Process.run(
+    Process.run(
       runInShell: true,
       command,
       [
@@ -103,10 +96,7 @@ class FontSubsetProcessor extends FontTool with TextFileMixin, GlyphTextMixin {
         '--text-file=${textFile.path}',
         ..._fontToolsOptions,
       ],
-    ).then((result) {
-      return result.exitCode;
-    });
-    return result;
+    );
   }
 
   @override
