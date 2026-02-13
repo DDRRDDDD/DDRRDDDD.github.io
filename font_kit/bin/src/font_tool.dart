@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import './arguments.dart';
-import './text_file.dart';
+import './text_mixin.dart';
 
 /// 폰트 서브셋 생성 시 적용할 fontTools 옵션들
 const List<String> _fontToolsOptions = [
@@ -74,14 +74,17 @@ class Woff2Compressor extends FontTool {
 }
 
 /// 이모지 or 일반 텍스트 서브셋 프로세스
-class FontSubsetProcessor extends FontTool with TextFileMixin {
+class FontSubsetProcessor extends FontTool with TextFileMixin, GlyphTextMixin {
   final SubsetMode mode;
 
   FontSubsetProcessor(this.mode);
 
   @override
   Future<int> _process(String inputPath, String outputPath) async {
-    final String content = '';
+    final String content = switch(mode) {
+      SubsetMode.textOnly => textGlyphs,
+      SubsetMode.emojiOnly => emojiGlyphs,
+    };
     final File textFile = await writeTempFile(content);
 
     return Process.run(
@@ -98,10 +101,6 @@ class FontSubsetProcessor extends FontTool with TextFileMixin {
     ).then((result) {
       return result.exitCode;
     });
-  }
-
-  String textFilepath() {
-    return '';
   }
 
   @override
