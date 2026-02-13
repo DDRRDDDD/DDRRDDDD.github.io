@@ -4,7 +4,7 @@ import 'package:path/path.dart' as path;
 import 'glyph_source.dart';
 
 class MarkdownTextGlyph implements GlyphSource {
-  static const String _directoryPath = '../assets/md/';
+  static const String _directoryPath = 'assets/md/';
 
   const MarkdownTextGlyph();
 

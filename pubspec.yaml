@@ -67,10 +67,6 @@ flutter:
       transformers:
         - package: vector_graphics_compiler
 
-    - path: assets/fonts/JetBrainsMono-Medium.ttf
-      transformers:
-        - package: font_kit
-          args: [--type=compress]
     - path: assets/fonts/NotoSansKR-VariableFont_wght.ttf
       transformers:
         - package: font_kit
@@ -79,6 +75,10 @@ flutter:
       transformers:
         - package: font_kit
           args: [--type=emoji]
+    - path: assets/fonts/JetBrainsMono-Medium.ttf
+      transformers:
+        - package: font_kit
+          args: [--type=compress]
 
     - assets/rive/
     - assets/image/

@@ -6,27 +6,29 @@ class FontManager {
   static const String jetBrainsMonoFamily = 'JetBrainsMono';
 
   static Future<void> load() async {
-    Future.wait([
-      _createFontLoader(
+    await Future.wait([
+      _registerFont(
         fontFamily: notoSansFamily,
         assetPath: 'assets/fonts/NotoSansKR-VariableFont_wght.ttf',
       ),
-      _createFontLoader(
+      _registerFont(
         fontFamily: notoSansEmojiFamily,
         assetPath: 'assets/fonts/NotoColorEmoji-Regular.ttf',
       ),
-      _createFontLoader(
+      _registerFont(
         fontFamily: jetBrainsMonoFamily,
         assetPath: 'assets/fonts/JetBrainsMono-Medium.ttf',
       ),
     ]);
   }
 
-  static Future<FontLoader> _createFontLoader({
+  static Future<void> _registerFont({
     required String fontFamily,
     required String assetPath,
   }) async {
     final FontLoader fontLoader = FontLoader(fontFamily);
-    return fontLoader..addFont(rootBundle.load(assetPath));
+
+    fontLoader.addFont(rootBundle.load(assetPath));
+    await fontLoader.load();
   }
 }

@@ -1,10 +1,10 @@
 import './src/arguments.dart';
 import './src/font_tool.dart';
 
-void main(List<String> args) {
+Future<void> main(List<String> args) async {
   final Arguments arguments = Arguments.from(args);
 
-  FontTool
+  await FontTool
       .fromType(arguments.type)
       .process(arguments.inputPath, arguments.outputPath);
 }

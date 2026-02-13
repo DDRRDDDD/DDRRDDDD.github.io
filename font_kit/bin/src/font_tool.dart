@@ -32,46 +32,69 @@ abstract class FontTool {
     };
   }
 
-  String get command {
-    return Platform.isWindows ? 'python' : 'python3';
-  }
+  String get command => Platform.isWindows ? 'python' : 'python3';
 
   Future<void> _process(String inputPath, String outputPath);
 
   void _dispose() {}
 
   Future<void> process(String inputPath, String outputPath) async {
-    await _process(inputPath, outputPath)
-        .catchError(_onProcessError)
-        .whenComplete(_dispose);
+    try {
+      await _process(inputPath, outputPath);
+    } catch (exception) {
+      _onProcessError(exception);
+    } finally {
+      _dispose();
+    }
   }
 
-  Never _onProcessError(Object exception) {
-    print('에러 발생: $exception');
+  void _onProcessError(Object exception) {
+    stderr.writeln('작업 중 치명적 에러 발생: $exception');
     exit(1);
+  }
+
+  /// 프로세스 실행 결과가 실패(exitCode != 0)일 경우 로그 파일을 생성합니다.
+  Future<void> _handleProcessResult(ProcessResult result, List<String> args) async {
+    if (result.exitCode == 0) return;
+
+    final String timestamp = DateTime.now().toIso8601String().replaceAll(':', '-');
+    final String logFileName = 'font_tool_error_$timestamp.log';
+
+    final logContent = StringBuffer()
+      ..writeln('--- FontTool Error Log ---')
+      ..writeln('Time: ${DateTime.now()}')
+      ..writeln('Command: $command ${args.join(' ')}')
+      ..writeln('Exit Code: ${result.exitCode}')
+      ..writeln('\n[STDOUT]\n${result.stdout}')
+      ..writeln('\n[STDERR]\n${result.stderr}');
+
+    try {
+      final logFile = File(logFileName);
+      await logFile.writeAsString(logContent.toString());
+      stderr.writeln('\n에러 발생! 로그 파일이 생성되었습니다: ${logFile.absolute.path}');
+    } catch (e) {
+      stderr.writeln('로그 파일 작성 실패: $e');
+    }
+
+    // 에러 발생 시 프로세스 종료
+    exit(result.exitCode);
   }
 }
 
-/// 파일을 그냥 .woff2로 변환
 class Woff2Compressor extends FontTool {
   @override
   Future<void> _process(String inputPath, String outputPath) async {
-    Process.run(
-      runInShell: true,
-      command,
-      [
-        '-m',
-        'fontTools.ttLib.woff2',
-        'compress',
-        '-o',
-        outputPath,
-        inputPath,
-      ],
-    );
+    final args = [
+      '-m', 'fontTools.ttLib.woff2', 'compress',
+      '-o', outputPath,
+      inputPath,
+    ];
+
+    final result = await Process.run(command, args, runInShell: true);
+    await _handleProcessResult(result, args);
   }
 }
 
-/// 이모지 or 일반 텍스트 서브셋 프로세스
 class FontSubsetProcessor extends FontTool with TextFileMixin, GlyphTextMixin {
   final SubsetMode mode;
 
@@ -83,20 +106,19 @@ class FontSubsetProcessor extends FontTool with TextFileMixin, GlyphTextMixin {
       SubsetMode.textOnly => textGlyphs,
       SubsetMode.emojiOnly => emojiGlyphs,
     };
+
     final File textFile = await writeTempFile(content);
 
-    Process.run(
-      runInShell: true,
-      command,
-      [
-        '-m',
-        'fontTools.subset',
-        inputPath,
-        '--output-file=$outputPath',
-        '--text-file=${textFile.path}',
-        ..._fontToolsOptions,
-      ],
-    );
+    final args = [
+      '-m', 'fontTools.subset',
+      inputPath,
+      '--output-file=$outputPath',
+      '--text-file=${textFile.path}',
+      ..._fontToolsOptions,
+    ];
+
+    final result = await Process.run(command, args, runInShell: true);
+    await _handleProcessResult(result, args);
   }
 
   @override
