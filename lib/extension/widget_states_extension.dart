@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../theme/color_theme.dart';
+import 'theme_extension.dart';
+
 const bool _add = true;
 const bool _remove = false;
 
@@ -30,5 +33,15 @@ extension WidgetStatesControllerExtension on WidgetStatesController {
 
   void pressOff() {
     update(WidgetState.pressed, _remove);
+  }
+}
+
+extension HoverEffectExtension on WidgetStates {
+  Border hoverBorder(BuildContext context) {
+    return Border.all(
+      color: isHovered
+          ? ColorThemeExtension.indigoVivid.withValues(alpha: 0.4)
+          : context.colorTheme.outline,
+    );
   }
 }

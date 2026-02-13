@@ -23,14 +23,14 @@ class HeroSection extends StatelessWidget {
           children: [
             ScaleDetector(
               hoverScale: 0.035,
-              child: LabelChip(
+              builder: (context, _) => LabelChip(
                 chipColor: context.chipColorTheme.heroPrimary,
                 label: Constraints.persistentProblemSolving.label,
               ),
             ),
             ScaleDetector(
               hoverScale: 0.035,
-              child: LabelChip(
+              builder: (context, _) => LabelChip(
                 chipColor: context.chipColorTheme.neutral,
                 label: Constraints.architectureDesigningCommunication.label,
               ),

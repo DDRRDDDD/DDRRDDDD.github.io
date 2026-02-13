@@ -57,8 +57,7 @@ class _FloatingNavigationBarState extends State<FloatingNavigationBar> {
   @override
   Widget build(BuildContext context) {
     final Axis direction =
-        MediaQuery.heightOf(context) <
-            NavigationBarLocation.heightThreshold
+        MediaQuery.heightOf(context) < NavigationBarLocation.heightThreshold
         ? .vertical
         : .horizontal;
 
@@ -129,23 +128,21 @@ class _NavigationItem extends StatelessWidget {
     return ScaleDetector(
       hoverScale: isSelected ? 0.08 : 0.16,
       onPressUp: onNavigate,
-      child: Builder(
-        builder: (context) => AnimatedContainer(
-          height: 40,
-          width: 40,
-          curve: Curves.easeOutCubic,
-          duration: const Duration(milliseconds: 150),
-          decoration: BoxDecoration(
-            color: isSelected
-                ? ColorThemeExtension.indigoVivid
-                : Colors.transparent,
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Icon(
-            item.icon,
-            size: item.size,
-            color: _resolveLabelColor(context),
-          ),
+      builder: (context, states) => AnimatedContainer(
+        height: 40,
+        width: 40,
+        curve: Curves.easeOutCubic,
+        duration: const Duration(milliseconds: 150),
+        decoration: BoxDecoration(
+          color: isSelected
+              ? ColorThemeExtension.indigoVivid
+              : Colors.transparent,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Icon(
+          item.icon,
+          size: item.size,
+          color: _resolveLabelColor(context),
         ),
       ),
     );
@@ -178,7 +175,6 @@ class NavigationBarLocation extends StandardFabLocation {
 
   @override
   double getOffsetY(ScaffoldPrelayoutGeometry geometry, _) {
-
     final Size screenSize = geometry.scaffoldSize;
     final double fabHeight = geometry.floatingActionButtonSize.height;
 

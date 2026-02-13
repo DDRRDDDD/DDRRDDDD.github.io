@@ -17,19 +17,17 @@ class ProjectMyPortfolioSection extends StatelessWidget {
 
     return ScaleDetector(
       onPressDown: () => context.go('/project/my-portfolio'),
-      child: Builder(
-        builder: (context) => ProjectContainer(
-          isHovered: ScaleDetector.of(context).value.isHovered,
-          child: Stack(
-            children: [
-              SummaryCard(
-                icon: project.primaryIcon.data,
-                titleLabel: project.type.label,
-                subTitle: project.subTitle,
-                skills: project.labels,
-              ),
-            ],
-          ),
+      builder: (_, states) => ProjectContainer(
+        isHovered: states.isHovered,
+        child: Stack(
+          children: [
+            SummaryCard(
+              icon: project.primaryIcon.data,
+              titleLabel: project.type.label,
+              subTitle: project.subTitle,
+              skills: project.labels,
+            ),
+          ],
         ),
       ),
     );

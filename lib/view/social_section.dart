@@ -61,31 +61,19 @@ class _SocialBox extends StatelessWidget {
   final VoidCallback? onTap;
   final Widget child;
 
-  Color get _hoverBorderColor {
-    return ColorThemeExtension.indigoVivid.withValues(alpha: 0.4);
-  }
-
-  Border? _resolveBorder(BuildContext context) {
-    return ScaleDetector.of(context).value.isHovered
-        ? Border.all(color: _hoverBorderColor)
-        : Border.all(color: context.colorTheme.outline);
-  }
-
   @override
   Widget build(BuildContext context) {
     return ScaleDetector(
       hoverScale: 0.06,
       enabled: onTap != null,
       onPressUp: onTap,
-      child: Builder(
-        builder: (context) => BentoContainer(
+        builder: (context, states) => BentoContainer(
           width: BentoContainer.spanWidth(1/2),
           height: BentoContainer.spanHeight(1/2),
-          border: _resolveBorder(context),
+          border: states.hoverBorder(context),
           color: context.colorTheme.surface,
           child: child,
         ),
-      ),
     );
   }
 }
@@ -97,7 +85,7 @@ class _ContactMeCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScaleDetector(
       onPressUp: () => context.go('/input'),
-      child: _AwesomeContainer(
+      builder: (context, _) => _AwesomeContainer(
         child: Padding(
           padding: BentoContainer.contentPadding,
           child: Row(

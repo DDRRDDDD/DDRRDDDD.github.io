@@ -3,6 +3,12 @@ import 'package:flutter/material.dart';
 import '../extension/widget_states_extension.dart';
 import 'provider.dart';
 
+typedef ScaleDetectorBuilder =
+    Widget Function(
+      BuildContext context,
+      WidgetStates states,
+    );
+
 class ScaleDetector extends StatefulWidget {
   const ScaleDetector({
     super.key,
@@ -11,7 +17,7 @@ class ScaleDetector extends StatefulWidget {
     this.onHover,
     this.enabled = true,
     this.hoverScale = 0.03,
-    required this.child,
+    required this.builder,
   });
 
   final VoidCallback? onPressUp;
@@ -19,7 +25,7 @@ class ScaleDetector extends StatefulWidget {
   final VoidCallback? onHover;
   final bool enabled;
   final double hoverScale;
-  final Widget child;
+  final ScaleDetectorBuilder builder;
 
   static WidgetStatesController of(BuildContext context) {
     return Provider.of<WidgetStatesController>(context);
@@ -118,12 +124,12 @@ class _ScaleDetectorState extends State<ScaleDetector> {
     );
   }
 
-  Widget _buildScalableChild(_, WidgetStates states, _) {
+  Widget _buildScalableChild(BuildContext context, WidgetStates states, _) {
     return AnimatedScale(
       scale: WidgetStateProperty.resolveWith(_resolveScale).resolve(states),
       duration: const Duration(milliseconds: 150),
       curve: Curves.easeOutCubic,
-      child: widget.child,
+      child: widget.builder(context, states),
     );
   }
 }

@@ -160,46 +160,44 @@ class LinkedTagChip extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScaleDetector(
       onPressUp: () => url?.let(launchUrl),
-      child: Builder(
-        builder: (context) => AnimatedContainer(
-          duration: const Duration(milliseconds: 150),
-          curve: Curves.easeOutCubic,
-          decoration: BoxDecoration(
-            color: ScaleDetector.of(context).value.isHovered
-                ? context.colorTheme.background
-                : context.colorTheme.glassOverlay,
-            borderRadius: const BorderRadius.all(
-              Radius.circular(6),
-            ),
-            border: Border.all(
-              color: ScaleDetector.of(context).value.isHovered
-                  ? context.colorTheme.secondary
-                  : context.colorTheme.outline,
-            ),
+      builder: (context, states) => AnimatedContainer(
+        duration: const Duration(milliseconds: 150),
+        curve: Curves.easeOutCubic,
+        decoration: BoxDecoration(
+          color: states.isHovered
+              ? context.colorTheme.background
+              : context.colorTheme.glassOverlay,
+          borderRadius: const BorderRadius.all(
+            Radius.circular(6),
           ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 10,
-              vertical: 5,
-            ),
-            child: Row(
-              spacing: 6,
-              mainAxisSize: .min,
-              children: [
-                FaIcon(
-                  icon,
-                  size: 14,
+          border: Border.all(
+            color: states.isHovered
+                ? context.colorTheme.secondary
+                : context.colorTheme.outline,
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 10,
+            vertical: 5,
+          ),
+          child: Row(
+            spacing: 6,
+            mainAxisSize: .min,
+            children: [
+              FaIcon(
+                icon,
+                size: 14,
+                color: context.colorTheme.textSub,
+              ),
+              Text(
+                tag,
+                style: context.textTheme.labelMedium.copyWith(
                   color: context.colorTheme.textSub,
+                  height: 1.5,
                 ),
-                Text(
-                  tag,
-                  style: context.textTheme.labelMedium.copyWith(
-                    color: context.colorTheme.textSub,
-                    height: 1.5,
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

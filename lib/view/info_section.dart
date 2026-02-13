@@ -14,47 +14,35 @@ import '../widget/scale_detector.dart';
 class PersonalInfoBentoCard extends StatelessWidget {
   const PersonalInfoBentoCard({super.key});
 
-  Color get _hoverBorderColor {
-    return ColorThemeExtension.indigoVivid.withValues(alpha: 0.4);
-  }
-
-  Border? _resolveBorder(BuildContext context) {
-    return ScaleDetector.of(context).value.isHovered
-        ? Border.all(color: _hoverBorderColor)
-        : Border.all(color: context.colorTheme.outline);
-  }
-
   @override
   Widget build(BuildContext context) {
     return ScaleDetector(
-      child: Builder(
-        builder: (context) => BentoContainer(
-          color: context.colorTheme.surface,
-          border: _resolveBorder(context),
-          child: Column(
-            crossAxisAlignment: .start,
-            children: [
-              Text(
-                Constraints.activitiesAndQualifications.label,
-                style: context.textTheme.timelineTitle.copyWith(
-                  color: context.colorTheme.textMain,
-                  fontVariations: const [FontVariation.weight(900)],
-                ),
+      builder: (context, states) => BentoContainer(
+        color: context.colorTheme.surface,
+        border: states.hoverBorder(context),
+        child: Column(
+          crossAxisAlignment: .start,
+          children: [
+            Text(
+              Constraints.activitiesAndQualifications.label,
+              style: context.textTheme.timelineTitle.copyWith(
+                color: context.colorTheme.textMain,
+                fontVariations: const [FontVariation.weight(900)],
               ),
-              const Gap(9),
-              _LinkInfoRow(
-                label: Constraints.openSourceContribution.label,
-                content: Constraints.webDriverManagerPR.label,
-                url: 'https://github.com/bonigarcia/webdrivermanager/pull/1259',
-                icon: FontAwesomeIcons.githubAlt,
-              ),
-              _InfoRow(
-                label: Constraints.certification.label,
-                content: Constraints.infoProcessingIndustryEngineer.label,
-                icon: FontAwesomeIcons.stamp,
-              ),
-            ],
-          ),
+            ),
+            const Gap(9),
+            _LinkInfoRow(
+              label: Constraints.openSourceContribution.label,
+              content: Constraints.webDriverManagerPR.label,
+              url: 'https://github.com/bonigarcia/webdrivermanager/pull/1259',
+              icon: FontAwesomeIcons.githubAlt,
+            ),
+            _InfoRow(
+              label: Constraints.certification.label,
+              content: Constraints.infoProcessingIndustryEngineer.label,
+              icon: FontAwesomeIcons.stamp,
+            ),
+          ],
         ),
       ),
     );
@@ -68,7 +56,6 @@ class _LinkInfoRow extends StatelessWidget {
     required this.url,
     required this.icon,
   });
-
 
   final String label;
   final String content;
@@ -146,9 +133,7 @@ class _InfoRow extends StatelessWidget {
                   style: context.textTheme.labelMedium.copyWith(
                     height: 1.2,
                     fontVariations: const [FontVariation.weight(600)],
-                    decoration: isHighlighted
-                        ? TextDecoration.underline
-                        : null,
+                    decoration: isHighlighted ? TextDecoration.underline : null,
                     decorationColor: isHighlighted
                         ? ColorThemeExtension.indigoVivid
                         : null,

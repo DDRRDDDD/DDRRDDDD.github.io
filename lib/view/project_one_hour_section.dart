@@ -19,37 +19,35 @@ class ProjectOneHourSection extends StatelessWidget {
 
     return ScaleDetector(
       onPressDown: () => context.go('/project/one-hour'),
-      child: Builder(
-        builder: (context) => ProjectContainer(
-          isHovered: ScaleDetector.of(context).value.isHovered,
-          child: Stack(
-            children: [
-              Positioned.fill(
-                child: Image.asset(
-                  project.bannerAssetPath!,
-                  cacheHeight: BentoContainer.spanHeight(2).cacheSize(context),
-                  fit: .cover,
+      builder: (context, states) => ProjectContainer(
+        isHovered: states.isHovered,
+        child: Stack(
+          children: [
+            Positioned.fill(
+              child: Image.asset(
+                project.bannerAssetPath!,
+                cacheHeight: BentoContainer.spanHeight(2).cacheSize(context),
+                fit: .cover,
+              ),
+            ),
+            Positioned.fill(
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  gradient: context.gradientTheme.overlay,
                 ),
               ),
-              Positioned.fill(
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    gradient: context.gradientTheme.overlay,
-                  ),
-                ),
-              ),
-              SummaryCard(
-                icon: project.primaryIcon.data,
-                personnel: project.teamSummaries?.length,
-                contribution: project.myContribution,
-                titleLabel: project.type.label,
-                title: project.title,
-                subTitle: project.subTitle,
-                description: project.description,
-                skills: project.labels,
-              ),
-            ],
-          ),
+            ),
+            SummaryCard(
+              icon: project.primaryIcon.data,
+              personnel: project.teamSummaries?.length,
+              contribution: project.myContribution,
+              titleLabel: project.type.label,
+              title: project.title,
+              subTitle: project.subTitle,
+              description: project.description,
+              skills: project.labels,
+            ),
+          ],
         ),
       ),
     );
