@@ -4,6 +4,7 @@ import './src/font_tool.dart';
 void main(List<String> args) {
   final Arguments arguments = Arguments.from(args);
 
-  FontTool.fromType(ProcessType.compress)
+  FontTool
+      .fromType(arguments.type)
       .process(arguments.inputPath, arguments.outputPath);
 }

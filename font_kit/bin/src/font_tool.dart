@@ -42,7 +42,9 @@ abstract class FontTool {
 
   void process(String inputPath, String outputPath) {
     try {
-      _process(inputPath, outputPath).then(exit);
+      _process(inputPath, outputPath)
+          .then(exit)
+          .catchError((_) => exit(1));
     } catch (exception) {
       stderr.writeln('\n 에러 발생: $exception');
       exit(1);
