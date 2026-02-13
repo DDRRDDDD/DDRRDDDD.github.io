@@ -49,35 +49,8 @@ abstract class FontTool {
   }
 
   void _onProcessError(Object exception) {
-    stderr.writeln('작업 중 치명적 에러 발생: $exception');
+    stderr.writeln('작업 중 에러 발생: $exception');
     exit(1);
-  }
-
-  /// 프로세스 실행 결과가 실패(exitCode != 0)일 경우 로그 파일을 생성합니다.
-  Future<void> _handleProcessResult(ProcessResult result, List<String> args) async {
-    if (result.exitCode == 0) return;
-
-    final String timestamp = DateTime.now().toIso8601String().replaceAll(':', '-');
-    final String logFileName = 'font_tool_error_$timestamp.log';
-
-    final logContent = StringBuffer()
-      ..writeln('--- FontTool Error Log ---')
-      ..writeln('Time: ${DateTime.now()}')
-      ..writeln('Command: $command ${args.join(' ')}')
-      ..writeln('Exit Code: ${result.exitCode}')
-      ..writeln('\n[STDOUT]\n${result.stdout}')
-      ..writeln('\n[STDERR]\n${result.stderr}');
-
-    try {
-      final logFile = File(logFileName);
-      await logFile.writeAsString(logContent.toString());
-      stderr.writeln('\n에러 발생! 로그 파일이 생성되었습니다: ${logFile.absolute.path}');
-    } catch (e) {
-      stderr.writeln('로그 파일 작성 실패: $e');
-    }
-
-    // 에러 발생 시 프로세스 종료
-    exit(result.exitCode);
   }
 }
 
@@ -85,13 +58,13 @@ class Woff2Compressor extends FontTool {
   @override
   Future<void> _process(String inputPath, String outputPath) async {
     final args = [
-      '-m', 'fontTools.ttLib.woff2', 'compress',
+      '-m', 'fontTools.ttLib.woff2',
+      'compress',
       '-o', outputPath,
       inputPath,
     ];
 
-    final result = await Process.run(command, args, runInShell: true);
-    await _handleProcessResult(result, args);
+    await Process.run(command, args, runInShell: true);
   }
 }
 
@@ -117,8 +90,7 @@ class FontSubsetProcessor extends FontTool with TextFileMixin, GlyphTextMixin {
       ..._fontToolsOptions,
     ];
 
-    final result = await Process.run(command, args, runInShell: true);
-    await _handleProcessResult(result, args);
+    await Process.run(command, args, runInShell: true);
   }
 
   @override
