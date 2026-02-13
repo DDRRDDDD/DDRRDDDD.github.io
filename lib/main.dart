@@ -47,6 +47,7 @@ class MyPortfolioApp extends StatelessWidget {
         themeMode: brightness.themeMode,
         theme: ThemeData(
           fontFamily: FontManager.notoSansFamily,
+          fontFamilyFallback: [FontManager.notoSansEmojiFamily],
           splashFactory: NoSplash.splashFactory,
           scaffoldBackgroundColor: Colors.transparent,
           extensions: [

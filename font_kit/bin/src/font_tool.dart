@@ -40,17 +40,20 @@ abstract class FontTool {
 
   void _dispose() {}
 
-  void process(String inputPath, String outputPath) {
-    try {
-      _process(inputPath, outputPath)
-          .then(exit)
-          .catchError((_) => exit(1));
-    } catch (exception) {
-      stderr.writeln('\n 에러 발생: $exception');
+  Future<void> process(String inputPath, String outputPath) async {
+    await _process(inputPath, outputPath)
+        .catchError((exception) {
+      print('에러 발생: $exception');
       exit(1);
-    } finally {
-      _dispose();
-    }
+    }).whenComplete(_dispose);
+    // try {
+    //   _process(inputPath, outputPath);
+    // } catch (exception) {
+    //   print('에러 발생: $exception');
+    //   exit(1);
+    // } finally {
+    //   _dispose();
+    // }
   }
 }
 
@@ -89,7 +92,7 @@ class FontSubsetProcessor extends FontTool with TextFileMixin, GlyphTextMixin {
     };
     final File textFile = await writeTempFile(content);
 
-    return Process.run(
+    final int result = await Process.run(
       runInShell: true,
       command,
       [
@@ -103,11 +106,12 @@ class FontSubsetProcessor extends FontTool with TextFileMixin, GlyphTextMixin {
     ).then((result) {
       return result.exitCode;
     });
+    return result;
   }
 
   @override
   void _dispose() {
-    unawaited(cleanUp());
+    cleanUp();
   }
 }
 

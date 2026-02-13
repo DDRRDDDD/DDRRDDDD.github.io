@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:markdown/markdown.dart' as md;
 
+import '../datasource/font_manager.dart';
 import '../extension/markdown_extension.dart';
 import '../extension/theme_extension.dart';
 import 'color_theme.dart';
@@ -85,7 +86,7 @@ class MarkdownTheme {
       ),
 
       code: textTheme.bodyRegular.copyWith(
-        fontFamily: 'JetBrainsMono',
+        fontFamily: FontManager.jetBrainsMonoFamily,
         color: colorTheme.textSub,
         fontWeight: FontWeight.w500,
       ),
