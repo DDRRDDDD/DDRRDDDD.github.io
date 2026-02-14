@@ -32,11 +32,9 @@ abstract class FontTool {
     };
   }
 
-  String get command => Platform.isWindows ? 'python' : 'python3';
-
-  Future<void> _process(String inputPath, String outputPath);
-
-  void _dispose() {}
+  String get command {
+    return Platform.isWindows ? 'python' : 'python3';
+  }
 
   Future<void> process(String inputPath, String outputPath) async {
     try {
@@ -52,6 +50,10 @@ abstract class FontTool {
     stderr.writeln('작업 중 에러 발생: $exception');
     exit(1);
   }
+
+  Future<void> _process(String inputPath, String outputPath);
+
+  void _dispose() {}
 }
 
 class Woff2Compressor extends FontTool {
