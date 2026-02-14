@@ -1,37 +1,33 @@
+import 'package:path/path.dart' as p;
 import 'package:vector_graphics/vector_graphics.dart';
 
 import '../extension/common_extension.dart';
+import 'asset_finder.dart';
 
 typedef SvgEntry = MapEntry<String, PictureInfo>;
 
-class SvgManager {
-  static SvgManager? _instance;
+class SkillSvgManager extends AssetFileManager<PictureInfo> {
+  static const String skillAssetPath = 'assets/skill';
 
-  final Map<String, PictureInfo> _svgCache;
+  static SkillSvgManager? _instance;
 
-  SvgManager._(this._svgCache);
+  const SkillSvgManager._(super.base);
 
-  factory SvgManager() {
-    if (_instance != null) {
-      return _instance!;
-    }
-
-    throw Exception(
-      '[SvgManager] 초기화되지 않았습니다. '
-      'main()에서 SvgManager.init()을 먼저 호출해주세요.',
-    );
+  factory SkillSvgManager() {
+    return _instance ?? throwUninitialized(SkillSvgManager);
   }
 
-  static Future<void> init(List<String> allowPaths) async {
+  static Future<void> init() async {
     if (_instance != null) {
       return;
     }
 
-    _instance = await allowPaths
+    _instance = await AssetFinder()
+        .where((path) => path.startsWith(skillAssetPath))
         .map(_loadPicture)
         .let(Future.wait)
         .then(Map.fromEntries)
-        .then(SvgManager._);
+        .then(SkillSvgManager._);
   }
 
   static Future<SvgEntry> _loadPicture(String svgPath) async {
@@ -40,7 +36,34 @@ class SvgManager {
     return MapEntry(svgPath, value);
   }
 
-  PictureInfo? lookup(String path) {
-    return _svgCache.lookup(path);
+  PictureInfo pictureInfo(String key) {
+    return requiredLookup(key);
+  }
+}
+
+enum SkillSize {
+  small(size: 44.0, suffix: 'sm'),
+  medium(size: 52.0, suffix: 'md'),
+  large(size: 60.0, suffix: 'lg')
+  ;
+
+  final double size;
+  final String suffix;
+
+  const SkillSize({
+    required this.size,
+    required this.suffix,
+  });
+
+  factory SkillSize.fromPath(String path) {
+    return SkillSize.values.firstWhere(
+      (size) => size.isMatch(path),
+      orElse: () => SkillSize.small,
+    );
+  }
+
+  bool isMatch(String path) {
+    final String fileName = p.basenameWithoutExtension(path);
+    return fileName.toLowerCase().endsWith(suffix);
   }
 }

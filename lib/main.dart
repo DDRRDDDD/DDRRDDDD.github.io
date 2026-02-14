@@ -12,7 +12,6 @@ import 'theme/code_syntax_theme.dart';
 import 'theme/color_theme.dart';
 import 'theme/gradient_theme.dart';
 import 'theme/text_theme.dart';
-import 'view/skill_section.dart';
 import 'widget/grid_dot_background.dart';
 import 'widget/theme_mode_provider.dart';
 
@@ -27,7 +26,7 @@ Future<void> main() async {
 
   await Future.wait([
     RiveFileManager.init(),
-    SvgManager.init(SkillOptions.allAssetPaths),
+    SkillSvgManager.init(),
   ]);
 
   runApp(const MyPortfolioApp());
@@ -69,3 +68,6 @@ class MyPortfolioApp extends StatelessWidget {
 /// -> 포트폴리오의 수정이 필요할 시 파일의 추가/삭제만으로 포토폴리오를 핸들링 하기 위함
 /// -> 기존은 asset 파일을 추가하면 코드를 추가해야 함 (비효율)
 /// -> 마크다운, Skill Ball 추가를 유동적으로 가져갈 수 있음
+
+/// 2. 이메일 매니저 구현
+/// 3. 상황봐서 md/foo.png => webp (상황: 크기가 많이 줄어들면)

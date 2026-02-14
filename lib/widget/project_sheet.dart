@@ -94,7 +94,7 @@ class _ProjectSheetState extends State<ProjectSheet> {
               contentMargin: ProjectSheet.contentSpacing,
               color: context.colorTheme.textSub,
               milestones: AssetFinder()
-                  .selectAssets(widget.project.matchesMarkdown)
+                  .where(widget.project.matchesMarkdown)
                   .map(MilestoneMarkdown.new)
                   .toList(),
             ),

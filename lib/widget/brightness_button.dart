@@ -3,6 +3,7 @@ import 'package:rive/rive.dart';
 
 import '../datasource/rive_file_manager.dart';
 import '../extension/brightness_extension.dart';
+import '../extension/common_extension.dart';
 import '../extension/theme_extension.dart';
 import '../extension/widget_states_extension.dart';
 import '../theme/color_theme.dart';
@@ -26,7 +27,9 @@ class _ThemeToggleButtonState extends State<ThemeToggleButton> {
   @override
   void initState() {
     super.initState();
-    _controller = RiveWidgetController(RiveFileManager().themeToggle);
+    _controller = RiveFileManager()
+        .file('theme_toggle.riv')
+        .let(RiveWidgetController.new);
     _viewModel = _controller.dataBind(DataBind.auto());
   }
 

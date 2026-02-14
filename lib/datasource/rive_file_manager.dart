@@ -1,23 +1,21 @@
+import 'dart:async';
+
 import 'package:rive/rive.dart';
 
-class RiveFileManager {
+import '../extension/common_extension.dart';
+import 'asset_finder.dart';
+
+typedef RiveFileEntry = MapEntry<String, File>;
+
+class RiveFileManager extends AssetFileManager<File> {
+  static const String riveAssetPath = 'assets/rive';
+
   static RiveFileManager? _instance;
 
-  final File themeToggle;
-
-  const RiveFileManager._({
-    required this.themeToggle,
-  });
+  const RiveFileManager._(super.base);
 
   factory RiveFileManager() {
-    if (_instance != null) {
-      return _instance!;
-    }
-
-    throw Exception(
-      '[RiveFileManager] 초기화되지 않았습니다. '
-      'main()에서 RiveFileManager.init()을 먼저 호출해주세요.',
-    );
+    return _instance ?? throwUninitialized(RiveFileManager);
   }
 
   static Future<void> init() async {
@@ -29,12 +27,25 @@ class RiveFileManager {
       await RiveNative.init();
     }
 
-    final List<File?> files = await Future.wait([
-      File.asset('assets/rive/theme_toggle.riv', riveFactory: Factory.rive),
-    ]);
+    _instance = await AssetFinder()
+        .where((path) => path.startsWith(riveAssetPath))
+        .map(_loadEntry)
+        .let(Future.wait)
+        .then(Map.fromEntries)
+        .then(RiveFileManager._);
+  }
 
-    _instance = RiveFileManager._(
-      themeToggle: files.elementAt(0)!,
-    );
+  static Future<MapEntry<String, File>> _loadEntry(String path) async {
+    try {
+      final File? file = await File.asset(path, riveFactory: Factory.rive);
+      return MapEntry(path, file!);
+    }
+    catch (exception) {
+      throw StateError('[$path] 로드 실패: $exception');
+    }
+  }
+
+  File file(String key) {
+    return requiredLookup('$riveAssetPath/$key');
   }
 }

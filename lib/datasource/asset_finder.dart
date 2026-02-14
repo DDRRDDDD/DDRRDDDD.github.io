@@ -1,29 +1,27 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/services.dart';
 
 import '../extension/common_extension.dart';
 
 typedef AssetSelector = bool Function(String path);
 
-class AssetFinder {
+Never throwUninitialized(Type type) {
+  throw StateError('[$type]가 초기화되지 않았습니다.');
+}
+
+class AssetFinder extends DelegatingList<String>
+    with NonGrowableListMixin<String> {
+
   static AssetFinder? _instance;
 
-  final List<String> _listAssets;
-
-  const AssetFinder._(this._listAssets);
+  const AssetFinder._(super.base);
 
   factory AssetFinder._fromManifest(AssetManifest manifest) {
     return manifest.listAssets().let(AssetFinder._);
   }
 
   factory AssetFinder() {
-    if (_instance != null) {
-      return _instance!;
-    }
-
-    throw Exception(
-      '[AssetManager] 초기화되지 않았습니다. '
-      'main()에서 AssetManager.init()을 먼저 호출해주세요.',
-    );
+    return _instance ?? throwUninitialized(AssetFinder);
   }
 
   static Future<void> init() async {
@@ -35,12 +33,10 @@ class AssetFinder {
         .loadFromAssetBundle(rootBundle)
         .then(AssetFinder._fromManifest);
   }
+}
 
-  List<String> get listAssets {
-    return List.unmodifiable(_listAssets);
-  }
 
-  List<String> selectAssets(AssetSelector selector) {
-    return listAssets.where(selector).toList();
-  }
+abstract class AssetFileManager<V> extends DelegatingMap<String, V>
+    with UnmodifiableMapMixin<String, V> {
+  const AssetFileManager(super.base);
 }

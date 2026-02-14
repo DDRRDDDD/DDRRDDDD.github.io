@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:font_kit/font_kit.dart';
 
@@ -9,10 +10,12 @@ import '../widget/bouncing_ball_container.dart';
 class SkillSection extends StatelessWidget {
   const SkillSection({super.key});
 
-  BallOption _toSkillBallOption(SkillOptions skill) {
+  BallOption _toSkillBallOption(SvgEntry entry) {
+    final double scale = BouncingBallController.defaultScale;
+
     return BallOption(
-      pictureInfo: SvgManager().lookup(skill.assetPath),
-      width: skill.size / BouncingBallController.defaultScale,
+      pictureInfo: entry.value,
+      width: SkillSize.fromPath(entry.key).size / scale,
       color: Colors.white,
     );
   }
@@ -29,10 +32,9 @@ class SkillSection extends StatelessWidget {
           LayoutBuilder(
             builder: (_, constraints) => BouncingBallContainer(
               containerSize: constraints.biggest,
-              ballOptions: SkillOptions.values
+              ballOptions: SkillSvgManager().entries
                   .map(_toSkillBallOption)
-                  .toList()
-                ..shuffle(),
+                  .shuffled(),
             ),
           ),
           Padding(
@@ -68,46 +70,46 @@ class SkillSection extends StatelessWidget {
   }
 }
 
-enum SkillOptions {
-  copilot(_smallSize),
-  css(_smallSize),
-  figma(_smallSize),
-  gemini(_smallSize),
-  githubactions(_smallSize),
-  html(_smallSize),
-  js(_smallSize),
-  mariadb(_smallSize),
-  mysql(_smallSize),
-  nginx(_smallSize),
-  selenium(_smallSize),
-  slack(_smallSize),
-  ubuntu(_smallSize),
-  rive(_smallSize),
-  docker(_mediumSize),
-  jenkins(_mediumSize),
-  firebase(_mediumSize),
-  supabase(_mediumSize),
-  github(_mediumSize),
-  riverpod(_largeSize),
-  dart(_largeSize),
-  flutter(_largeSize),
-  java(_largeSize),
-  spring(_largeSize),
-  ;
-
-  static const double _largeSize = 60.0;
-  static const double _mediumSize = 52.0;
-  static const double _smallSize = 44.0;
-
-  final double size;
-
-  static List<String> get allAssetPaths {
-    return SkillOptions.values.map((skill) => skill.assetPath).toList();
-  }
-
-  String get assetPath {
-    return 'assets/skill/$name.svg';
-  }
-
-  const SkillOptions(this.size);
-}
+// enum SkillOptions {
+//   copilot(_smallSize),
+//   css(_smallSize),
+//   figma(_smallSize),
+//   gemini(_smallSize),
+//   githubactions(_smallSize),
+//   html(_smallSize),
+//   js(_smallSize),
+//   mariadb(_smallSize),
+//   mysql(_smallSize),
+//   nginx(_smallSize),
+//   selenium(_smallSize),
+//   slack(_smallSize),
+//   ubuntu(_smallSize),
+//   rive(_smallSize),
+//   docker(_mediumSize),
+//   jenkins(_mediumSize),
+//   firebase(_mediumSize),
+//   supabase(_mediumSize),
+//   github(_mediumSize),
+//   riverpod(_largeSize),
+//   dart(_largeSize),
+//   flutter(_largeSize),
+//   java(_largeSize),
+//   spring(_largeSize),
+//   ;
+//
+//   static const double _largeSize = 60.0;
+//   static const double _mediumSize = 52.0;
+//   static const double _smallSize = 44.0;
+//
+//   final double size;
+//
+//   static List<String> get allAssetPaths {
+//     return SkillOptions.values.map((skill) => skill.assetPath).toList();
+//   }
+//
+//   String get assetPath {
+//     return 'assets/skill/$name.svg';
+//   }
+//
+//   const SkillOptions(this.size);
+// }

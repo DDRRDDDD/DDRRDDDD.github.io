@@ -100,20 +100,18 @@ class PhysicsBallPainter extends CustomPainter {
           ..style = PaintingStyle.fill,
       );
 
-      if (option.pictureInfo != null) {
-        canvas.save();
+      canvas.save();
 
-        final double iconTargetSize = radius * 2 * 0.7; // 공 지름의 70%
-        final double svgWidth = option.pictureInfo!.size.width;
+      final double iconTargetSize = radius * 2 * 0.7; // 공 지름의 70%
+      final double svgWidth = option.pictureInfo!.size.width;
 
-        canvas.translate(centerOffset.dx, centerOffset.dy);
-        canvas.rotate(body.angle);
-        canvas.scale(iconTargetSize / svgWidth);
-        canvas.translate(-svgWidth / 2, -svgWidth / 2);
-        canvas.drawPicture(option.pictureInfo!.picture);
+      canvas.translate(centerOffset.dx, centerOffset.dy);
+      canvas.rotate(body.angle);
+      canvas.scale(iconTargetSize / svgWidth);
+      canvas.translate(-svgWidth / 2, -svgWidth / 2);
+      canvas.drawPicture(option.pictureInfo!.picture);
 
-        canvas.restore();
-      }
+      canvas.restore();
     }
   }
 }
@@ -331,12 +329,12 @@ class BlastQueryCallback extends QueryCallback {
 class BallOption {
   final double width;
   final Color color;
-  final PictureInfo? pictureInfo;
+  final PictureInfo pictureInfo;
 
   const BallOption({
     required this.width,
     required this.color,
-    this.pictureInfo,
+    required this.pictureInfo,
   });
 
   double get radius {
