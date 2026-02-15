@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:rive/rive.dart';
 
 import '../datasource/rive_file_manager.dart';
 import '../extension/common_extension.dart';
-import '../extension/theme_extension.dart';
 
-class ContactFormCheck extends StatefulWidget {
-  const ContactFormCheck({super.key});
+class CheckmarkSplash extends StatefulWidget {
+  const CheckmarkSplash({super.key});
 
   @override
-  State<ContactFormCheck> createState() => _ContactFormCheckState();
+  State<CheckmarkSplash> createState() => _CheckmarkSplashState();
 }
 
-class _ContactFormCheckState extends State<ContactFormCheck> {
+class _CheckmarkSplashState extends State<CheckmarkSplash> {
   late RiveWidgetController _controller;
 
   @override
@@ -21,6 +21,12 @@ class _ContactFormCheckState extends State<ContactFormCheck> {
     _controller = RiveFileManager()
         .file('checkmark.riv')
         .let(RiveWidgetController.new);
+
+    Future.delayed(const Duration(seconds: 2), () {
+      if (mounted) {
+        context.pop();
+      }
+    });
   }
 
   @override
@@ -31,16 +37,13 @@ class _ContactFormCheckState extends State<ContactFormCheck> {
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-      backgroundColor: context.colorTheme.surfaceAlt,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(24)),
-      ),
+    return Padding(
+      padding: const EdgeInsets.all(20),
       child: SizedBox.square(
-        dimension: 160,
+        dimension: 320,
         child: RiveWidget(
           controller: _controller,
-          fit: Fit.cover,
+          fit: Fit.contain,
         ),
       ),
     );
