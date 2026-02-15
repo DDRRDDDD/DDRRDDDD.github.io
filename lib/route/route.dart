@@ -9,6 +9,7 @@ import '../view/bento_grid_container.dart';
 import '../view/bento_grid_scaffold.dart';
 import '../view/main_grid.dart';
 import '../view/project_grid.dart';
+import '../widget/checkmark_splash.dart';
 import '../widget/contact_form_dialog.dart';
 import '../widget/project_sheet.dart';
 import 'dialog_page.dart';
@@ -35,9 +36,12 @@ final GoRouter router = GoRouter(
                 GoRoute(
                   path: 'input',
                   parentNavigatorKey: rootNavigatorKey,
-                  pageBuilder: (_, state) => DialogPage(
+                  pageBuilder: (_, state) => FlowDialogPage(
                     key: state.pageKey,
-                    child: ContactFormDialog(),
+                    children: [
+                      ContactFormDialog(),
+                      CheckmarkSplash(),
+                    ]
                   ),
                 ),
               ],
