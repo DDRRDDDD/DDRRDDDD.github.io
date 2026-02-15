@@ -64,10 +64,9 @@ class MyPortfolioApp extends StatelessWidget {
 
 // https://ddrrdddd.github.io/
 
-/// 1. AssetFinder를 사용해서 asset을 사용하는 클래스 리펙토링
-/// -> 포트폴리오의 수정이 필요할 시 파일의 추가/삭제만으로 포토폴리오를 핸들링 하기 위함
-/// -> 기존은 asset 파일을 추가하면 코드를 추가해야 함 (비효율)
-/// -> 마크다운, Skill Ball 추가를 유동적으로 가져갈 수 있음
+/// 이메일 매니저 구현
+/// -> 이메일 보내기 완료 후 checkmark.riv 연결
 
-/// 2. 이메일 매니저 구현
-/// 3. 상황봐서 md/foo.png => webp (상황: 크기가 많이 줄어들면)
+/// 마크다운 pre load 구현
+/// -> 프리로드 구현 후 아직도 시트가 버벅이면 AnimatedFade? 다시 구현
+

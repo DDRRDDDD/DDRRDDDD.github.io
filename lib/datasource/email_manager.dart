@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:envied/envied.dart';
 import 'package:http/http.dart' as http;
 
@@ -6,22 +7,26 @@ import '../extension/common_extension.dart';
 part 'email_manager.g.dart';
 
 @Envied(path: 'config/.env')
-class EmailManager {
-  static final EmailManager _instance = EmailManager._();
+class EmailService {
+  static final RegExp emailRegex = RegExp(
+    r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
+  );
+
+  static final EmailService _instance = EmailService._();
   static final Uri _baseUri = Uri.https('api.emailjs.com');
 
   @EnviedField(varName: 'SERVICE_ID', obfuscate: true)
-  static final String _serviceId = _EmailManager._serviceId;
+  static final String _serviceId = _EmailService._serviceId;
 
   @EnviedField(varName: 'TEMPLATE_ID', obfuscate: true)
-  static final String _templateId = _EmailManager._templateId;
+  static final String _templateId = _EmailService._templateId;
 
   @EnviedField(varName: 'PUBLIC_KEY', obfuscate: true)
-  static final String _userId = _EmailManager._userId;
+  static final String _userId = _EmailService._userId;
 
-  const EmailManager._();
+  const EmailService._();
 
-  factory EmailManager() {
+  factory EmailService() {
     return _instance;
   }
 

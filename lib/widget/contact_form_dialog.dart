@@ -2,11 +2,72 @@ import 'package:flutter/material.dart';
 import 'package:font_kit/font_kit.dart';
 import 'package:go_router/go_router.dart';
 
+import '../datasource/email_manager.dart';
 import '../extension/theme_extension.dart';
 import 'bento_container.dart';
 
-class ContactFormDialog extends StatelessWidget {
+class ContactFormDialog extends StatefulWidget {
   const ContactFormDialog({super.key});
+
+  @override
+  State<ContactFormDialog> createState() {
+    return _ContactFormDialogState();
+  }
+}
+
+class _ContactFormDialogState extends State<ContactFormDialog> {
+  late final GlobalKey<FormState> _formKey;
+
+  String title = '';
+  String email = '';
+  String message = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _formKey = GlobalKey<FormState>();
+  }
+
+  String? _validateTitle(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return Constraints.inputTitle.label;
+    }
+
+    return null;
+  }
+
+  String? _validateEmail(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return Constraints.inputEmail.label;
+    }
+
+    if (!EmailService.emailRegex.hasMatch(value)) {
+      return Constraints.invalidEmailFormat.label;
+    }
+
+    return null;
+  }
+
+  String? _validateMessage(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return Constraints.inputMessage.label;
+    }
+
+    return null;
+  }
+
+  void _method() {
+    if(_formKey.currentState?.validate() ?? false) {
+      _formKey.currentState?.save();
+      final EmailPayload payload = EmailPayload(
+        title: title,
+        fromEmail: email,
+        message: message,
+      );
+      EmailService().sendEmail(payload);
+      context.pop(); // TODO checkmark.riv
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,70 +80,82 @@ class ContactFormDialog extends StatelessWidget {
             vertical: 24,
             horizontal: 20,
           ),
-          child: Column(
-            mainAxisAlignment: .center,
-            spacing: 12,
-            children: [
-              TextField(
-                decoration: InputDecoration(
-                  labelText: Constraints.title.label,
-                ),
-              ),
-              TextField(
-                decoration: InputDecoration(
-                  labelText: Constraints.email.label,
-                ),
-              ),
-              Expanded(
-                child: TextField(
-                  expands: true,
-                  maxLines: null,
-                  textAlignVertical: .top,
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: .center,
+              spacing: 12,
+              children: [
+                TextFormField(
+                  initialValue: title,
+                  onSaved: (value) => title = value ?? '',
+                  validator: _validateTitle,
                   decoration: InputDecoration(
-                    alignLabelWithHint: true,
-                    labelText: Constraints.inquiryContent.label,
+                    labelText: Constraints.title.label,
                   ),
                 ),
-              ),
-              Row(
-                mainAxisAlignment: .end,
-                spacing: 8,
-                children: [
-                  TextButton(
-                    onPressed: context.pop,
-                    style: TextButton.styleFrom(
-                      padding: const EdgeInsets.all(17),
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(8)),
-                      ),
-                      foregroundColor: context.colorTheme.textMain,
-                    ),
-                    child: Text(
-                      Constraints.cancel.label,
-                      style: context.textTheme.heroBadge,
+                TextFormField(
+                  initialValue: email,
+                  onSaved: (value) => email = value ?? '',
+                  validator: _validateEmail,
+                  decoration: InputDecoration(
+                    labelText: Constraints.email.label,
+                  ),
+                ),
+                Expanded(
+                  child: TextFormField(
+                    expands: true,
+                    maxLines: null,
+                    textAlignVertical: .top,
+                    initialValue: message,
+                    onSaved: (value) => message = value ?? '',
+                    validator: _validateMessage,
+                    decoration: InputDecoration(
+                      alignLabelWithHint: true,
+                      labelText: Constraints.inquiryContent.label,
                     ),
                   ),
-                  ElevatedButton(
-                    onPressed: context.pop,
-                    style: ElevatedButton.styleFrom(
-                      elevation: 0,
-                      padding: const EdgeInsets.all(16),
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(8)),
+                ),
+                Row(
+                  mainAxisAlignment: .end,
+                  spacing: 8,
+                  children: [
+                    TextButton(
+                      onPressed: context.pop,
+                      style: TextButton.styleFrom(
+                        padding: const EdgeInsets.all(17),
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(8)),
+                        ),
+                        foregroundColor: context.colorTheme.textMain,
                       ),
-                      backgroundColor: context.colorTheme.secondary,
-                      foregroundColor: Colors.white,
-                    ),
-                    child: Text(
-                      Constraints.send.label,
-                      style: context.textTheme.buttonText.copyWith(
-                        letterSpacing: 1.0,
+                      child: Text(
+                        Constraints.cancel.label,
+                        style: context.textTheme.heroBadge,
                       ),
                     ),
-                  ),
-                ],
-              ),
-            ],
+                    ElevatedButton(
+                      onPressed: _method,
+                      style: ElevatedButton.styleFrom(
+                        elevation: 0,
+                        padding: const EdgeInsets.all(16),
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(8)),
+                        ),
+                        backgroundColor: context.colorTheme.secondary,
+                        foregroundColor: Colors.white,
+                      ),
+                      child: Text(
+                        Constraints.send.label,
+                        style: context.textTheme.buttonText.copyWith(
+                          letterSpacing: 1.0,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -112,6 +185,9 @@ class _InputFieldContainer extends StatelessWidget {
           labelStyle: context.textTheme.heroBadge.copyWith(
             color: context.colorTheme.textSub,
           ),
+          errorStyle: context.textTheme.labelMedium.copyWith(
+            color: Colors.redAccent,
+          ),
           floatingLabelStyle: context.textTheme.heroBadge.copyWith(
             color: context.colorTheme.textSub,
           ),
@@ -139,7 +215,6 @@ class _InputFieldContainer extends StatelessWidget {
             ),
             borderSide: const BorderSide(
               color: Colors.redAccent,
-              width: 1.0,
             ),
           ),
           focusedErrorBorder: OutlineInputBorder(

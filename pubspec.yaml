@@ -60,9 +60,6 @@ flutter:
   uses-material-design: true
 
   assets:
-    - path: assets/icon/
-      transformers:
-        - package: vector_graphics_compiler
     - path: assets/skill/
       transformers:
         - package: vector_graphics_compiler

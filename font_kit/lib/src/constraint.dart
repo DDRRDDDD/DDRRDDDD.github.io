@@ -60,6 +60,11 @@ enum Constraints with GlyphLabelMixin {
   cancel('취소'),
   send('보내기'),
 
+  inputTitle('제목을 입력해주세요.'),
+  inputEmail('이메일을 입력해주세요.'),
+  inputMessage('문의 내용을 입력해주세요.'),
+  invalidEmailFormat('이메일 형식이 올바르지 않아요.'),
+
   // Project Sheet
   category('분류'),
   role('역할'),
