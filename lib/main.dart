@@ -64,9 +64,6 @@ class MyPortfolioApp extends StatelessWidget {
 
 // https://ddrrdddd.github.io/
 
-/// 이메일 매니저 구현
-/// -> 이메일 보내기 완료 후 checkmark.riv 연결
-
 /// 마크다운 pre load 구현
 /// -> 프리로드 구현 후 아직도 시트가 버벅이면 AnimatedFade? 다시 구현
 

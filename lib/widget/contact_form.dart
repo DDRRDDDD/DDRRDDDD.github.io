@@ -8,16 +8,16 @@ import '../extension/theme_extension.dart';
 import '../theme/text_field_theme.dart';
 import 'bento_container.dart';
 
-class ContactFormDialog extends StatefulWidget {
-  const ContactFormDialog({super.key});
+class ContactForm extends StatefulWidget {
+  const ContactForm({super.key});
 
   @override
-  State<ContactFormDialog> createState() {
-    return _ContactFormDialogState();
+  State<ContactForm> createState() {
+    return _ContactFormState();
   }
 }
 
-class _ContactFormDialogState extends State<ContactFormDialog> {
+class _ContactFormState extends State<ContactForm> {
   late final GlobalKey<FormState> _formKey;
 
   String title = '';
@@ -70,11 +70,8 @@ class _ContactFormDialogState extends State<ContactFormDialog> {
       message: message,
     );
 
-    await EmailService().sendEmail(payload);
-
-    if (mounted) {
-      WoltModalSheet.of(context).showNext();
-    }
+    EmailService().sendEmail(payload);
+    WoltModalSheet.of(context).showNext();
   }
 
   @override
