@@ -4,9 +4,8 @@ import 'package:font_kit/font_kit.dart';
 
 import '../extension/theme_extension.dart';
 import '../extension/widget_states_extension.dart';
-import '../theme/color_theme.dart';
-import '../widget/bento_container.dart';
 import '../widget/badge_icon.dart';
+import '../widget/bento_container.dart';
 import '../widget/scale_detector.dart';
 
 class AboutSection extends StatelessWidget {

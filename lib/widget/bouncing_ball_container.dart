@@ -103,13 +103,13 @@ class PhysicsBallPainter extends CustomPainter {
       canvas.save();
 
       final double iconTargetSize = radius * 2 * 0.7; // 공 지름의 70%
-      final double svgWidth = option.pictureInfo!.size.width;
+      final double svgWidth = option.pictureInfo.size.width;
 
       canvas.translate(centerOffset.dx, centerOffset.dy);
       canvas.rotate(body.angle);
       canvas.scale(iconTargetSize / svgWidth);
       canvas.translate(-svgWidth / 2, -svgWidth / 2);
-      canvas.drawPicture(option.pictureInfo!.picture);
+      canvas.drawPicture(option.pictureInfo.picture);
 
       canvas.restore();
     }
