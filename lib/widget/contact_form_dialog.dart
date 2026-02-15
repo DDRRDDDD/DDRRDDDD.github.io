@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:font_kit/font_kit.dart';
 import 'package:go_router/go_router.dart';
+import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 import '../datasource/email_manager.dart';
 import '../extension/theme_extension.dart';
+import '../theme/text_field_theme.dart';
 import 'bento_container.dart';
 
 class ContactFormDialog extends StatefulWidget {
@@ -56,25 +58,31 @@ class _ContactFormDialogState extends State<ContactFormDialog> {
     return null;
   }
 
-  void _method() {
-    if(_formKey.currentState?.validate() ?? false) {
-      _formKey.currentState?.save();
-      final EmailPayload payload = EmailPayload(
-        title: title,
-        fromEmail: email,
-        message: message,
-      );
-      EmailService().sendEmail(payload);
-      context.pop(); // TODO checkmark.riv
+  Future<void> _onSendPressed() async {
+    if (_formKey.currentState?.validate() != true) {
+      return;
+    }
+
+    _formKey.currentState?.save();
+    final EmailPayload payload = EmailPayload(
+      title: title,
+      fromEmail: email,
+      message: message,
+    );
+
+    await EmailService().sendEmail(payload);
+
+    if (mounted) {
+      WoltModalSheet.of(context).showNext();
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return _InputFieldContainer(
+    return Theme(
+      data: TextFieldTheme.theme(context),
       child: SizedBox(
         height: BentoContainer.spanHeight(3),
-        width: BentoContainer.spanWidth(2),
         child: Padding(
           padding: const EdgeInsets.symmetric(
             vertical: 24,
@@ -123,7 +131,7 @@ class _ContactFormDialogState extends State<ContactFormDialog> {
                     TextButton(
                       onPressed: context.pop,
                       style: TextButton.styleFrom(
-                        padding: const EdgeInsets.all(17),
+                        padding: const EdgeInsets.all(16),
                         shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(8)),
                         ),
@@ -135,7 +143,7 @@ class _ContactFormDialogState extends State<ContactFormDialog> {
                       ),
                     ),
                     ElevatedButton(
-                      onPressed: _method,
+                      onPressed: _onSendPressed,
                       style: ElevatedButton.styleFrom(
                         elevation: 0,
                         padding: const EdgeInsets.all(16),
@@ -158,86 +166,6 @@ class _ContactFormDialogState extends State<ContactFormDialog> {
             ),
           ),
         ),
-      ),
-    );
-  }
-}
-
-class _InputFieldContainer extends StatelessWidget {
-  const _InputFieldContainer({
-    super.key,
-    required this.child,
-  });
-
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context) {
-    return Theme(
-      data: Theme.of(context).copyWith(
-        textTheme: Theme.of(context).textTheme.copyWith(
-          bodyLarge: Theme.of(context).textTheme.bodyLarge?.copyWith(
-            color: context.colorTheme.textMain,
-            fontSize: 12,
-          ),
-        ),
-        inputDecorationTheme: InputDecorationTheme(
-          labelStyle: context.textTheme.heroBadge.copyWith(
-            color: context.colorTheme.textSub,
-          ),
-          errorStyle: context.textTheme.labelMedium.copyWith(
-            color: Colors.redAccent,
-          ),
-          floatingLabelStyle: context.textTheme.heroBadge.copyWith(
-            color: context.colorTheme.textSub,
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: const BorderRadius.all(
-              Radius.circular(12),
-            ),
-            borderSide: BorderSide(
-              color: context.colorTheme.outline,
-              width: 1.0,
-            ),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: const BorderRadius.all(
-              Radius.circular(12),
-            ),
-            borderSide: BorderSide(
-              color: context.colorTheme.textMain,
-              width: 1.5,
-            ),
-          ),
-          errorBorder: OutlineInputBorder(
-            borderRadius: const BorderRadius.all(
-              Radius.circular(12),
-            ),
-            borderSide: const BorderSide(
-              color: Colors.redAccent,
-            ),
-          ),
-          focusedErrorBorder: OutlineInputBorder(
-            borderRadius: const BorderRadius.all(
-              Radius.circular(12),
-            ),
-            borderSide: const BorderSide(
-              color: Colors.redAccent,
-              width: 1.5,
-            ),
-          ),
-        ),
-        textSelectionTheme: TextSelectionThemeData(
-          cursorColor: context.colorTheme.textMain,
-          selectionColor: context.colorTheme.outline,
-        ),
-      ),
-      child: Dialog(
-        backgroundColor: context.colorTheme.surfaceAlt,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(24)),
-        ),
-        child: child,
       ),
     );
   }

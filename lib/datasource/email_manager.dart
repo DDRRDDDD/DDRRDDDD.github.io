@@ -1,7 +1,7 @@
+import 'dart:convert';
+
 import 'package:envied/envied.dart';
 import 'package:http/http.dart' as http;
-
-import '../extension/common_extension.dart';
 
 part 'email_manager.g.dart';
 
@@ -30,17 +30,20 @@ class EmailService {
   }
 
   Future<void> sendEmail(EmailPayload payload) async {
-    await _baseUri
-        .replace(
-          path: '/api/v1.0/email/send',
-          queryParameters: {
-            'service_id': _serviceId,
-            'template_id': _templateId,
-            'user_id': _userId,
-            'template_params': payload.toJson(),
-          },
-        )
-        .let(http.get);
+    await http.post(
+      _baseUri.replace(
+        path: '/api/v1.0/email/send',
+      ),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode({
+        'service_id': _serviceId,
+        'template_id': _templateId,
+        'user_id': _userId,
+        'template_params': payload.toJson(),
+      }),
+    );
   }
 }
 
