@@ -1,4 +1,3 @@
-import 'package:collection/collection.dart';
 import 'package:envied/envied.dart';
 import 'package:http/http.dart' as http;
 

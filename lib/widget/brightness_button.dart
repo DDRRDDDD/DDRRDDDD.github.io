@@ -36,9 +36,8 @@ class _ThemeToggleButtonState extends State<ThemeToggleButton> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _viewModel.boolean('isLight')?.value = BrightnessProvider.of(
-      context,
-    ).value.isLight;
+    _viewModel.boolean('isLight')?.value =
+        BrightnessProvider.of(context).value.isLight;
   }
 
   @override
