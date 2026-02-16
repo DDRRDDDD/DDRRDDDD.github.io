@@ -49,7 +49,7 @@ class SlideSheetPage<T> extends CustomTransitionPage<T> {
         child: Align(
           alignment: AlignmentDirectional.centerEnd,
           child: SizedBox(
-            width: (MediaQuery.widthOf(context) * 0.48).clamp(0, 800),
+            width: (MediaQuery.widthOf(context) * 0.4).clamp(0, 700),
             child: Material(
               color: Colors.transparent,
               clipBehavior: Clip.hardEdge,
