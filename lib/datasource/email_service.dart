@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:envied/envied.dart';
 import 'package:http/http.dart' as http;
 
-part 'email_manager.g.dart';
+part 'email_service.g.dart';
 
 @Envied(path: 'config/.env')
 class EmailService {

@@ -3,7 +3,7 @@ import 'package:font_kit/font_kit.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
-import '../datasource/email_manager.dart';
+import '../datasource/email_service.dart';
 import '../extension/theme_extension.dart';
 import '../theme/text_field_theme.dart';
 import 'bento_container.dart';
