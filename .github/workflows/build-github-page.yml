@@ -53,8 +53,11 @@ jobs:
         # 기본 경로를 출력 변수로 제공합니다.
         uses: actions/configure-pages@v5
 
-      - name: 종속성 설치
+      - name: 의존성 설치
         run: flutter pub get
+
+      - name: 빌드 러너 실행
+        run: dart run build_runner build --delete-conflicting-outputs
 
       - name: 웹 빌드
         run: flutter build web --release --base-href "${{ steps.pages.outputs.base_path }}/"
