@@ -122,9 +122,7 @@ class _MilestoneListState extends State<MilestoneList> {
                     height: _dotWidth,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: isCurrent
-                          ? widget.selectedColor
-                          : widget.color,
+                      color: isCurrent ? widget.selectedColor : widget.color,
                     ),
                   ),
                   _buildLine(isNotLast),
@@ -174,26 +172,23 @@ class _MilestoneListState extends State<MilestoneList> {
             ),
           ),
         ),
-        AnimatedCrossFade(
+        AnimatedSize(
           duration: kThemeAnimationDuration,
-          sizeCurve: Curves.fastOutSlowIn,
-          crossFadeState: isCurrent
-              ? CrossFadeState.showSecond
-              : CrossFadeState.showFirst,
-          firstCurve: const Interval(0.0, 0.6, curve: Curves.fastOutSlowIn),
-          firstChild: const SizedBox(width: double.infinity),
-          secondCurve: const Interval(0.4, 1.0, curve: Curves.fastOutSlowIn),
-          secondChild: Padding(
-            padding: EdgeInsetsDirectional.only(
-              start: widget.contentMargin * 1.5 + _dotWidth,
-              end: widget.contentMargin,
-              bottom: widget.contentMargin,
-            ),
-            child: Align(
-              alignment: AlignmentDirectional.centerStart,
-              child: widget.milestones.elementAt(index).content,
-            ),
-          ),
+          curve: Curves.fastOutSlowIn,
+          alignment: Alignment.topCenter,
+          child: isCurrent
+              ? Padding(
+                  padding: EdgeInsetsDirectional.only(
+                    start: widget.contentMargin * 1.5 + _dotWidth,
+                    end: widget.contentMargin,
+                    bottom: widget.contentMargin,
+                  ),
+                  child: Align(
+                    alignment: AlignmentDirectional.centerStart,
+                    child: widget.milestones.elementAt(index).content,
+                  ),
+                )
+              : const SizedBox(width: double.infinity),
         ),
       ],
     );
