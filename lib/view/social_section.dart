@@ -37,6 +37,9 @@ class SocialSection extends StatelessWidget {
           ),
         ),
         _SocialBox(
+          onTap: () => Uri
+              .parse('https://velog.io/@ddrrdddd/posts')
+              .let(launchUrl),
           child: Center(
             child: FaIcon(
               FontAwesomeIcons.bloggerB,
