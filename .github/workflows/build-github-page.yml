@@ -53,6 +53,9 @@ jobs:
         # 기본 경로를 출력 변수로 제공합니다.
         uses: actions/configure-pages@v5
 
+      - name: 플러터 클린
+        run: flutter clean
+
       - name: 의존성 설치
         run: flutter pub get
 
