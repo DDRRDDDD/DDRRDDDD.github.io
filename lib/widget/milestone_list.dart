@@ -37,9 +37,7 @@ class _MilestoneListState extends State<MilestoneList> {
     super.initState();
     if (widget.currentIndex != null) {
       Future.delayed(const Duration(seconds: 1), () {
-        if (mounted) {
-          _scrollToItem(widget.currentIndex!);
-        }
+        _scrollToItem(widget.currentIndex!);
       });
     }
   }
@@ -57,6 +55,10 @@ class _MilestoneListState extends State<MilestoneList> {
   }
 
   Future<void> _scrollToItem(int index) async {
+    if(!mounted) {
+      return;
+    }
+
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await widget.controller.scrollToIndex(
         index,
