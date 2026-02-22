@@ -19,15 +19,11 @@ class ProjectMyPortfolioSection extends StatelessWidget {
       onPressDown: () => context.go('/project/my-portfolio'),
       builder: (_, states) => ProjectContainer(
         isHovered: states.isHovered,
-        child: Stack(
-          children: [
-            SummaryCard(
-              icon: project.primaryIcon.data,
-              titleLabel: project.type.label,
-              subTitle: project.subTitle,
-              skills: project.labels,
-            ),
-          ],
+        child: SummaryCard(
+          icon: project.primaryIcon.data,
+          titleLabel: project.type.label,
+          subTitle: project.subTitle,
+          skills: project.labels,
         ),
       ),
     );
