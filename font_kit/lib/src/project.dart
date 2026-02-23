@@ -58,7 +58,7 @@ enum Project implements GlyphSource {
     role: '앱 개발 리드',
     startAt: '2025.07',
     endAt: '2025.12',
-    myContribution: 0.9,
+    myContribution: 0.8,
     teamSummaries: GlyphBuffer(['디자이너', '기획', '개발']),
   ),
   myPortfolio(
