@@ -111,8 +111,10 @@ class MarkdownTheme {
 
       a: textTheme.bodyRegular.copyWith(
         color: colorTheme.primary,
+        fontVariations: [FontVariation.weight(600)],
         decoration: TextDecoration.underline,
-        decorationColor: colorTheme.primary.withValues(alpha: 0.5),
+        decorationColor: colorTheme.primary.withValues(alpha: 0.8),
+        decorationThickness: 2.0,
       ),
 
       blockSpacing: 16.0,

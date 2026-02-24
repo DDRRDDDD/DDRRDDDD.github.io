@@ -8,9 +8,9 @@ class TextFieldTheme {
   static ThemeData theme(BuildContext context) {
     final ThemeData baseTheme = Theme.of(context);
 
-    return baseTheme.copyWith(
-      textTheme: baseTheme.textTheme.copyWith(
-        bodyLarge: baseTheme.textTheme.bodyLarge?.copyWith(
+    return Theme.of(context).copyWith(
+      textTheme: TextTheme(
+        bodyLarge: TextStyle(
           color: context.colorTheme.textMain,
           fontSize: 12,
         ),

@@ -1,58 +1,82 @@
 import 'package:flutter/material.dart';
 
+import '../datasource/font_manager.dart';
+
 const defaultTextTheme = TextThemeExtension._(
   heroTitle: TextStyle(
+    fontFamily: FontManager.notoSansFamily,
+    fontFamilyFallback: [FontManager.notoSansEmojiFamily],
     fontVariations: [FontVariation.weight(900)],
     fontSize: 60.0,
     height: 1.1,
     letterSpacing: -0.5,
   ),
   heroBadge: TextStyle(
+    fontFamily: FontManager.notoSansFamily,
+    fontFamilyFallback: [FontManager.notoSansEmojiFamily],
     fontVariations: [FontVariation.weight(700)],
     fontSize: 14.0,
   ),
   sectionTitle: TextStyle(
+    fontFamily: FontManager.notoSansFamily,
+    fontFamilyFallback: [FontManager.notoSansEmojiFamily],
     fontVariations: [FontVariation.weight(700)],
     fontSize: 30.0,
   ),
   sectionText: TextStyle(
+    fontFamily: FontManager.notoSansFamily,
+    fontFamilyFallback: [FontManager.notoSansEmojiFamily],
     fontVariations: [FontVariation.weight(500)],
     fontSize: 16.0,
     letterSpacing: -0.2,
     height: 1.5,
   ),
   cardTitle: TextStyle(
+    fontFamily: FontManager.notoSansFamily,
+    fontFamilyFallback: [FontManager.notoSansEmojiFamily],
     fontVariations: [FontVariation.weight(700)],
     fontSize: 20.0,
     letterSpacing: -0.3,
   ),
   timelineTitle: TextStyle(
+    fontFamily: FontManager.notoSansFamily,
+    fontFamilyFallback: [FontManager.notoSansEmojiFamily],
     fontVariations: [FontVariation.weight(700)],
     fontSize: 18.0,
     letterSpacing: -0.3,
   ),
   bodyLead: TextStyle(
+    fontFamily: FontManager.notoSansFamily,
+    fontFamilyFallback: [FontManager.notoSansEmojiFamily],
     fontVariations: [FontVariation.weight(400)],
     fontSize: 18.0,
     letterSpacing: -0.3,
     height: 1.6,
   ),
   bodyRegular: TextStyle(
+    fontFamily: FontManager.notoSansFamily,
+    fontFamilyFallback: [FontManager.notoSansEmojiFamily],
     fontVariations: [FontVariation.weight(400)],
     fontSize: 14.0,
     letterSpacing: -0.2,
     height: 1.5,
   ),
   buttonText: TextStyle(
+    fontFamily: FontManager.notoSansFamily,
+    fontFamilyFallback: [FontManager.notoSansEmojiFamily],
     fontVariations: [FontVariation.weight(700)],
     fontSize: 16.0,
   ),
   labelMedium: TextStyle(
+    fontFamily: FontManager.notoSansFamily,
+    fontFamilyFallback: [FontManager.notoSansEmojiFamily],
     fontVariations: [FontVariation.weight(500)],
     fontSize: 12.0,
     letterSpacing: -0.1,
   ),
   labelSmall: TextStyle(
+    fontFamily: FontManager.notoSansFamily,
+    fontFamilyFallback: [FontManager.notoSansEmojiFamily],
     fontVariations: [FontVariation.weight(500)],
     fontSize: 9.0,
     letterSpacing: 0.2,

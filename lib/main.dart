@@ -45,10 +45,9 @@ class MyPortfolioApp extends StatelessWidget {
         builder: GridDotContainer.background,
         themeMode: brightness.themeMode,
         theme: ThemeData(
-          fontFamily: FontManager.notoSansFamily,
-          fontFamilyFallback: [FontManager.notoSansEmojiFamily],
           splashFactory: NoSplash.splashFactory,
           scaffoldBackgroundColor: Colors.transparent,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
           extensions: [
             ColorThemeExtension.from(brightness),
             ChipColorThemeExtension.from(brightness),
@@ -63,7 +62,3 @@ class MyPortfolioApp extends StatelessWidget {
 }
 
 // https://ddrrdddd.github.io/
-
-/// 마크다운 pre load 구현
-/// -> 프리로드 구현 후 아직도 시트가 버벅이면 AnimatedFade? 다시 구현
-
