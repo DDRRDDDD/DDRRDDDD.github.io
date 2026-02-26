@@ -19,15 +19,11 @@ class RiveFileManager extends AssetFileManager<File> {
   }
 
   static Future<void> init() async {
-    if (_instance != null) {
-      return;
-    }
-
     if (!RiveNative.isInitialized) {
       await RiveNative.init();
     }
 
-    _instance = await AssetFinder()
+    _instance ??= await AssetFinder()
         .where((path) => path.startsWith(riveAssetPath))
         .map(_loadEntry)
         .let(Future.wait)

@@ -32,3 +32,13 @@ class FontManager {
     await fontLoader.load();
   }
 }
+
+class FontConfig {
+  final String fontFamily;
+  final String assetPath;
+
+  const FontConfig({
+    required this.fontFamily,
+    required this.assetPath,
+  });
+}

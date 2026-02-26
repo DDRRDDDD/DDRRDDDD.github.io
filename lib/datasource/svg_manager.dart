@@ -18,11 +18,7 @@ class SkillSvgManager extends AssetFileManager<PictureInfo> {
   }
 
   static Future<void> init() async {
-    if (_instance != null) {
-      return;
-    }
-
-    _instance = await AssetFinder()
+    _instance ??= await AssetFinder()
         .where((path) => path.startsWith(skillAssetPath))
         .map(_loadPicture)
         .let(Future.wait)

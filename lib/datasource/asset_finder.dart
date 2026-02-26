@@ -25,11 +25,7 @@ class AssetFinder extends DelegatingList<String>
   }
 
   static Future<void> init() async {
-    if (_instance != null) {
-      return;
-    }
-
-    _instance = await AssetManifest
+    _instance ??= await AssetManifest
         .loadFromAssetBundle(rootBundle)
         .then(AssetFinder._fromManifest);
   }
