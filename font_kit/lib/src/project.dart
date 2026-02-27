@@ -33,19 +33,6 @@ enum Project implements GlyphSource {
     endAt: '2025.02',
     myContribution: 0.3,
     teamSummaries: GlyphBuffer(['기획·Flutter', 'Flutter']),
-    references: GlyphTree([
-      LinkItem(
-        icon: ProjectIcon.apple,
-        label: 'App Store',
-        url:
-        'https://apps.apple.com/kr/app/'
-            '%EC%9B%90%EC%95%84%EC%9B%8C-'
-            '%EC%9D%B4%EC%9B%83%EA%B3%BC-'
-            '%EC%86%8C%EC%86%8C%ED%95%9C-'
-            '%EB%AA%A8%EC%9E%84%EB%B6%80%ED%84%B0-'
-            '%EB%8C%80%ED%99%94%EA%B9%8C%EC%A7%80/id6739973696',
-      ),
-    ]),
   ),
   myTurn(
     primaryIcon: ProjectIcon.flag,
